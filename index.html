@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Emily Furst · Film Editor</title>
+<meta name="description" content="Emily Furst is a film editor and assistant editor in Los Angeles, cutting narrative shorts and assisting on documentary series for Netflix and HBO Max.">
+<meta property="og:title" content="Emily Furst · Film Editor">
+<meta property="og:description" content="Film editor and assistant editor in Los Angeles. Narrative shorts, Netflix and HBO Max documentary series.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.emily-furst.com/">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{--sky:#dcefef;--paper:#f4fafa;--ink:#1e1a3c;--pink:#e5407a;--sand:#f0dfae;--muted:#52506b;--line:rgba(30,26,60,.18);--c0:#f7b6cd;--c1:#b8c9f0;--cd:#1e1a3c;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--sky:#17163a;--paper:#201e4a;--ink:#eef6f6;--pink:#ff6b9c;--sand:#d9c27a;--muted:#b4b2d0;--line:rgba(238,246,246,.2)}}
+:root[data-theme="dark"]{--sky:#17163a;--paper:#201e4a;--ink:#eef6f6;--pink:#ff6b9c;--sand:#d9c27a;--muted:#b4b2d0;--line:rgba(238,246,246,.2)}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;background:var(--sky);color:var(--ink);font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:1.0625rem;line-height:1.6}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--pink);outline-offset:3px}
+.wrap{max-width:62rem;margin:0 auto;padding:0 1.25rem}
+nav{display:flex;justify-content:space-between;gap:1rem;padding:1.25rem 0;font-weight:600}
+nav div{display:flex;gap:1.25rem;flex-wrap:wrap}nav a{text-decoration:none}nav a:hover{color:var(--pink)}
+.hero{padding:2.5rem 0 1rem}
+h1{font-size:clamp(3rem,11vw,8rem);line-height:.92;font-weight:800;letter-spacing:-.035em;margin:0;position:relative;display:inline-block}
+h1 .ghost{position:absolute;inset:0;color:var(--pink);opacity:.5;transform:translate(var(--gx,6px),var(--gy,4px));mix-blend-mode:multiply;pointer-events:none}
+@media (prefers-color-scheme:dark){h1 .ghost{mix-blend-mode:screen}}
+.lede{font-size:clamp(1.15rem,2.4vw,1.5rem);max-width:36rem;margin:1.5rem 0 2rem}
+
+/* edit window */
+.nle{border:2px solid var(--ink);border-radius:14px;overflow:hidden;background:var(--paper)}
+.mon{background:var(--ink);color:var(--paper);padding:1.1rem 1.25rem;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:1.5rem;align-items:center}
+.info{display:grid;gap:.15rem}
+.pv{aspect-ratio:16/9;border-radius:8px;border:2px solid var(--paper);background-size:cover;background-position:center;display:grid;place-items:center;padding:1rem;text-align:center;color:#1e1a3c;font-weight:800;font-size:clamp(1.1rem,3vw,1.8rem);line-height:1.1;letter-spacing:-.02em;overflow:hidden}
+.mon-top{display:flex;justify-content:space-between;gap:1rem;font-size:.9rem;opacity:.85}
+.tc{font-variant-numeric:tabular-nums;color:var(--pink);font-weight:600}
+.mon h3{margin:.2rem 0 0;font-size:clamp(1.5rem,4vw,2.4rem);line-height:1.1;font-weight:800;letter-spacing:-.02em}
+.mon p{margin:0}.mon a{color:var(--pink);font-weight:600}
+.body{display:grid;grid-template-columns:2.6rem 1fr;padding:.6rem .75rem .9rem 0}
+.labels{display:grid;grid-template-rows:1.4rem 3.2rem 3.2rem;gap:.4rem;font-size:.8rem;font-weight:600;color:var(--muted);text-align:center;align-items:center}
+.area{position:relative;display:grid;grid-template-rows:1.4rem 3.2rem 3.2rem;gap:.4rem;cursor:ew-resize;touch-action:pan-y;user-select:none}
+.ruler{position:relative;border-bottom:1.5px solid var(--line)}
+.tick{position:absolute;bottom:0;height:.45rem;border-left:1.5px solid var(--muted)}
+.tick span{position:absolute;bottom:.5rem;left:3px;font-size:.72rem;color:var(--muted);white-space:nowrap}
+.lane{position:relative;background:repeating-linear-gradient(90deg,transparent 0 calc(100% - 1px),var(--line) 0);border-radius:6px}
+.clip{position:absolute;top:0;bottom:0;border:1.5px solid var(--cd);border-radius:6px;padding:.15rem .45rem;font:inherit;font-size:.78rem;font-weight:600;color:#1e1a3c;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;line-height:1.3}
+.clip::after{content:"";position:absolute;left:5px;right:5px;bottom:4px;height:28%;background:repeating-linear-gradient(90deg,rgba(30,26,60,.4) 0 2px,transparent 2px 4px);opacity:.7}
+.lane:nth-of-type(1) .clip{background:var(--c0)}.lane:nth-of-type(2) .clip{background:var(--c1)}
+.clip.on{box-shadow:0 0 0 3px var(--ink);z-index:2}
+.slot{position:absolute;top:0;bottom:0;border:1.5px dashed var(--muted);border-radius:6px;font-size:.75rem;color:var(--muted);padding:.15rem .45rem;overflow:hidden;white-space:nowrap}
+.head{position:absolute;top:0;bottom:0;width:2px;margin-left:-1px;background:var(--pink);pointer-events:none;z-index:3;transition:left .25s}
+.head::before{content:"";position:absolute;top:0;left:-6px;border:7px solid transparent;border-top:10px solid var(--pink);border-bottom:0}
+.dragging .head{transition:none}
+.hint{font-size:.9rem;color:var(--muted);margin:.8rem 0 0}
+kbd{background:var(--paper);border:1.5px solid var(--ink);border-radius:5px;padding:0 .35rem;font:inherit;font-size:.85em;font-weight:600}
+
+section{padding:3.5rem 0 1rem}
+h2{font-size:clamp(1.9rem,4vw,2.8rem);line-height:1.05;letter-spacing:-.02em;margin:0 0 1.5rem;font-weight:800}
+.reel{display:grid;grid-template-columns:1.4fr 1fr;gap:1.5rem;align-items:center}
+.play{display:grid;place-items:center;aspect-ratio:16/9;background:var(--ink);border-radius:14px;text-decoration:none;position:relative;overflow:hidden}
+.play::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 25% 125%,#7fa86a 0 30%,transparent 31%),radial-gradient(circle at 80% 130%,var(--pink) 0 28%,transparent 29%)}
+.play span{position:relative;width:4.5rem;height:4.5rem;border-radius:50%;background:var(--paper);display:grid;place-items:center;transition:transform .2s}
+.play:hover span{transform:scale(1.12)}
+.play span::after{content:"";border:12px solid transparent;border-left:19px solid #1e1a3c;border-right:0;margin-left:5px}
+.reel p{margin:0}
+.credit{display:grid;grid-template-columns:4rem 1fr auto;gap:1rem;align-items:baseline;padding:1rem 0;border-top:1.5px solid var(--line)}
+.credit:last-child{border-bottom:1.5px solid var(--line)}
+.credit.hl{background:linear-gradient(90deg,rgba(229,64,122,.14),transparent)}
+.yr{color:var(--muted);font-variant-numeric:tabular-nums}
+.credit h3{margin:0;font-size:1.3rem;font-weight:600;line-height:1.25}
+.credit small{display:block;font-size:.95rem;font-weight:400;color:var(--muted)}
+.role{background:var(--sand);color:#1e1a3c;border:1.5px solid var(--ink);border-radius:99px;padding:.1rem .8rem;font-size:.9rem;font-weight:600;white-space:nowrap}
+.about{display:grid;grid-template-columns:1.3fr 1fr;gap:2.5rem}.about p{margin:0 0 1rem;max-width:36rem}
+.tools{display:flex;flex-wrap:wrap;gap:.5rem;align-content:flex-start;padding:0;margin:0;list-style:none}
+.tools li{background:var(--paper);border:1.5px solid var(--ink);border-radius:99px;padding:.15rem .9rem;font-weight:600}
+.contact{text-align:center;padding:5rem 0 3rem}.contact h2{font-size:clamp(2.4rem,8vw,5.5rem)}
+.btn{display:inline-block;background:var(--pink);color:#1e1a3c;border:2px solid var(--ink);border-radius:99px;padding:.7rem 1.8rem;font-weight:800;font-size:1.15rem;text-decoration:none;box-shadow:4px 4px 0 var(--ink);transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
+.links{margin-top:1.5rem;display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;font-weight:600}
+footer{text-align:center;color:var(--muted);padding:1rem 0 2rem;font-size:.95rem}
+@media (max-width:700px){.reel,.about,.mon{grid-template-columns:1fr}.credit{grid-template-columns:1fr auto}.credit .yr{grid-column:1/-1;margin-bottom:-.6rem}.kb{display:none}.clip{font-size:.7rem;padding:.1rem .3rem}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><strong>Emily Furst</strong><div><a href="#reel">Reel</a><a href="#credits">Credits</a><a href="#about">About</a><a href="#contact">Contact</a></div></nav>
+<header class="hero">
+  <h1 id="name" aria-label="Emily Furst"><span>Emily<br>Furst</span><span class="ghost" aria-hidden="true">Emily<br>Furst</span></h1>
+  <p class="lede">Film editor and assistant editor in Los Angeles. I cut narrative shorts and assist on documentary series for Netflix and HBO Max, and I'm ready to move into scripted film and television. <b>Open to work.</b></p>
+
+  <div class="nle">
+    <div class="mon"><div class="pv" id="pv" aria-hidden="true"><span id="pvt"></span></div><div class="info" aria-live="polite">
+      <div class="mon-top"><span id="mtag">Program</span><span class="tc" id="tc">00:00:00:00</span></div>
+      <h3 id="mt"></h3><p id="mm"></p><p id="mx"></p></div>
+    </div>
+    <div class="body">
+      <div class="labels"><span></span><span>V1</span><span>V2</span></div>
+      <div class="area" id="area"><div class="ruler" id="ruler"></div><div class="lane" id="l0"></div><div class="lane" id="l1"></div><div class="head" id="head"></div></div>
+    </div>
+  </div>
+  <p class="hint">Every clip is a real credit. Hover or drag across the timeline, or tap a clip. <span class="kb">On a keyboard, <kbd>J</kbd> and <kbd>L</kbd> jump between cuts.</span></p>
+</header>
+
+<section id="reel"><h2>Watch the reel</h2>
+  <div class="reel"><a class="play" href="https://www.youtube.com/" target="_blank" rel="noopener" aria-label="Watch my reel on YouTube"><span></span></a>
+  <p>A few minutes of shorts and doc work. Opens on YouTube.<br><br><a href="https://www.youtube.com/" target="_blank" rel="noopener">Watch on YouTube</a></p></div>
+</section>
+<section id="credits"><h2>Credits</h2><div id="list"></div></section>
+<section id="about"><h2>About</h2>
+  <div class="about"><div>
+    <p>I'm drawn to stories about family dynamics, human psychology, and the ways we experience reality. Born in Hunan, adopted and raised in St. Louis, and now based in Los Angeles, my background shapes both the stories I choose and how I collaborate.</p>
+    <p>Working as both an editor and an assistant editor keeps me in the creative and the technical side of the craft, and I enjoy both. I have a particular love for animation, and I'm developing a short animated film that I'm writing and directing myself.</p>
+    <p><a href="https://www.emily-furst.com/resume" rel="noopener">Résumé</a></p></div>
+  <ul class="tools" aria-label="Software"><li>Avid Media Composer</li><li>DaVinci Resolve</li><li>Premiere Pro (branded work)</li></ul></div>
+</section>
+<section class="contact" id="contact"><h2>Let's make<br>a cut.</h2><a class="btn" href="mailto:emilyj.furst@gmail.com">Email me</a>
+  <div class="links"><a href="https://www.imdb.com/name/nm12587784/" rel="noopener">IMDb</a><a href="https://www.linkedin.com/in/efurst/" rel="noopener">LinkedIn</a><a href="https://www.instagram.com/em.furst/" rel="noopener">Instagram</a><a href="https://vimeo.com/efurst" rel="noopener">Vimeo</a></div></section>
+<footer>That's a wrap. © Emily Furst</footer>
+</div>
+<script>
+// EDIT ME: one list drives the timeline, preview and credits. track 0 = V1 (shorts), 1 = V2 (docs). min = how wide the clip looks. still = optional image (data URI) for the preview window.
+var CREDITS=[
+ {track:0,title:"Attached",role:"Editor",year:2022,min:10,note:"Narrative short · Sci-Fi · Horror"},
+ {track:0,title:"Mom Is Visiting 妈妈来了",role:"Editor",year:2023,min:10,note:"Narrative short · Drama · Comedy"},
+ {track:0,title:"Promises, Promises",role:"Editor",year:2023,min:10,note:"Narrative short · Drama"},
+ {track:0,title:"Over Easy",role:"Editor",year:2023,min:10,note:"Narrative short · Comedy"},
+ {track:0,title:"Ornamental Oriental",role:"Editor",year:2024,min:10,note:"Narrative short · Sci-Fi"},
+ {track:0,title:"Socks",role:"Editor",year:2025,min:10,note:"Narrative short · Drama"},
+ {track:0,title:"Cocoon",role:"Editor",year:2025,min:10,note:"Tribeca premiere · Focus Features & JetBlue Student Short Film Showcase winner"},
+ {track:0,title:"I Don't Even Skate",role:"Editor",year:2025,min:10,note:"Narrative short · Drama"},
+ {track:1,title:"Pop Star Academy: KATSEYE",role:"Assistant Editor",year:2024,min:20,note:"Netflix · Documentary series"},
+ {track:1,title:"aka Charlie Sheen",role:"Assistant Editor",year:2025,min:20,note:"Netflix · Two-part documentary"},
+ {track:1,title:"Paul American",role:"Assistant Editor",year:2025,min:20,note:"HBO Max · Series"},
+ {track:1,title:"Unannounced feature",role:"Assistant Editor",year:2027,min:20,note:"Feature documentary"}
+];
+(function(){
+var $=function(i){return document.getElementById(i)},GAP=1,SLOT=8,lanes=[$('l0'),$('l1')],cur=[0,0],ends=[0,0];
+CREDITS.forEach(function(c,i){c.i=i;c.start=cur[c.track];cur[c.track]+=c.min+GAP});
+var TOTAL=Math.max(cur[0],cur[1])+SLOT;
+function pct(m){return (m/TOTAL*100)+'%'}
+CREDITS.forEach(function(c){
+  var b=document.createElement('button');b.className='clip';b.style.left=pct(c.start);b.style.width=pct(c.min);
+  b.textContent=c.title;b.setAttribute('aria-label',c.title+', '+c.role+', '+c.year);b.dataset.i=c.i;c.el=b;lanes[c.track].appendChild(b);
+  b.addEventListener('click',function(e){if(e.detail===0)pick(c.i)});
+  var r=document.createElement('div');r.className='credit';r.id='c'+c.i;c.row=r;
+  r.innerHTML='<span class="yr">'+c.year+'</span><h3>'+c.title+'<small>'+c.note+'</small></h3><span class="role">'+c.role+'</span>';
+  $('list').insertBefore(r,$('list').firstChild);
+});
+[0,1].forEach(function(t){var s=document.createElement('div');s.className='slot';s.style.left=pct(cur[t]);s.style.width=pct(SLOT);s.textContent='Your next project?';s.setAttribute('aria-hidden','true');lanes[t].appendChild(s)});
+for(var m=0;m<=TOTAL;m+=10){var k=document.createElement('div');k.className='tick';k.style.left=pct(m);k.innerHTML='';$('ruler').appendChild(k)}
+
+var PAL=[['#f7b6cd','#e5407a'],['#b8c9f0','#6b7fd6'],['#b9dba3','#5f8a4b'],['#f0dfae','#e0a53a']];
+function art(c){var v=$('pv'),t=$('pvt');
+ if(!c){v.style.backgroundImage='repeating-linear-gradient(45deg,transparent 0 10px,rgba(238,246,246,.12) 10px 20px)';v.style.backgroundColor='#2b2858';v.style.color='#eef6f6';t.textContent='No signal';return}
+ var p=PAL[c.i%PAL.length];v.style.color='#1e1a3c';
+ if(c.still){v.style.backgroundImage='url('+c.still+')';t.textContent=''}
+ else{v.style.backgroundImage='radial-gradient(circle at 20% 125%,'+p[1]+' 0 38%,transparent 39%),linear-gradient(160deg,'+p[0]+',#f4fafa)';v.style.backgroundColor=p[0];t.textContent=c.title}}
+function p2(n){return String(n).padStart(2,'0')}
+function tcOf(p){var s=p*TOTAL*60,f=Math.floor((s%1)*24);s=Math.floor(s);return p2(Math.floor(s/3600))+':'+p2(Math.floor(s/60)%60)+':'+p2(s%60)+':'+p2(f)}
+var active=-1;
+function show(p,row){
+  $('head').style.left=(p*100)+'%';$('tc').textContent=tcOf(p);
+  var t=p*TOTAL,hit=CREDITS.filter(function(c){return c.track===row&&t>=c.start&&t<c.start+c.min})[0];
+  CREDITS.forEach(function(c){c.el.classList.toggle('on',c===hit);c.row.classList.toggle('hl',c===hit)});
+  if(hit){active=hit.i;art(hit);$('mtag').textContent=(hit.track?'V2 · Doc':'V1 · Short');$('mt').textContent=hit.title;
+    $('mm').textContent=hit.role+' · '+hit.year;
+    $('mx').innerHTML=hit.note+' &nbsp;<a href="#c'+hit.i+'">See in credits</a>'}
+  else{art(null);$('mtag').textContent='Open slot';$('mt').textContent=t>=cur[row]?'Your next project?':'Between cuts';$('mm').textContent='';
+    $('mx').innerHTML=t>=cur[row]?'Got a cut that needs an editor? <a href="mailto:emilyj.furst@gmail.com">Say hello</a>':''}
+}
+function pick(i){var c=CREDITS[i];show((c.start+c.min/2)/TOTAL,c.track)}
+var area=$('area'),down=false;
+function at(e){var r=area.getBoundingClientRect(),l1=lanes[1].getBoundingClientRect(),l0=lanes[0].getBoundingClientRect();
+  show(Math.max(0,Math.min(.9999,(e.clientX-r.left)/r.width)),e.clientY>=(l0.bottom+l1.top)/2?1:0)}
+area.addEventListener('pointerdown',function(e){down=true;area.classList.add('dragging');area.setPointerCapture(e.pointerId);at(e)});
+area.addEventListener('pointermove',function(e){if(down||e.pointerType==='mouse')at(e)});
+['pointerup','pointercancel'].forEach(function(n){area.addEventListener(n,function(){down=false;area.classList.remove('dragging')})});
+addEventListener('keydown',function(e){var k=e.key.toLowerCase();if(e.metaKey||e.ctrlKey||e.altKey||(k!=='j'&&k!=='l'))return;
+  pick((Math.max(active,0)+(k==='l'?1:CREDITS.length-1))%CREDITS.length)});
+pick(0);
+document.addEventListener('pointermove',function(e){var n=$('name');n.style.setProperty('--gx',((e.clientX/innerWidth-.5)*24)+'px');n.style.setProperty('--gy',((e.clientY/innerHeight-.5)*16)+'px')});
+})();
+</script>
+</body>
+</html>
