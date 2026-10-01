@@ -39,15 +39,15 @@ h1 .ghost{position:absolute;inset:0;color:var(--pink);opacity:.5;transform:trans
 .mon h3{margin:.2rem 0 0;font-size:clamp(1.5rem,4vw,2.4rem);line-height:1.1;font-weight:800;letter-spacing:-.02em}
 .mon p{margin:0}.mon a{color:var(--pink);font-weight:600}
 .body{display:grid;grid-template-columns:2.6rem 1fr;padding:.6rem .75rem .9rem 0}
-.labels{display:grid;grid-template-rows:1.4rem 3.2rem 3.2rem 3.2rem;gap:.4rem;font-size:.8rem;font-weight:600;color:var(--muted);text-align:center;align-items:center}
-.area{position:relative;display:grid;grid-template-rows:1.4rem 3.2rem 3.2rem 3.2rem;gap:.4rem;cursor:ew-resize;touch-action:pan-y;user-select:none}
+.labels{display:grid;gap:.4rem;font-size:.8rem;font-weight:600;color:var(--muted);text-align:center;align-items:center}
+.area{position:relative;display:grid;gap:.4rem;cursor:ew-resize;touch-action:pan-y;user-select:none}
 .ruler{position:relative;border-bottom:1.5px solid var(--line)}
 .tick{position:absolute;bottom:0;height:.45rem;border-left:1.5px solid var(--muted)}
 .tick span{position:absolute;bottom:.5rem;left:3px;font-size:.72rem;color:var(--muted);white-space:nowrap}
 .lane{position:relative;background:repeating-linear-gradient(90deg,transparent 0 calc(100% - 1px),var(--line) 0);border-radius:6px}
 .clip{position:absolute;top:0;bottom:0;border:1.5px solid var(--cd);border-radius:6px;padding:.15rem .45rem;font:inherit;font-size:.78rem;font-weight:600;color:#1e1a3c;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;line-height:1.3}
 .clip::after{content:"";position:absolute;left:5px;right:5px;bottom:4px;height:28%;background:repeating-linear-gradient(90deg,rgba(30,26,60,.4) 0 2px,transparent 2px 4px);opacity:.7}
-#l0 .clip{background:var(--c0)}#l1 .clip{background:var(--c1)}#l2 .clip{background:var(--c2)}
+.lane.short .clip{background:var(--c0)}.lane.doc .clip{background:var(--c1)}.lane.own .clip{background:var(--c2)}
 .clip.on{box-shadow:0 0 0 3px var(--ink);z-index:2}
 .slot{position:absolute;top:0;bottom:0;border:1.5px dashed var(--muted);border-radius:6px;font-size:.75rem;color:var(--muted);padding:.15rem .45rem;overflow:hidden;white-space:nowrap}
 .head{position:absolute;top:0;bottom:0;width:2px;margin-left:-1px;background:var(--pink);pointer-events:none;z-index:3;transition:left .25s}
@@ -105,8 +105,8 @@ footer{text-align:center;color:var(--muted);padding:1rem 0 2rem;font-size:.95rem
       <h3 id="mt"></h3><p id="mm"></p><p id="mx"></p></div>
     </div>
     <div class="body">
-      <div class="labels"><span></span><span>V1</span><span>V2</span><span>V3</span></div>
-      <div class="area" id="area"><div class="ruler" id="ruler"></div><div class="lane" id="l0"></div><div class="lane" id="l1"></div><div class="lane" id="l2"></div><div class="head" id="head"></div></div>
+      <div class="labels" id="labels"><span></span></div>
+      <div class="area" id="area"><div class="ruler" id="ruler"></div><div class="head" id="head"></div></div>
     </div>
   </div>
   <p class="hint">Every clip is a real credit. Hover or drag across the timeline, or tap a clip. <span class="kb">On a keyboard, <kbd>J</kbd> and <kbd>L</kbd> jump between clips.</span></p>
@@ -128,7 +128,16 @@ footer{text-align:center;color:var(--muted);padding:1rem 0 2rem;font-size:.95rem
 <footer>That's a wrap. © Emily Furst</footer>
 </div>
 <script>
-// EDIT ME: one list drives the timeline, preview and credits. track 0 = V1 (shorts), 1 = V2 (docs), 2 = V3 (personal projects). min = how wide the clip looks. still = optional image (data URI) for the preview window.
+// EDIT ME: one list drives the timeline, preview and credits.
+// track = row index in TRACKS. Clips on a row play back to back unless they set at (start position).
+// min = clip width; to:'end' stretches a clip to the end of the timeline. still = optional image (data URI) for the preview window.
+var TRACKS=[
+ {label:'V1',kind:'short',tag:'V1 · Short'},
+ {label:'V2',kind:'doc',tag:'V2 · Doc'},
+ {label:'V3',kind:'doc',tag:'V3 · Doc'},
+ {label:'V4',kind:'own',tag:'V4 · Personal'},
+ {label:'V5',kind:'own',tag:'V5 · Personal'}
+];
 var CREDITS=[
  {track:0,title:"Attached",role:"Editor",year:2022,min:10,note:"Narrative short · Sci-Fi · Horror"},
  {track:0,title:"Mom Is Visiting 妈妈来了",role:"Editor",year:2023,min:10,note:"Narrative short · Drama · Comedy"},
@@ -141,15 +150,19 @@ var CREDITS=[
  {track:1,title:"Pop Star Academy: KATSEYE",role:"Assistant Editor",year:2024,min:20,note:"Netflix · Documentary series"},
  {track:1,title:"aka Charlie Sheen",role:"Assistant Editor",year:2025,min:20,note:"Netflix · Two-part documentary"},
  {track:1,title:"Paul American",role:"Assistant Editor",year:2025,min:20,note:"HBO Max · Series"},
- {track:1,title:"Untitled development project",role:"Assistant Editor",year:2026,min:20,note:"Feature documentary"},
- {track:1,title:"Unannounced feature",role:"Assistant Editor",year:2027,min:20,note:"Feature documentary"},
- {track:2,title:"Orizuru",role:"Writer & Director",year:"Now",min:20,note:"Animated short film · Drama · In production"},
- {track:2,title:"Dimenticato",role:"Writer",year:"Now",min:20,note:"Feature script · Drama · In development"}
+ {track:1,title:"Untitled development project",role:"Assistant Editor",year:"Now",min:20,note:"Feature documentary"},
+ {track:2,title:"Unannounced feature",role:"Assistant Editor",year:"Now",at:64,to:'end',note:"Feature documentary"},
+ {track:3,title:"Orizuru",role:"Writer & Director",year:"Now",at:0,to:'end',note:"Animated short film · Drama · In production"},
+ {track:4,title:"Dimenticato",role:"Writer",year:"Now",at:70,to:'end',note:"Feature script · Drama · In development"}
 ];
 (function(){
-var $=function(i){return document.getElementById(i)},GAP=0,SLOT=8,TAGS=['V1 · Short','V2 · Doc','V3 · Personal'],lanes=[$('l0'),$('l1'),$('l2')],cur=[0,0,0];
-CREDITS.forEach(function(c,i){c.i=i;c.start=cur[c.track];cur[c.track]+=c.min+GAP});
-var TOTAL=Math.max.apply(null,cur)+SLOT;
+var $=function(i){return document.getElementById(i)},SLOT=8,cur=TRACKS.map(function(){return 0}),rows='1.4rem';
+var lanes=TRACKS.map(function(t){var l=document.createElement('div');l.className='lane '+t.kind;$('area').insertBefore(l,$('head'));
+  var s=document.createElement('span');s.textContent=t.label;$('labels').appendChild(s);rows+=' 2.8rem';return l});
+$('labels').style.gridTemplateRows=$('area').style.gridTemplateRows=rows;
+CREDITS.forEach(function(c,i){c.i=i;c.start=c.at!=null?c.at:cur[c.track];if(c.to!=='end')cur[c.track]=c.start+c.min});
+var TOTAL=Math.max.apply(null,CREDITS.map(function(c){return c.start+(c.min||0)}))+SLOT;
+CREDITS.forEach(function(c){if(c.to==='end'){c.min=TOTAL-c.start;cur[c.track]=TOTAL}});
 function pct(m){return (m/TOTAL*100)+'%'}
 CREDITS.forEach(function(c){
   var b=document.createElement('button');b.className='clip';b.style.left=pct(c.start);b.style.width=pct(c.min);
@@ -158,9 +171,10 @@ CREDITS.forEach(function(c){
   var r=document.createElement('div');r.className='credit';r.id='c'+c.i;c.row=r;
   r.innerHTML='<span class="yr">'+c.year+'</span><h3>'+c.title+'<small>'+c.note+'</small></h3><span class="role">'+c.role+'</span>';
 });
-function yr(c){return typeof c.year==='number'?c.year:-1}
-CREDITS.slice().sort(function(a,b){return yr(b)-yr(a)||b.track-a.track||b.i-a.i}).forEach(function(c){$('list').appendChild(c.row)});
-[0,1].forEach(function(t){var s=document.createElement('div');s.className='slot';s.style.left=pct(cur[t]);s.style.width=pct(SLOT);s.textContent='Your next project?';s.setAttribute('aria-hidden','true');lanes[t].appendChild(s)});
+// Newest first; personal projects go last
+function yr(c){return TRACKS[c.track].kind==='own'?-1:typeof c.year==='number'?c.year:9999}
+CREDITS.slice().sort(function(a,b){return yr(b)-yr(a)||a.track-b.track||b.i-a.i}).forEach(function(c){$('list').appendChild(c.row)});
+TRACKS.forEach(function(tr,t){if(cur[t]>=TOTAL||tr.kind==='own')return;var s=document.createElement('div');s.className='slot';s.style.left=pct(cur[t]);s.style.width=pct(TOTAL-cur[t]);s.textContent='Your next project?';s.setAttribute('aria-hidden','true');lanes[t].appendChild(s)});
 for(var m=0;m<=TOTAL;m+=10){var k=document.createElement('div');k.className='tick';k.style.left=pct(m);k.innerHTML='';$('ruler').appendChild(k)}
 
 var PAL=[['#f7b6cd','#e5407a'],['#b8c9f0','#6b7fd6'],['#b9dba3','#5f8a4b'],['#f0dfae','#e0a53a']];
@@ -176,11 +190,11 @@ function show(p,row){
   $('head').style.left=(p*100)+'%';$('tc').textContent=tcOf(p);
   var t=p*TOTAL,hit=CREDITS.filter(function(c){return c.track===row&&t>=c.start&&t<c.start+c.min})[0];
   CREDITS.forEach(function(c){c.el.classList.toggle('on',c===hit);c.row.classList.toggle('hl',c===hit)});
-  if(hit){active=hit.i;art(hit);$('mtag').textContent=TAGS[hit.track];$('mt').textContent=hit.title;
+  if(hit){active=hit.i;art(hit);$('mtag').textContent=TRACKS[hit.track].tag;$('mt').textContent=hit.title;
     $('mm').textContent=hit.role+' · '+hit.year;
     $('mx').innerHTML=hit.note+' &nbsp;<a href="#c'+hit.i+'">See in credits</a>'}
-  else{art(null);$('mtag').textContent=row===2?TAGS[2]:'Open slot';$('mt').textContent=row===2?'More in development':'Your next project?';$('mm').textContent='';
-    $('mx').innerHTML=row===2?'':'Got a cut that needs an editor? <a href="mailto:emilyj.furst@gmail.com">Say hello</a>'}
+  else{var own=TRACKS[row].kind==='own';art(null);$('mtag').textContent=own?TRACKS[row].tag:'Open slot';$('mt').textContent=own?'More in development':'Your next project?';$('mm').textContent='';
+    $('mx').innerHTML=own?'':'Got a cut that needs an editor? <a href="mailto:emilyj.furst@gmail.com">Say hello</a>'}
 }
 function pick(i){var c=CREDITS[i];show((c.start+c.min/2)/TOTAL,c.track)}
 var area=$('area'),down=false;
