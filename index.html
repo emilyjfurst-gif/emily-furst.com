@@ -27,6 +27,7 @@ nav div{display:flex;gap:1.25rem;flex-wrap:wrap}nav a{text-decoration:none}nav a
 h1{font-size:clamp(3rem,11vw,8rem);line-height:.92;font-weight:800;letter-spacing:-.035em;margin:0;position:relative;display:inline-block}
 h1 .ghost{position:absolute;inset:0;color:var(--pink);opacity:.5;transform:translate(var(--gx,6px),var(--gy,4px));mix-blend-mode:multiply;pointer-events:none}
 @media (prefers-color-scheme:dark){h1 .ghost{mix-blend-mode:screen}}
+.stack{display:none}
 .lede{font-size:clamp(1.25rem,2.6vw,1.6rem);font-weight:600;letter-spacing:-.01em;margin:1.25rem 0 0}
 
 /* edit window */
@@ -79,6 +80,7 @@ kbd{background:var(--paper);border:1.5px solid var(--ink);border-radius:5px;padd
 section{padding:3.5rem 0 1rem}
 h2{font-size:clamp(1.9rem,4vw,2.8rem);line-height:1.05;letter-spacing:-.02em;margin:0 0 1.5rem;font-weight:800}
 #reel{padding-top:2rem}
+#credits{padding-top:2.5rem}
 .reel{position:relative;aspect-ratio:16/9;max-width:100%}
 .reel iframe{position:absolute;inset:0;width:100%;height:100%;border:2px solid var(--ink);border-radius:14px;background:#000}
 .play .tag{position:absolute;left:1rem;bottom:1rem;background:var(--paper);color:var(--ink);border:1.5px solid var(--ink);border-radius:99px;padding:.15rem .8rem;font-size:.9rem;font-weight:700}
@@ -107,7 +109,7 @@ h2{font-size:clamp(1.9rem,4vw,2.8rem);line-height:1.05;letter-spacing:-.02em;mar
 .btn:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
 .links{margin-top:1.5rem;display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;font-weight:600}
 footer{text-align:center;color:var(--muted);padding:1rem 0 2rem;font-size:.95rem}
-@media (max-width:700px){.about,.mon{grid-template-columns:1fr}.credit{grid-template-columns:1fr auto}.credit .yr{grid-column:1/-1;margin-bottom:-.6rem}.kb{display:none}.tch{display:inline}.clip{font-size:.7rem}.clip span{padding:.1rem .3rem}.slot{font-size:0;display:grid;place-items:center;padding:0}.slot::before{content:"+";font-size:1rem}.side{order:-1}.portrait{max-width:15rem}}
+@media (max-width:700px){.stack{display:inline}.about,.mon{grid-template-columns:1fr}.credit{grid-template-columns:1fr auto}.credit .yr{grid-column:1/-1;margin-bottom:-.6rem}.kb{display:none}.tch{display:inline}.clip{font-size:.7rem}.clip span{padding:.1rem .3rem}.slot{font-size:0;display:grid;place-items:center;padding:0}.slot::before{content:"+";font-size:1rem}.side{order:-1}.portrait{max-width:15rem}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
@@ -115,14 +117,14 @@ footer{text-align:center;color:var(--muted);padding:1rem 0 2rem;font-size:.95rem
 <div class="wrap">
 <nav><div><a href="#reel">Reel</a><a href="#credits">Credits</a><a href="#about">About</a><a href="#contact">Contact</a></div></nav>
 <header class="hero">
-  <h1 id="name" aria-label="Emily Furst"><span>Emily<br>Furst</span><span class="ghost" aria-hidden="true">Emily<br>Furst</span></h1>
+  <h1 id="name" aria-label="Emily Furst"><span>Emily <br class="stack">Furst</span><span class="ghost" aria-hidden="true">Emily <br class="stack">Furst</span></h1>
   <p class="lede">Film Assistant Editor &amp; Editor</p>
 </header>
 
 <section id="reel">
   <div class="reel" id="reelbox"><a class="play" id="play" href="https://youtu.be/6ofU30wRzsM" target="_blank" rel="noopener" aria-label="Play my editing reel"><span></span><b class="tag">Editing reel</b></a></div>
 </section>
-<section id="credits"><h2>Credits</h2>
+<section id="credits">
   <div class="nle">
     <div class="mon"><div class="pv" id="pv" aria-hidden="true"><span id="pvt"></span></div><div class="info" aria-live="polite">
       <div class="mon-top"><span id="mtag">Program</span><span class="tc" id="tc">00:00:00:00</span></div>
