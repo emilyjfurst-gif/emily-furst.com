@@ -9,7 +9,7 @@
 <meta property="og:description" content="Film editor and assistant editor in Los Angeles. Narrative shorts, Netflix and HBO Max documentary series.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.emily-furst.com/">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Michroma&display=swap" rel="stylesheet">
 <style>
 :root{--sky:#dcefef;--paper:#f4fafa;--ink:#1e1a3c;--pink:#e5407a;--sand:#f0dfae;--muted:#52506b;--line:rgba(30,26,60,.18);--c0:#f7b6cd;--c1:#b8c9f0;--c2:#d4d3de;--cd:#1e1a3c;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -35,7 +35,8 @@ h1 .ghost{position:absolute;inset:0;color:var(--pink);opacity:.5;transform:trans
 .mon{background:var(--ink);color:var(--paper);padding:1.1rem 1.25rem;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:1.5rem;align-items:center}
 .info{display:grid;gap:.15rem}
 .pv{aspect-ratio:16/9;border-radius:8px;border:2px solid var(--paper);background-size:cover;background-position:center;display:grid;place-items:center;padding:1rem;text-align:center;color:#1e1a3c;font-weight:800;font-size:clamp(1.1rem,3vw,1.8rem);line-height:1.1;letter-spacing:-.02em;overflow:hidden}
-.offline{display:block;font-family:Arial,Helvetica,sans-serif;font-weight:400;font-size:clamp(.5rem,1.25vw,.8rem);line-height:1.3;letter-spacing:0}
+.pv{container-type:inline-size;position:relative}
+.offline{position:absolute;left:0;right:0;top:70%;transform:translateY(-50%);font-family:Michroma,"Arial Black",Arial,sans-serif;font-weight:400;font-size:7.4cqw;letter-spacing:.01em;line-height:1;color:#5c5c5c;-webkit-text-stroke:.045em #5c5c5c;text-shadow:-1px -1px 0 #767676,1px 1px 0 #0e0e0e}
 .mon-top{display:flex;justify-content:space-between;gap:1rem;font-size:.9rem;opacity:.85}
 .tc{font-variant-numeric:tabular-nums;color:var(--pink);font-weight:600}
 .mon h3{margin:.2rem 0 0;font-size:clamp(1.5rem,4vw,2.4rem);line-height:1.1;font-weight:800;letter-spacing:-.02em}
@@ -164,7 +165,8 @@ footer{text-align:center;color:var(--muted);padding:1rem 0 2rem;font-size:.95rem
 // EDIT ME: one list drives the timeline, preview and credits.
 // TRACKS run top to bottom like an editing timeline. Each credit sits on a track (index into TRACKS),
 // starts at `at` and lasts `len`, both in months from the first project. muted:true dims a clip (project on hold).
-// still = optional preview image (data URI). Tracks with slot:true get a dotted "Your next project?" box after their last clip.
+// still = optional preview image (data URI). Tracks with a slot get a dotted box after their last clip:
+// slot.label is the box text, slot.ask is what the monitor asks when the cursor is there.
 var JAN2026=40.25,NOW=49.25,GAP=.5,SLOT=5,END=NOW+GAP+SLOT; // NOW = today (early Oct 2026)
 function month(y,m){return JAN2026+(y-2026)*12+(m-1)} // month(2023,5) = May 2023 on the timeline
 // Markers on the ruler, like NLE markers
@@ -172,9 +174,9 @@ var MARKERS=[{at:month(2023,5),label:'Graduated!',title:'Graduated with my MFA �
 var TRACKS=[
  {label:'V5',kind:'short',tag:'V5 · Short'},
  {label:'V4',kind:'short',tag:'V4 · Short'},
- {label:'V3',kind:'short',tag:'V3 · Short',slot:true},
+ {label:'V3',kind:'short',tag:'V3 · Short',slot:{label:'Need an editor?',ask:'Need an editor?'}},
  {label:'V2',kind:'doc',tag:'V2 · Doc'},
- {label:'V1',kind:'doc',tag:'V1 · Doc',slot:true},
+ {label:'V1',kind:'doc',tag:'V1 · Doc',slot:{label:'Need an AE?',ask:'Need an assistant editor?'}},
  {label:'A1',kind:'own',tag:'A1 · Personal'},
  {label:'A2',kind:'own',tag:'A2 · Personal'}
 ];
@@ -217,7 +219,7 @@ CREDITS.forEach(function(c){
 // Newest first; undated next; personal projects last
 function yr(c){return TRACKS[c.track].kind==='own'?-2:typeof c.year==='number'?c.year:c.sortYear||9999}
 CREDITS.slice().sort(function(a,b){return yr(b)-yr(a)||(yr(a)===-2?a.start-b.start:b.start-a.start)}).forEach(function(c){$('list').appendChild(c.row)});
-TRACKS.forEach(function(tr,t){if(!tr.slot||last[t]>=TOTAL)return;var s=document.createElement('div');s.className='slot';s.style.left=pct(last[t]+GAP);s.style.width=pct(TOTAL-last[t]-GAP);s.textContent='Your next project?';s.setAttribute('aria-hidden','true');lanes[t].appendChild(s)});
+TRACKS.forEach(function(tr,t){if(!tr.slot||last[t]>=TOTAL)return;var s=document.createElement('div');s.className='slot';s.style.left=pct(last[t]+GAP);s.style.width=pct(TOTAL-last[t]-GAP);s.textContent=tr.slot.label;s.setAttribute('aria-hidden','true');lanes[t].appendChild(s)});
 // J/L step through clips left to right
 var ORDER=CREDITS.slice().sort(function(a,b){return a.start-b.start||a.track-b.track}).map(function(c){return c.i});
 function tick(cls,m,text){var k=document.createElement('div');k.className=cls;k.style.left=pct(m);if(text)k.appendChild(document.createElement('span')).textContent=text;$('ruler').appendChild(k);return k}
@@ -226,13 +228,11 @@ MARKERS.forEach(function(mk){var k=tick('mark',mk.at,mk.label);k.title=mk.title;
   var l=document.createElement('div');l.className='lanes-mark';l.style.left=pct(mk.at);$('area').insertBefore(l,$('head'))});
 
 var PAL=[['#f7b6cd','#e5407a'],['#b8c9f0','#6b7fd6'],['#b9dba3','#5f8a4b'],['#f0dfae','#e0a53a']];
-var OFFLINE=['Media offline','Média hors ligne','Medien offline','Media non in linea','Medios sin conexión','Mídia off-line','メディアオフライン','미디어 오프라인','媒体脱机','Медиаданные не в сети'];
 function art(c){var v=$('pv'),t=$('pvt');
  // Nothing under the playhead: plain black, like an empty spot in a sequence
  if(!c){v.style.backgroundImage='none';v.style.backgroundColor='#000';t.textContent='';return}
- // Offline clip: Premiere's red Media Offline frame
- if(c.offline){v.style.backgroundImage='none';v.style.backgroundColor='#e1000f';v.style.color='#fff';
-   t.innerHTML='<span class="offline">'+OFFLINE.join('<br>')+'</span>';return}
+ // Offline clip: Avid's Media Offline frame
+ if(c.offline){v.style.backgroundImage='none';v.style.backgroundColor='#1f1f1f';t.innerHTML='<span class="offline">MEDIA OFFLINE</span>';return}
  var p=PAL[c.i%PAL.length];v.style.color='#1e1a3c';
  if(c.still){v.style.backgroundImage='url('+c.still+')';t.textContent=''}
  else{v.style.backgroundImage='radial-gradient(circle at 20% 125%,'+p[1]+' 0 38%,transparent 39%),linear-gradient(160deg,'+p[0]+',#f4fafa)';v.style.backgroundColor=p[0];t.textContent=c.title}}
@@ -241,7 +241,7 @@ function p2(n){return String(n).padStart(2,'0')}
 function tcOf(p){var s=Math.round((3600+(p*TOTAL-MARKERS[0].at)*60)*24)/24,f=Math.floor((s%1)*24);s=Math.floor(s);return p2(Math.floor(s/3600))+':'+p2(Math.floor(s/60)%60)+':'+p2(s%60)+':'+p2(f)}
 // The playhead follows the cursor. The monitor works like a program monitor: it shows the topmost clip
 // at the playhead (V5 down to V1, then audio), unless the cursor is right on a lower clip or one was picked with J/L or a tap.
-var active=-1,hov=-1,sel=-1,headP=0;
+var active=-1,hov=-1,hovRow=-1,sel=-1,headP=0;
 function covers(c,t){return t>=c.start&&t<c.start+c.min}
 function clipAt(t,row){return CREDITS.filter(function(c){return c.track===row&&covers(c,t)})[0]}
 function topAt(t){for(var r=0;r<TRACKS.length;r++){var c=clipAt(t,r);if(c)return c}}
@@ -252,9 +252,9 @@ function render(){var t=headP*TOTAL,c=hov>=0?CREDITS[hov]:sel>=0&&covers(CREDITS
   if(c){art(c);$('mtag').textContent=TRACKS[c.track].tag+(c.muted?' · Muted':'');$('mt').textContent=c.title;
     $('mm').textContent=(c.role||'')+(c.role?when(c):String(c.year||''));
     $('mx').textContent=c.note}
-  else{var after=t>=NOW;art(null);$('mtag').textContent='Program';$('mm').textContent='';
-    $('mt').textContent=after?'Your next project?':'Between projects';
-    $('mx').innerHTML=after?'Got a cut that needs an editor? <a href="mailto:emilyj.furst@gmail.com">Say hello</a>':''}
+  else{var after=t>=NOW,slot=hovRow>=0&&TRACKS[hovRow].slot;art(null);$('mtag').textContent=after&&slot?TRACKS[hovRow].tag:'Program';$('mm').textContent='';
+    $('mt').textContent=after?(slot?slot.ask:'Your next project?'):'Between projects';
+    $('mx').innerHTML=after?'Got a project that needs one? <a href="mailto:emilyj.furst@gmail.com">Say hello</a>':''}
 }
 function pick(i){var c=CREDITS[i];setHead((c.start+Math.min(c.min/2,3))/TOTAL);sel=i;hov=-1;render();reveal(headP)}
 // Credits list starts collapsed; the button or a clip click opens it
@@ -277,15 +277,15 @@ $('zfit').addEventListener('click',function(){setZoom(1)});
 sc.addEventListener('wheel',function(e){if(!(e.ctrlKey||e.metaKey))return;e.preventDefault();setZoom(Z*Math.exp(-e.deltaY*(e.deltaMode?.05:.0025)),e.clientX)},{passive:false});
 function posAt(e){var r=area.getBoundingClientRect(),row=0;
   lanes.forEach(function(l,i){if(i&&e.clientY>=(lanes[i-1].getBoundingClientRect().bottom+l.getBoundingClientRect().top)/2)row=i});
-  var p=Math.max(0,Math.min(.9999,(e.clientX-r.left)/r.width)),c=!!e.target.closest('.ruler')?null:clipAt(p*TOTAL,row);return {p:p,c:c?c.i:-1}}
+  var p=Math.max(0,Math.min(.9999,(e.clientX-r.left)/r.width)),c=!!e.target.closest('.ruler')?null:clipAt(p*TOTAL,row);return {p:p,c:c?c.i:-1,row:e.target.closest('.ruler')?-1:row}}
 // Mouse: the playhead follows the cursor; clicking a clip jumps to its credit.
 // Touch: swipes scroll, the ruler scrubs, a tap moves the playhead to that clip, and a second tap jumps to its credit.
 area.addEventListener('pointerdown',function(e){var at=posAt(e),scrub=e.pointerType==='mouse'||!!e.target.closest('.ruler');
   tap={x:e.clientX,scrub:scrub,was:e.pointerType==='mouse'?hov:sel,moved:false};
   if(scrub){down=true;area.classList.add('dragging');area.setPointerCapture(e.pointerId);setHead(at.p);hov=at.c;sel=-1;render()}});
 area.addEventListener('pointermove',function(e){if(!down&&e.pointerType!=='mouse')return;var at=posAt(e);
-  if(tap&&Math.abs(e.clientX-tap.x)>4)tap.moved=true;setHead(at.p);hov=e.pointerType==='mouse'?at.c:-1;sel=-1;render()});
-area.addEventListener('pointerleave',function(e){if(!down&&hov>=0){hov=-1;render()}});
+  if(tap&&Math.abs(e.clientX-tap.x)>4)tap.moved=true;setHead(at.p);hov=e.pointerType==='mouse'?at.c:-1;hovRow=at.row;sel=-1;render()});
+area.addEventListener('pointerleave',function(e){if(!down){hov=-1;hovRow=-1;render()}});
 ['pointerup','pointercancel'].forEach(function(n){area.addEventListener(n,function(e){var t=tap;down=false;tap=null;area.classList.remove('dragging');
   if(n!=='pointerup'||!t||t.moved||Math.abs(e.clientX-t.x)>=6)return;var at=posAt(e);
   if(!t.scrub){setHead(at.p);sel=at.c;render()}
