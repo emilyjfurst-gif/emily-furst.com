@@ -50,7 +50,6 @@ h1 .ghost{position:absolute;inset:0;color:var(--pink);opacity:.5;transform:trans
 .ruler{position:relative;border-bottom:1.5px solid var(--line)}
 .tick{position:absolute;bottom:0;height:.45rem;border-left:1.5px solid var(--muted)}
 .tick span{position:absolute;bottom:.15rem;left:4px;font-size:.72rem;font-weight:600;color:var(--muted);white-space:nowrap;line-height:1}
-.tick.year{height:100%}.tick.first{border-left:0}.tick.first span{left:0}
 .mark{position:absolute;bottom:0;height:100%;z-index:2;cursor:help}
 .mark::before{content:"";position:absolute;left:-5px;bottom:-5px;width:10px;height:10px;background:var(--sand);border:1.5px solid var(--ink);transform:rotate(45deg)}
 .mark span{position:absolute;bottom:.75rem;left:7px;font-size:.72rem;font-weight:800;color:var(--ink);background:var(--sand);border:1.5px solid var(--ink);border-radius:4px;padding:0 .3rem;line-height:1.3;white-space:nowrap}
@@ -101,7 +100,7 @@ h2{font-size:clamp(1.9rem,4vw,2.8rem);line-height:1.05;letter-spacing:-.02em;mar
 .btn:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
 .links{margin-top:1.5rem;display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;font-weight:600}
 footer{text-align:center;color:var(--muted);padding:1rem 0 2rem;font-size:.95rem}
-@media (max-width:700px){.reel,.about,.mon{grid-template-columns:1fr}.credit{grid-template-columns:1fr auto}.credit .yr{grid-column:1/-1;margin-bottom:-.6rem}.kb{display:none}.tch{display:inline}.tick.first span{display:none}.clip{font-size:.7rem}.clip span{padding:.1rem .3rem}.slot{font-size:0;display:grid;place-items:center;padding:0}.slot::before{content:"+";font-size:1rem}.side{order:-1}.portrait{max-width:15rem}}
+@media (max-width:700px){.reel,.about,.mon{grid-template-columns:1fr}.credit{grid-template-columns:1fr auto}.credit .yr{grid-column:1/-1;margin-bottom:-.6rem}.kb{display:none}.tch{display:inline}.clip{font-size:.7rem}.clip span{padding:.1rem .3rem}.slot{font-size:0;display:grid;place-items:center;padding:0}.slot::before{content:"+";font-size:1rem}.side{order:-1}.portrait{max-width:15rem}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
@@ -170,13 +169,13 @@ var CREDITS=[
  {track:2,at:3.75,len:3,title:"Over Easy",role:"Editor",year:2023,note:"Narrative short · Comedy"},
  {track:1,at:3.75,len:3,title:"Promises, Promises",role:"Editor",year:2023,note:"Narrative short · Drama"},
  {track:0,at:3.75,len:3,title:"Mom Is Visiting 妈妈来了",role:"Editor",year:2023,note:"Narrative short · Drama · Comedy"},
- {track:4,at:7.5,len:9,title:"Pop Star Academy: KATSEYE",role:"Assistant Editor",year:2024,note:"Netflix · Documentary series"},
- {track:2,at:9,len:3,title:"Cocoon",role:"Editor",year:2025,note:"Narrative short · Drama"},
- {track:1,at:9.4,len:3,title:"Ornamental Oriental",role:"Editor",year:2024,note:"Narrative short · Sci-Fi"},
- {track:4,at:18.5,len:9,title:"Paul American",role:"Assistant Editor",year:2025,note:"HBO Max · Series"},
- {track:2,at:19,len:3,title:"I Don't Even Skate",role:"Editor",year:2025,note:"Narrative short · Drama"},
- {track:1,at:22.5,len:3,title:"Socks",role:"Editor",year:2025,note:"Narrative short · Drama"},
- {track:4,at:28.5,len:6.75,title:"aka Charlie Sheen",role:"Assistant Editor",year:2025,note:"Netflix · Two-part documentary"},
+ {track:4,at:month(2023,8),len:9,title:"Pop Star Academy: KATSEYE",role:"Assistant Editor",year:2024,note:"Netflix · Documentary series"},
+ {track:2,at:month(2023,8)+1.5,len:3,title:"Cocoon",role:"Editor",year:2025,note:"Narrative short · Drama"},
+ {track:1,at:month(2023,8)+1.9,len:3,title:"Ornamental Oriental",role:"Editor",year:2024,note:"Narrative short · Sci-Fi"},
+ {track:4,at:month(2023,8)+11,len:9,title:"Paul American",role:"Assistant Editor",year:2025,note:"HBO Max · Series"},
+ {track:2,at:month(2023,8)+11.5,len:3,title:"I Don't Even Skate",role:"Editor",year:2025,note:"Narrative short · Drama"},
+ {track:1,at:month(2023,8)+15,len:3,title:"Socks",role:"Editor",year:2025,note:"Narrative short · Drama"},
+ {track:4,at:month(2023,8)+21,len:3,title:"aka Charlie Sheen",role:"Assistant Editor",year:2025,note:"Netflix · Two-part documentary"},
  {track:4,at:35.75,len:2,title:"Untitled Michigan Football Project",role:"Assistant Editor",year:"Canceled",sortYear:2025,muted:true,note:"Docu-series"},
  {track:5,at:36,len:NOW-36,title:"Orizuru",role:"Writer & Director",year:"Now",note:"Animated short film · Drama · In production"},
  {track:2,at:39.25,len:3,title:"Muse",role:"Editor",year:2026,note:"Narrative short · Drama"},
@@ -207,8 +206,7 @@ TRACKS.forEach(function(tr,t){if(!tr.slot||last[t]>=TOTAL)return;var s=document.
 // J/L step through clips left to right
 var ORDER=CREDITS.slice().sort(function(a,b){return a.start-b.start||a.track-b.track}).map(function(c){return c.i});
 function tick(cls,m,text){var k=document.createElement('div');k.className=cls;k.style.left=pct(m);if(text)k.appendChild(document.createElement('span')).textContent=text;$('ruler').appendChild(k);return k}
-for(var y=2022;month(y,1)<TOTAL;y++){var jan=month(y,1),label=jan<TOTAL-3?String(y):'';if(jan>0)tick('tick year',jan,label);else tick('tick year first',0,label);
-  for(var q=3;q<12;q+=3)if(jan+q>0&&jan+q<TOTAL)tick('tick',jan+q)}
+for(var m=month(2022,1);m<TOTAL;m+=3)if(m>0)tick('tick',m);
 MARKERS.forEach(function(mk){var k=tick('mark',mk.at,mk.label);k.title=mk.title;k.setAttribute('aria-label',mk.title);
   var l=document.createElement('div');l.className='lanes-mark';l.style.left=pct(mk.at);$('area').insertBefore(l,$('head'))});
 
