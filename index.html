@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://www.emily-furst.com/">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
 <style>
-:root{--sky:#dcefef;--paper:#f4fafa;--ink:#1e1a3c;--pink:#e5407a;--sand:#f0dfae;--muted:#52506b;--line:rgba(30,26,60,.18);--c0:#f7b6cd;--c1:#b8c9f0;--cd:#1e1a3c;
+:root{--sky:#dcefef;--paper:#f4fafa;--ink:#1e1a3c;--pink:#e5407a;--sand:#f0dfae;--muted:#52506b;--line:rgba(30,26,60,.18);--c0:#f7b6cd;--c1:#b8c9f0;--c2:#d4d3de;--cd:#1e1a3c;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--sky:#17163a;--paper:#201e4a;--ink:#eef6f6;--pink:#ff6b9c;--sand:#d9c27a;--muted:#b4b2d0;--line:rgba(238,246,246,.2)}}
 :root[data-theme="dark"]{--sky:#17163a;--paper:#201e4a;--ink:#eef6f6;--pink:#ff6b9c;--sand:#d9c27a;--muted:#b4b2d0;--line:rgba(238,246,246,.2)}
@@ -39,15 +39,15 @@ h1 .ghost{position:absolute;inset:0;color:var(--pink);opacity:.5;transform:trans
 .mon h3{margin:.2rem 0 0;font-size:clamp(1.5rem,4vw,2.4rem);line-height:1.1;font-weight:800;letter-spacing:-.02em}
 .mon p{margin:0}.mon a{color:var(--pink);font-weight:600}
 .body{display:grid;grid-template-columns:2.6rem 1fr;padding:.6rem .75rem .9rem 0}
-.labels{display:grid;grid-template-rows:1.4rem 3.2rem 3.2rem;gap:.4rem;font-size:.8rem;font-weight:600;color:var(--muted);text-align:center;align-items:center}
-.area{position:relative;display:grid;grid-template-rows:1.4rem 3.2rem 3.2rem;gap:.4rem;cursor:ew-resize;touch-action:pan-y;user-select:none}
+.labels{display:grid;grid-template-rows:1.4rem 3.2rem 3.2rem 3.2rem;gap:.4rem;font-size:.8rem;font-weight:600;color:var(--muted);text-align:center;align-items:center}
+.area{position:relative;display:grid;grid-template-rows:1.4rem 3.2rem 3.2rem 3.2rem;gap:.4rem;cursor:ew-resize;touch-action:pan-y;user-select:none}
 .ruler{position:relative;border-bottom:1.5px solid var(--line)}
 .tick{position:absolute;bottom:0;height:.45rem;border-left:1.5px solid var(--muted)}
 .tick span{position:absolute;bottom:.5rem;left:3px;font-size:.72rem;color:var(--muted);white-space:nowrap}
 .lane{position:relative;background:repeating-linear-gradient(90deg,transparent 0 calc(100% - 1px),var(--line) 0);border-radius:6px}
 .clip{position:absolute;top:0;bottom:0;border:1.5px solid var(--cd);border-radius:6px;padding:.15rem .45rem;font:inherit;font-size:.78rem;font-weight:600;color:#1e1a3c;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;line-height:1.3}
 .clip::after{content:"";position:absolute;left:5px;right:5px;bottom:4px;height:28%;background:repeating-linear-gradient(90deg,rgba(30,26,60,.4) 0 2px,transparent 2px 4px);opacity:.7}
-#l0 .clip{background:var(--c0)}#l1 .clip{background:var(--c1)}
+#l0 .clip{background:var(--c0)}#l1 .clip{background:var(--c1)}#l2 .clip{background:var(--c2)}
 .clip.on{box-shadow:0 0 0 3px var(--ink);z-index:2}
 .slot{position:absolute;top:0;bottom:0;border:1.5px dashed var(--muted);border-radius:6px;font-size:.75rem;color:var(--muted);padding:.15rem .45rem;overflow:hidden;white-space:nowrap}
 .head{position:absolute;top:0;bottom:0;width:2px;margin-left:-1px;background:var(--pink);pointer-events:none;z-index:3;transition:left .25s}
@@ -105,11 +105,11 @@ footer{text-align:center;color:var(--muted);padding:1rem 0 2rem;font-size:.95rem
       <h3 id="mt"></h3><p id="mm"></p><p id="mx"></p></div>
     </div>
     <div class="body">
-      <div class="labels"><span></span><span>V1</span><span>V2</span></div>
-      <div class="area" id="area"><div class="ruler" id="ruler"></div><div class="lane" id="l0"></div><div class="lane" id="l1"></div><div class="head" id="head"></div></div>
+      <div class="labels"><span></span><span>V1</span><span>V2</span><span>V3</span></div>
+      <div class="area" id="area"><div class="ruler" id="ruler"></div><div class="lane" id="l0"></div><div class="lane" id="l1"></div><div class="lane" id="l2"></div><div class="head" id="head"></div></div>
     </div>
   </div>
-  <p class="hint">Every clip is a real credit. Hover or drag across the timeline, or tap a clip. <span class="kb">On a keyboard, <kbd>J</kbd> and <kbd>L</kbd> jump between cuts.</span></p>
+  <p class="hint">Every clip is a real credit. Hover or drag across the timeline, or tap a clip. <span class="kb">On a keyboard, <kbd>J</kbd> and <kbd>L</kbd> jump between clips.</span></p>
   <div id="list"></div>
 </section>
 <section id="about"><h2>About</h2>
@@ -128,7 +128,7 @@ footer{text-align:center;color:var(--muted);padding:1rem 0 2rem;font-size:.95rem
 <footer>That's a wrap. © Emily Furst</footer>
 </div>
 <script>
-// EDIT ME: one list drives the timeline, preview and credits. track 0 = V1 (shorts), 1 = V2 (docs). min = how wide the clip looks. still = optional image (data URI) for the preview window.
+// EDIT ME: one list drives the timeline, preview and credits. track 0 = V1 (shorts), 1 = V2 (docs), 2 = V3 (personal projects). min = how wide the clip looks. still = optional image (data URI) for the preview window.
 var CREDITS=[
  {track:0,title:"Attached",role:"Editor",year:2022,min:10,note:"Narrative short · Sci-Fi · Horror"},
  {track:0,title:"Mom Is Visiting 妈妈来了",role:"Editor",year:2023,min:10,note:"Narrative short · Drama · Comedy"},
@@ -142,12 +142,14 @@ var CREDITS=[
  {track:1,title:"aka Charlie Sheen",role:"Assistant Editor",year:2025,min:20,note:"Netflix · Two-part documentary"},
  {track:1,title:"Paul American",role:"Assistant Editor",year:2025,min:20,note:"HBO Max · Series"},
  {track:1,title:"Untitled development project",role:"Assistant Editor",year:2026,min:20,note:"Feature documentary"},
- {track:1,title:"Unannounced feature",role:"Assistant Editor",year:2027,min:20,note:"Feature documentary"}
+ {track:1,title:"Unannounced feature",role:"Assistant Editor",year:2027,min:20,note:"Feature documentary"},
+ {track:2,title:"Orizuru",role:"Writer & Director",year:"Now",min:20,note:"Animated short film · Drama · In production"},
+ {track:2,title:"Dimenticato",role:"Writer",year:"Now",min:20,note:"Feature script · Drama · In development"}
 ];
 (function(){
-var $=function(i){return document.getElementById(i)},GAP=1,SLOT=8,lanes=[$('l0'),$('l1')],cur=[0,0],ends=[0,0];
+var $=function(i){return document.getElementById(i)},GAP=0,SLOT=8,TAGS=['V1 · Short','V2 · Doc','V3 · Personal'],lanes=[$('l0'),$('l1'),$('l2')],cur=[0,0,0];
 CREDITS.forEach(function(c,i){c.i=i;c.start=cur[c.track];cur[c.track]+=c.min+GAP});
-var TOTAL=Math.max(cur[0],cur[1])+SLOT;
+var TOTAL=Math.max.apply(null,cur)+SLOT;
 function pct(m){return (m/TOTAL*100)+'%'}
 CREDITS.forEach(function(c){
   var b=document.createElement('button');b.className='clip';b.style.left=pct(c.start);b.style.width=pct(c.min);
@@ -156,7 +158,8 @@ CREDITS.forEach(function(c){
   var r=document.createElement('div');r.className='credit';r.id='c'+c.i;c.row=r;
   r.innerHTML='<span class="yr">'+c.year+'</span><h3>'+c.title+'<small>'+c.note+'</small></h3><span class="role">'+c.role+'</span>';
 });
-CREDITS.slice().sort(function(a,b){return b.year-a.year||b.track-a.track||b.i-a.i}).forEach(function(c){$('list').appendChild(c.row)});
+function yr(c){return typeof c.year==='number'?c.year:-1}
+CREDITS.slice().sort(function(a,b){return yr(b)-yr(a)||b.track-a.track||b.i-a.i}).forEach(function(c){$('list').appendChild(c.row)});
 [0,1].forEach(function(t){var s=document.createElement('div');s.className='slot';s.style.left=pct(cur[t]);s.style.width=pct(SLOT);s.textContent='Your next project?';s.setAttribute('aria-hidden','true');lanes[t].appendChild(s)});
 for(var m=0;m<=TOTAL;m+=10){var k=document.createElement('div');k.className='tick';k.style.left=pct(m);k.innerHTML='';$('ruler').appendChild(k)}
 
@@ -173,16 +176,17 @@ function show(p,row){
   $('head').style.left=(p*100)+'%';$('tc').textContent=tcOf(p);
   var t=p*TOTAL,hit=CREDITS.filter(function(c){return c.track===row&&t>=c.start&&t<c.start+c.min})[0];
   CREDITS.forEach(function(c){c.el.classList.toggle('on',c===hit);c.row.classList.toggle('hl',c===hit)});
-  if(hit){active=hit.i;art(hit);$('mtag').textContent=(hit.track?'V2 · Doc':'V1 · Short');$('mt').textContent=hit.title;
+  if(hit){active=hit.i;art(hit);$('mtag').textContent=TAGS[hit.track];$('mt').textContent=hit.title;
     $('mm').textContent=hit.role+' · '+hit.year;
     $('mx').innerHTML=hit.note+' &nbsp;<a href="#c'+hit.i+'">See in credits</a>'}
-  else{art(null);$('mtag').textContent='Open slot';$('mt').textContent=t>=cur[row]?'Your next project?':'Between cuts';$('mm').textContent='';
-    $('mx').innerHTML=t>=cur[row]?'Got a cut that needs an editor? <a href="mailto:emilyj.furst@gmail.com">Say hello</a>':''}
+  else{art(null);$('mtag').textContent=row===2?TAGS[2]:'Open slot';$('mt').textContent=row===2?'More in development':'Your next project?';$('mm').textContent='';
+    $('mx').innerHTML=row===2?'':'Got a cut that needs an editor? <a href="mailto:emilyj.furst@gmail.com">Say hello</a>'}
 }
 function pick(i){var c=CREDITS[i];show((c.start+c.min/2)/TOTAL,c.track)}
 var area=$('area'),down=false;
-function at(e){var r=area.getBoundingClientRect(),l1=lanes[1].getBoundingClientRect(),l0=lanes[0].getBoundingClientRect();
-  show(Math.max(0,Math.min(.9999,(e.clientX-r.left)/r.width)),e.clientY>=(l0.bottom+l1.top)/2?1:0)}
+function at(e){var r=area.getBoundingClientRect(),row=0;
+  lanes.forEach(function(l,i){if(i&&e.clientY>=(lanes[i-1].getBoundingClientRect().bottom+l.getBoundingClientRect().top)/2)row=i});
+  show(Math.max(0,Math.min(.9999,(e.clientX-r.left)/r.width)),row)}
 area.addEventListener('pointerdown',function(e){down=true;area.classList.add('dragging');area.setPointerCapture(e.pointerId);at(e)});
 area.addEventListener('pointermove',function(e){if(down||e.pointerType==='mouse')at(e)});
 ['pointerup','pointercancel'].forEach(function(n){area.addEventListener(n,function(){down=false;area.classList.remove('dragging')})});
