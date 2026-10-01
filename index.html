@@ -75,6 +75,7 @@ h1 .ghost{position:absolute;inset:0;color:var(--pink);opacity:.5;transform:trans
 .more::after{content:" ↓"}.more[aria-expanded="true"]::after{content:" ↑"}
 @media (hover:hover){.more:hover{background:var(--sand);color:#1e1a3c}}
 #list{margin-top:1.25rem}
+.note{font-size:.9rem;color:var(--muted);margin:0 0 .75rem}
 kbd{background:var(--paper);border:1.5px solid var(--ink);border-radius:5px;padding:0 .35rem;font:inherit;font-size:.85em;font-weight:600}
 
 section{padding:3.5rem 0 1rem}
@@ -138,7 +139,7 @@ footer{text-align:center;color:var(--muted);padding:1rem 0 2rem;font-size:.95rem
   </div>
   <p class="hint"><span class="kb">Hover to scrub and click a clip for its credit. Zoom with the slider or <kbd>⌘</kbd>/<kbd>Ctrl</kbd> + scroll; <kbd>J</kbd> and <kbd>L</kbd> jump between clips.</span><span class="tch">Tap a clip to preview it, then tap again for its credit. Use the slider to zoom.</span></p>
   <button type="button" class="more" id="more" aria-expanded="false" aria-controls="list">Show all credits</button>
-  <div id="list" hidden></div>
+  <div id="list" hidden><p class="note">Years are release years. The timeline shows when I worked on each project.</p></div>
 </section>
 <section id="about"><h2>About</h2>
   <div class="about"><div>
@@ -174,16 +175,16 @@ var TRACKS=[
  {label:'A2',kind:'own',tag:'A2 · Personal'}
 ];
 var CREDITS=[
- {track:2,at:0,len:3,title:"Attached",role:"Editor",year:2022,note:"Narrative short · Sci-Fi · Horror"},
- {track:2,at:3.75,len:3,title:"Over Easy",role:"Editor",year:2023,note:"Narrative short · Comedy"},
- {track:1,at:3.75,len:3,title:"Promises, Promises",role:"Editor",year:2023,note:"Narrative short · Drama"},
- {track:0,at:3.75,len:3,title:"Mom Is Visiting 妈妈来了",role:"Editor",year:2023,note:"Narrative short · Drama · Comedy"},
+ {track:2,at:0,len:3,title:"Attached",still:"images/stills/attached.jpg",role:"Editor",year:2022,note:"Narrative short · Sci-Fi · Horror"},
+ {track:2,at:3.75,len:3,title:"Over Easy",still:"images/stills/over-easy.jpg",role:"Editor",year:2023,note:"Narrative short · Comedy"},
+ {track:1,at:3.75,len:3,title:"Promises, Promises",still:"images/stills/promises-promises.jpg",role:"Editor",year:2023,note:"Narrative short · Drama"},
+ {track:0,at:3.75,len:3,title:"Mom Is Visiting 妈妈来了",still:"images/stills/mom-is-visiting.jpg",role:"Editor",year:2023,note:"Narrative short · Drama · Comedy"},
  {track:4,at:month(2023,8),len:9,title:"Pop Star Academy: KATSEYE",role:"Assistant Editor",year:2024,note:"Netflix · Documentary series"},
- {track:2,at:month(2023,8)+1.5,len:3,title:"Cocoon",role:"Editor",year:2025,note:"Narrative short · Drama"},
- {track:1,at:month(2023,8)+1.9,len:3,title:"Ornamental Oriental",role:"Editor",year:2024,note:"Narrative short · Sci-Fi"},
+ {track:2,at:month(2023,8)+1.5,len:3,title:"Cocoon",still:"images/stills/cocoon.jpg",role:"Editor",year:2025,note:"Narrative short · Drama"},
+ {track:1,at:month(2023,8)+1.9,len:3,title:"Ornamental Oriental",still:"images/stills/ornamental-oriental.jpg",role:"Editor",year:2024,note:"Narrative short · Sci-Fi"},
  {track:4,at:month(2023,8)+11,len:9,title:"Paul American",role:"Assistant Editor",year:2025,note:"HBO Max · Series"},
- {track:2,at:month(2023,8)+11.5,len:3,title:"I Don't Even Skate",role:"Editor",year:2025,note:"Narrative short · Drama"},
- {track:1,at:month(2023,8)+15,len:3,title:"Socks",role:"Editor",year:2025,note:"Narrative short · Drama"},
+ {track:2,at:month(2023,8)+11.5,len:3,title:"I Don't Even Skate",still:"images/stills/i-dont-even-skate.jpg",role:"Editor",year:2025,note:"Narrative short · Drama"},
+ {track:1,at:month(2023,8)+15,len:3,title:"Socks",still:"images/stills/socks.jpg",role:"Editor",year:2025,note:"Narrative short · Drama"},
  {track:4,at:month(2023,8)+21,len:3,title:"aka Charlie Sheen",role:"Assistant Editor",year:2025,note:"Netflix · Two-part documentary"},
  {track:4,at:35.75,len:2,title:"Untitled Michigan Football Project",role:"Assistant Editor",year:"Canceled",sortYear:2025,muted:true,note:"Docu-series"},
  {track:5,at:36,len:NOW-36,title:"Orizuru",role:"Writer & Director",year:"Now",note:"Animated short film · Drama · In production"},
@@ -283,6 +284,7 @@ addEventListener('keydown',function(e){var k=e.key.toLowerCase();if(e.metaKey||e
   if(k==='='||k==='+'){setZoom(Z*1.5);return}if(k==='-'||k==='_'){setZoom(Z/1.5);return}if(k==='\\'){setZoom(1);return}if(k!=='j'&&k!=='l')return;
   var n=ORDER.indexOf(active);pick(ORDER[(Math.max(n,0)+(k==='l'?1:ORDER.length-1))%ORDER.length])});
 pick(ORDER[0]);
+CREDITS.forEach(function(c){if(c.still)new Image().src=c.still});
 if(!window.PREVIEW)$('play').addEventListener('click',function(e){e.preventDefault();var f=document.createElement('iframe');
   f.src='https://www.youtube-nocookie.com/embed/6ofU30wRzsM?autoplay=1&rel=0&playsinline=1';f.title='Emily Furst editing reel';
   f.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';f.allowFullscreen=true;$('reelbox').replaceChildren(f)});
