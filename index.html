@@ -245,7 +245,7 @@ function setHead(p){headP=Math.max(0,Math.min(.9999,p));$('head').style.left=(he
 function render(){var t=headP*TOTAL,c=hov>=0?CREDITS[hov]:sel>=0&&covers(CREDITS[sel],t)?CREDITS[sel]:topAt(t);
   active=c?c.i:-1;
   CREDITS.forEach(function(x){x.el.classList.toggle('on',x===c);x.row.classList.toggle('hl',x===c)});
-  if(c){art(c);$('mtag').textContent=TRACKS[c.track].tag+(c.muted?' · Muted':'');$('mt').textContent=c.title;
+  if(c){art(c);$('mtag').textContent=TRACKS[c.track].tag;$('mt').textContent=c.title;
     $('mm').textContent=(c.role||'')+(c.role?when(c):String(c.year||''));
     $('mx').textContent=c.note}
   else{var after=t>=NOW,slot=hovRow>=0&&TRACKS[hovRow].slot;art(null);$('mtag').textContent=after&&slot?TRACKS[hovRow].tag:'Program';$('mm').textContent='';
