@@ -135,7 +135,7 @@ footer{text-align:center;color:var(--muted);padding:1rem 0 2rem;font-size:.95rem
 // TRACKS run top to bottom like an editing timeline. Each credit sits on a track (index into TRACKS),
 // starts at `at` and lasts `len`, both in months from the first project. muted:true dims a clip (project on hold).
 // still = optional preview image (data URI). Tracks with slot:true get a dotted "Your next project?" box after their last clip.
-var NOW=45,END=NOW+4; // NOW = where current projects end
+var NOW=49.25,END=NOW+4; // NOW = today (early Oct 2026); 40.25 = Jan 2026
 var TRACKS=[
  {label:'V5',kind:'short',tag:'V5 · Short'},
  {label:'V4',kind:'short',tag:'V4 · Short'},
@@ -159,10 +159,10 @@ var CREDITS=[
  {track:4,at:28.5,len:6.75,title:"aka Charlie Sheen",role:"Assistant Editor",year:2025,note:"Netflix · Two-part documentary"},
  {track:4,at:35.75,len:2,title:"Untitled Michigan Footage Docu-series",role:"",year:"",muted:true,note:"Shadow Lion · Docu-series · Project put on hold"},
  {track:5,at:36,len:NOW-36,title:"Orizuru",role:"Writer & Director",year:"Now",note:"Animated short film · Drama · In production"},
- {track:2,at:37,len:3,title:"Muse",role:"",year:"",note:"Details coming soon"},
+ {track:2,at:39.25,len:3,title:"Muse",role:"",year:"",note:"Details coming soon"},
  {track:4,at:40.25,len:NOW-40.25,title:"Untitled development project",role:"Assistant Editor",year:"Now",note:"Feature documentary"},
- {track:3,at:41.25,len:NOW-41.25,title:"Unannounced feature",role:"Assistant Editor",year:"Now",note:"Feature documentary"},
- {track:6,at:41.5,len:NOW-41.5,title:"Dimenticato",role:"Writer",year:"Now",note:"Feature script · Drama · In development"},
+ {track:3,at:43.25,len:NOW-43.25,title:"Unannounced feature",role:"Assistant Editor",year:"Now",note:"Feature documentary"},
+ {track:6,at:41.25,len:NOW-41.25,title:"Dimenticato",role:"Writer",year:"Now",note:"Feature script · Drama · In development"},
  {track:2,at:NOW-1,len:1,title:"Keeper",role:"",year:"",note:"Details coming soon"}
 ];
 (function(){
