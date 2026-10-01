@@ -91,12 +91,12 @@ h2{font-size:clamp(1.9rem,4vw,2.8rem);line-height:1.05;letter-spacing:-.02em;mar
 .play span{position:relative;width:4.5rem;height:4.5rem;border-radius:50%;background:var(--paper);display:grid;place-items:center;transition:transform .2s}
 .play:hover span{transform:scale(1.12)}
 .play span::after{content:"";border:12px solid transparent;border-left:19px solid #1e1a3c;border-right:0;margin-left:5px}
-.credit{display:grid;grid-template-columns:5.25rem 1fr auto;gap:1rem;align-items:baseline;padding:1rem 0;border-top:1.5px solid var(--line)}
+.credit{display:grid;grid-template-columns:8.5rem 1fr auto;gap:1rem;align-items:baseline;padding:1rem 0;border-top:1.5px solid var(--line)}
 .credit:last-child{border-bottom:1.5px solid var(--line)}
 .credit.hl{background:linear-gradient(90deg,rgba(229,64,122,.14),transparent)}
 .credit.flash{animation:flash 1.6s ease-out}
 @keyframes flash{0%,30%{background-color:rgba(229,64,122,.35)}100%{background-color:transparent}}
-.yr{color:var(--muted);font-variant-numeric:tabular-nums}
+.yr{color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
 .credit h3{margin:0;font-size:1.3rem;font-weight:600;line-height:1.25}
 .credit small{display:block;font-size:.95rem;font-weight:400;color:var(--muted)}
 .role{background:var(--sand);color:#1e1a3c;border:1.5px solid var(--ink);border-radius:99px;padding:.1rem .8rem;font-size:.9rem;font-weight:600;white-space:nowrap}
@@ -187,12 +187,12 @@ var CREDITS=[
  {track:1,at:month(2023,8)+15,len:3,title:"Socks",still:"images/stills/socks.jpg",role:"Editor",year:2025,note:"Narrative short · Drama"},
  {track:4,at:month(2023,8)+21,len:3,title:"aka Charlie Sheen",role:"Assistant Editor",year:2025,note:"Netflix · Two-part documentary"},
  {track:4,at:35.75,len:2,title:"Untitled Michigan Football Project",role:"Assistant Editor",year:"Canceled",sortYear:2025,muted:true,note:"Docu-series"},
- {track:5,at:36,len:NOW-36,title:"Orizuru",role:"Writer & Director",year:"Now",note:"Animated short film · Drama · In production"},
- {track:2,at:39.25,len:3,title:"Muse",role:"Editor",year:2026,note:"Narrative short · Drama"},
- {track:4,at:40.25,len:NOW-40.25,title:"Untitled development project",role:"Assistant Editor",year:"Now",note:"Feature documentary"},
- {track:3,at:43.25,len:NOW-43.25,title:"Unannounced feature",role:"Assistant Editor",year:"Now",note:"Netflix · Feature documentary"},
- {track:6,at:41.25,len:NOW-41.25,title:"Dimenticato",role:"Writer",year:"Now",note:"Feature script · Drama · In development"},
- {track:2,at:NOW-1,len:1,title:"Keeper",role:"Editor",year:"Now",note:"Narrative short · Drama"}
+ {track:5,at:36,len:NOW-36,title:"Orizuru",role:"Writer & Director",year:"In production",note:"Animated short film · Drama"},
+ {track:2,at:39.25,len:3,title:"Muse",role:"Editor",year:"Completed",sortYear:2026,note:"Narrative short · Drama"},
+ {track:4,at:40.25,len:NOW-40.25,title:"Untitled development project",role:"Assistant Editor",year:"In post",note:"Feature documentary"},
+ {track:3,at:43.25,len:NOW-43.25,title:"Unannounced feature",role:"Assistant Editor",year:"In post",note:"Netflix · Feature documentary"},
+ {track:6,at:41.25,len:NOW-41.25,title:"Dimenticato",role:"Writer",year:"In development",note:"Feature script · Drama"},
+ {track:2,at:NOW-1,len:1,title:"Keeper",role:"Editor",year:"In post",note:"Narrative short · Drama"}
 ];
 (function(){
 var $=function(i){return document.getElementById(i)},TOTAL=END,rows='1.8rem',last=TRACKS.map(function(){return 0});
@@ -210,8 +210,8 @@ CREDITS.forEach(function(c){
   r.innerHTML='<span class="yr">'+c.year+'</span><h3>'+c.title+'<small>'+c.note+'</small></h3>'+(c.role?'<span class="role">'+c.role+'</span>':'');
 });
 // Newest first; undated next; personal projects last
-function yr(c){return TRACKS[c.track].kind==='own'?-2:c.year==='Now'?9999:c.sortYear||(typeof c.year==='number'?c.year:-1)}
-CREDITS.slice().sort(function(a,b){return yr(b)-yr(a)||b.start-a.start}).forEach(function(c){$('list').appendChild(c.row)});
+function yr(c){return TRACKS[c.track].kind==='own'?-2:typeof c.year==='number'?c.year:c.sortYear||9999}
+CREDITS.slice().sort(function(a,b){return yr(b)-yr(a)||(yr(a)===-2?a.start-b.start:b.start-a.start)}).forEach(function(c){$('list').appendChild(c.row)});
 TRACKS.forEach(function(tr,t){if(!tr.slot||last[t]>=TOTAL)return;var s=document.createElement('div');s.className='slot';s.style.left=pct(last[t]+GAP);s.style.width=pct(TOTAL-last[t]-GAP);s.textContent='Your next project?';s.setAttribute('aria-hidden','true');lanes[t].appendChild(s)});
 // J/L step through clips left to right
 var ORDER=CREDITS.slice().sort(function(a,b){return a.start-b.start||a.track-b.track}).map(function(c){return c.i});
