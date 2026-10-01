@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://www.emily-furst.com/">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
 <style>
-:root{--sky:#dcefef;--paper:#f4fafa;--ink:#1e1a3c;--pink:#e5407a;--sand:#f0dfae;--muted:#52506b;--line:rgba(30,26,60,.18);--c0:#f7b6cd;--c1:#b8c9f0;--c2:#d4d3de;--cd:#1e1a3c;
+:root{--sky:#dcefef;--paper:#f4fafa;--ink:#1e1a3c;--pink:#e5407a;--sand:#f0dfae;--muted:#52506b;--line:rgba(30,26,60,.18);--c0:#f7b6cd;--c1:#b8c9f0;--c2:#d4d3de;--c3:#a6dcc6;--cd:#1e1a3c;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--sky:#17163a;--paper:#201e4a;--ink:#eef6f6;--pink:#ff6b9c;--sand:#d9c27a;--muted:#b4b2d0;--line:rgba(238,246,246,.2)}}
 :root[data-theme="dark"]{--sky:#17163a;--paper:#201e4a;--ink:#eef6f6;--pink:#ff6b9c;--sand:#d9c27a;--muted:#b4b2d0;--line:rgba(238,246,246,.2)}
@@ -62,7 +62,7 @@ h1 .ghost{position:absolute;inset:0;color:var(--pink);opacity:.5;transform:trans
 .clip{position:absolute;top:0;bottom:0;border:1.5px solid var(--cd);border-radius:6px;padding:0;font:inherit;font-size:.78rem;font-weight:600;color:#1e1a3c;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;line-height:1.3}
 .clip,.zoom button{-webkit-tap-highlight-color:transparent}
 .clip span{display:block;padding:.15rem .45rem;overflow:hidden;text-overflow:ellipsis}
-.lane.short .clip{background:var(--c0)}.lane.doc .clip{background:var(--c1)}.lane.own .clip{background:var(--c2)}
+.lane.short .clip{background:var(--c0)}.lane.doc .clip{background:var(--c1)}.lane.own .clip{background:var(--c2)}.lane.color .clip{background:var(--c3)}
 .lane.own .clip::after{content:"";position:absolute;left:5px;right:5px;bottom:3px;height:30%;opacity:.7;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='20' fill='%231e1a3c' fill-opacity='.45'%3E%3Crect x='0' y='7' width='1.6' height='6'/%3E%3Crect x='3' y='4' width='1.6' height='12'/%3E%3Crect x='6' y='6' width='1.6' height='8'/%3E%3Crect x='9' y='2' width='1.6' height='16'/%3E%3Crect x='12' y='5' width='1.6' height='10'/%3E%3Crect x='15' y='1' width='1.6' height='18'/%3E%3Crect x='18' y='4' width='1.6' height='12'/%3E%3Crect x='21' y='7' width='1.6' height='6'/%3E%3Crect x='24' y='3' width='1.6' height='14'/%3E%3Crect x='27' y='0' width='1.6' height='20'/%3E%3Crect x='30' y='4' width='1.6' height='12'/%3E%3Crect x='33' y='6' width='1.6' height='8'/%3E%3Crect x='36' y='2' width='1.6' height='16'/%3E%3Crect x='39' y='5' width='1.6' height='10'/%3E%3Crect x='42' y='7' width='1.6' height='6'/%3E%3Crect x='45' y='4' width='1.6' height='12'/%3E%3Crect x='48' y='1' width='1.6' height='18'/%3E%3Crect x='51' y='3' width='1.6' height='14'/%3E%3Crect x='54' y='6' width='1.6' height='8'/%3E%3Crect x='57' y='5' width='1.6' height='10'/%3E%3C/svg%3E") left center/auto 100% repeat-x}
 .slot{position:absolute;top:0;bottom:0;border:1.5px dashed var(--muted);border-radius:6px;font-size:.75rem;line-height:1.2;color:var(--muted);padding:.2rem .45rem;overflow:hidden}
 .clip.muted{opacity:.55;background-image:repeating-linear-gradient(135deg,transparent 0 5px,rgba(30,26,60,.18) 5px 7px)!important}
@@ -102,6 +102,7 @@ h2{font-size:clamp(1.9rem,4vw,2.8rem);line-height:1.05;letter-spacing:-.02em;mar
 .yr{color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
 .credit h3{margin:0;font-size:1.3rem;font-weight:600;line-height:1.25}
 .credit small{display:block;font-size:.95rem;font-weight:400;color:var(--muted)}
+.role.short{background:var(--c0)}.role.doc{background:var(--c1)}.role.own{background:var(--c2)}.role.color{background:var(--c3)}
 .role{background:var(--sand);color:#1e1a3c;border:1.5px solid var(--ink);border-radius:99px;padding:.1rem .8rem;font-size:.9rem;font-weight:600;white-space:nowrap}
 .about{display:grid;grid-template-columns:1.3fr 1fr;gap:2.5rem}.about p{margin:0 0 1rem;max-width:36rem}
 .tools{display:flex;flex-wrap:wrap;gap:.5rem;align-content:flex-start;padding:0;margin:0;list-style:none}
@@ -171,6 +172,7 @@ function month(y,m){return JAN2026+(y-2026)*12+(m-1)} // month(2023,5) = May 202
 // Markers on the ruler, like NLE markers
 var MARKERS=[{at:month(2023,5),label:'Graduated!',title:'Graduated with my MFA · May 2023'}];
 var TRACKS=[
+ {label:'V6',kind:'color',tag:'V6 · Color'},
  {label:'V5',kind:'short',tag:'V5 · Short'},
  {label:'V4',kind:'short',tag:'V4 · Short'},
  {label:'V3',kind:'short',tag:'V3 · Short',slot:{label:'Need an editor?',ask:'Need an editor?'}},
@@ -180,25 +182,25 @@ var TRACKS=[
  {label:'A2',kind:'own',tag:'A2 · Personal Projects'}
 ];
 var CREDITS=[
- {track:2,at:0,len:3,title:"Attached",still:"images/stills/attached.jpg",role:"Editor",year:2022,note:"Narrative short · Sci-Fi · Horror"},
- {track:2,at:3.75,len:3,title:"Over Easy",still:"images/stills/over-easy.jpg",role:"Editor",year:2023,note:"Narrative short · Comedy"},
- {track:1,at:3.75,len:3,title:"Promises, Promises",still:"images/stills/promises-promises.jpg",role:"Editor",year:2024,note:"Narrative short · Drama"},
- {track:0,at:3.75,len:3,title:"Mom Is Visiting 妈妈来了",still:"images/stills/mom-is-visiting.jpg",role:"Editor",year:2023,note:"Narrative short · Drama · Comedy"},
- {track:4,at:month(2023,8),len:9,title:"Pop Star Academy: KATSEYE",still:"images/stills/pop-star-academy.jpg",role:"Assistant Editor",year:2024,note:"Netflix · Documentary series"},
- {track:2,at:month(2023,8)+1.5,len:3,title:"Cocoon",still:"images/stills/cocoon.jpg",role:"Editor",year:2025,note:"Narrative short · Drama"},
- {track:1,at:month(2023,8)+1.9,len:3,title:"Ornamental Oriental",still:"images/stills/ornamental-oriental.jpg",role:"Editor",year:2024,note:"Narrative short · Sci-Fi"},
+ {track:3,at:0,len:3,title:"Attached",still:"images/stills/attached.jpg",role:"Editor",year:2022,note:"Narrative short · Sci-Fi · Horror"},
+ {track:3,at:3.75,len:3,title:"Over Easy",still:"images/stills/over-easy.jpg",role:"Editor",year:2023,note:"Narrative short · Comedy"},
+ {track:2,at:3.75,len:3,title:"Promises, Promises",still:"images/stills/promises-promises.jpg",role:"Editor",year:2024,note:"Narrative short · Drama"},
+ {track:1,at:3.75,len:3,title:"Mom Is Visiting 妈妈来了",still:"images/stills/mom-is-visiting.jpg",role:"Editor",year:2023,note:"Narrative short · Drama · Comedy"},
+ {track:5,at:month(2023,8),len:9,title:"Pop Star Academy: KATSEYE",still:"images/stills/pop-star-academy.jpg",role:"Assistant Editor",year:2024,note:"Netflix · Documentary series"},
+ {track:3,at:month(2023,8)+1.5,len:3,title:"Cocoon",still:"images/stills/cocoon.jpg",role:"Editor",year:2025,note:"Narrative short · Drama"},
+ {track:2,at:month(2023,8)+1.9,len:3,title:"Ornamental Oriental",still:"images/stills/ornamental-oriental.jpg",role:"Editor",year:2024,note:"Narrative short · Sci-Fi"},
  {track:0,at:month(2023,9),len:1,title:"White Gaze",still:"images/stills/white-gaze.jpg",role:"Colorist",year:2023,note:"Narrative short · Drama"},
- {track:4,at:month(2023,8)+11,len:9,title:"Paul American",still:"images/stills/paul-american.jpg",role:"Assistant Editor",year:2025,note:"HBO Max · Series"},
- {track:2,at:month(2023,8)+11.5,len:3,title:"I Don't Even Skate",still:"images/stills/i-dont-even-skate.jpg",role:"Editor",year:2025,note:"Narrative short · Drama"},
- {track:2,at:month(2023,8)+15,len:3,title:"Socks",still:"images/stills/socks.jpg",role:"Editor",year:"Completed",sortYear:2026,note:"Narrative short · Drama"},
- {track:4,at:month(2023,8)+21,len:3,title:"aka Charlie Sheen",still:"images/stills/aka-charlie-sheen.jpg",role:"Assistant Editor",year:2025,note:"Netflix · Two-part documentary"},
- {track:4,at:35.75,len:2,title:"Untitled Michigan Football Project",role:"Assistant Editor",year:"Canceled",sortYear:2025,muted:true,still:"images/stills/media-offline.jpg",note:"Docu-series"},
- {track:5,at:36,len:NOW-36,title:"Orizuru",card:true,role:"Writer & Director",year:"In production",note:"Animated short · Drama"},
- {track:2,at:39.25,len:3,title:"Muse",still:"images/stills/muse.jpg",role:"Editor",year:"Completed",sortYear:2026,note:"Narrative short · Drama"},
- {track:4,at:40.25,len:NOW-40.25,title:"Untitled development project",card:true,role:"Assistant Editor",year:"In post",note:"Feature documentary"},
- {track:3,at:43.25,len:NOW-43.25,title:"Unannounced feature",card:true,role:"Assistant Editor",year:"In post",note:"Netflix · Feature documentary"},
- {track:6,at:41.25,len:NOW-41.25,title:"Dimenticato",card:true,role:"Writer",year:"In development",note:"Feature script · Drama"},
- {track:2,at:NOW-1,len:1,title:"Keeper",still:"images/stills/keeper.jpg",role:"Editor",year:"In post",note:"Narrative short · Drama"}
+ {track:5,at:month(2023,8)+11,len:9,title:"Paul American",still:"images/stills/paul-american.jpg",role:"Assistant Editor",year:2025,note:"HBO Max · Series"},
+ {track:3,at:month(2023,8)+11.5,len:3,title:"I Don't Even Skate",still:"images/stills/i-dont-even-skate.jpg",role:"Editor",year:2025,note:"Narrative short · Drama"},
+ {track:3,at:month(2023,8)+15,len:3,title:"Socks",still:"images/stills/socks.jpg",role:"Editor",year:"Completed",sortYear:2026,note:"Narrative short · Drama"},
+ {track:5,at:month(2023,8)+21,len:3,title:"aka Charlie Sheen",still:"images/stills/aka-charlie-sheen.jpg",role:"Assistant Editor",year:2025,note:"Netflix · Two-part documentary"},
+ {track:5,at:35.75,len:2,title:"Untitled Michigan Football Project",role:"Assistant Editor",year:"Canceled",sortYear:2025,muted:true,still:"images/stills/media-offline.jpg",note:"Docu-series"},
+ {track:6,at:36,len:NOW-36,title:"Orizuru",card:true,role:"Writer & Director",year:"In production",note:"Animated short · Drama"},
+ {track:3,at:39.25,len:3,title:"Muse",still:"images/stills/muse.jpg",role:"Editor",year:"Completed",sortYear:2026,note:"Narrative short · Drama"},
+ {track:5,at:40.25,len:NOW-40.25,title:"Untitled development project",card:true,role:"Assistant Editor",year:"In post",note:"Feature documentary"},
+ {track:4,at:43.25,len:NOW-43.25,title:"Unannounced feature",card:true,role:"Assistant Editor",year:"In post",note:"Netflix · Feature documentary"},
+ {track:7,at:41.25,len:NOW-41.25,title:"Dimenticato",card:true,role:"Writer",year:"In development",note:"Feature script · Drama"},
+ {track:3,at:NOW-1,len:1,title:"Keeper",still:"images/stills/keeper.jpg",role:"Editor",year:"In post",note:"Narrative short · Drama"}
 ];
 (function(){
 var $=function(i){return document.getElementById(i)},TOTAL=END,rows='2.4rem',last=TRACKS.map(function(){return 0});
@@ -213,7 +215,7 @@ CREDITS.forEach(function(c){
   b.title=c.title;b.appendChild(document.createElement('span')).textContent=c.title;b.setAttribute('aria-label',c.title+(c.role?', '+c.role:'')+(c.year?', '+c.year:''));b.dataset.i=c.i;c.el=b;lanes[c.track].appendChild(b);
   b.addEventListener('click',function(e){if(e.detail===0){if(active===c.i)goTo(c.i);else pick(c.i)}});
   var r=document.createElement('div');r.className='credit';r.id='c'+c.i;c.row=r;
-  r.innerHTML='<span class="yr">'+c.year+'</span><h3>'+c.title+'<small>'+c.note+'</small></h3>'+(c.role?'<span class="role">'+c.role+'</span>':'');
+  r.innerHTML='<span class="yr">'+c.year+'</span><h3>'+c.title+'<small>'+c.note+'</small></h3>'+(c.role?'<span class="role '+TRACKS[c.track].kind+'">'+c.role+'</span>':'');
 });
 // Newest first; undated next; personal projects last
 function yr(c){return TRACKS[c.track].kind==='own'?-2:typeof c.year==='number'?c.year:c.sortYear||9999}
