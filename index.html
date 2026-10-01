@@ -172,7 +172,7 @@ function month(y,m){return JAN2026+(y-2026)*12+(m-1)} // month(2023,5) = May 202
 // Markers on the ruler, like NLE markers
 var MARKERS=[{at:month(2023,5),label:'Graduated!',title:'Graduated with my MFA · May 2023'}];
 var TRACKS=[
- {label:'V6',kind:'color',tag:'V6 · Color'},
+ {label:'V6',kind:'color',tag:'V6 · Color',slot:{label:'Need a colorist?',ask:'Need a colorist?'}},
  {label:'V5',kind:'short',tag:'V5 · Short'},
  {label:'V4',kind:'short',tag:'V4 · Short'},
  {label:'V3',kind:'short',tag:'V3 · Short',slot:{label:'Need an editor?',ask:'Need an editor?'}},
@@ -223,7 +223,8 @@ CREDITS.forEach(function(c){
 // Newest first; undated next; personal projects last
 function yr(c){return TRACKS[c.track].kind==='own'?-2:typeof c.year==='number'?c.year:c.sortYear||9999}
 CREDITS.slice().sort(function(a,b){return yr(b)-yr(a)||(yr(a)===-2?a.start-b.start:b.start-a.start)}).forEach(function(c){$('list').appendChild(c.row)});
-TRACKS.forEach(function(tr,t){if(!tr.slot||last[t]>=TOTAL)return;var s=document.createElement('div');s.className='slot';s.style.left=pct(last[t]+GAP);s.style.width=pct(TOTAL-last[t]-GAP);s.textContent=tr.slot.label;s.setAttribute('aria-hidden','true');lanes[t].appendChild(s)});
+// Slots start at today, after any clip that runs up to it
+TRACKS.forEach(function(tr,t){var from=Math.max(last[t],NOW)+GAP;if(!tr.slot||from>=TOTAL)return;var s=document.createElement('div');s.className='slot';s.style.left=pct(from);s.style.width=pct(TOTAL-from);s.textContent=tr.slot.label;s.setAttribute('aria-hidden','true');lanes[t].appendChild(s)});
 // J/L step through clips left to right
 var ORDER=CREDITS.slice().sort(function(a,b){return a.start-b.start||a.track-b.track}).map(function(c){return c.i});
 function tick(cls,m,text){var k=document.createElement('div');k.className=cls;k.style.left=pct(m);if(text)k.appendChild(document.createElement('span')).textContent=text;$('ruler').appendChild(k);return k}
