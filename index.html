@@ -74,6 +74,8 @@ h2{font-size:clamp(1.9rem,4vw,2.8rem);line-height:1.05;letter-spacing:-.02em;mar
 .role{background:var(--sand);color:#1e1a3c;border:1.5px solid var(--ink);border-radius:99px;padding:.1rem .8rem;font-size:.9rem;font-weight:600;white-space:nowrap}
 .about{display:grid;grid-template-columns:1.3fr 1fr;gap:2.5rem}.about p{margin:0 0 1rem;max-width:36rem}
 .tools{display:flex;flex-wrap:wrap;gap:.5rem;align-content:flex-start;padding:0;margin:0;list-style:none}
+.side{display:grid;gap:1.75rem;align-content:start}
+.wip h3{margin:0 0 .5rem;font-size:1.3rem;font-weight:800}.wip p{margin:0 0 .75rem;color:var(--muted)}.wip b{color:var(--ink);font-size:1.1rem}
 .tools li{background:var(--paper);border:1.5px solid var(--ink);border-radius:99px;padding:.15rem .9rem;font-weight:600}
 .contact{text-align:center;padding:5rem 0 3rem}.contact h2{font-size:clamp(2.4rem,8vw,5.5rem)}
 .btn{display:inline-block;background:var(--pink);color:#1e1a3c;border:2px solid var(--ink);border-radius:99px;padding:.7rem 1.8rem;font-weight:800;font-size:1.15rem;text-decoration:none;box-shadow:4px 4px 0 var(--ink);transition:transform .15s,box-shadow .15s}
@@ -105,16 +107,20 @@ footer{text-align:center;color:var(--muted);padding:1rem 0 2rem;font-size:.95rem
 </header>
 
 <section id="reel"><h2>Watch the reel</h2>
-  <div class="reel"><a class="play" href="https://www.youtube.com/" target="_blank" rel="noopener" aria-label="Watch my reel on YouTube"><span></span></a>
-  <p>A few minutes of shorts and doc work. Opens on YouTube.<br><br><a href="https://www.youtube.com/" target="_blank" rel="noopener">Watch on YouTube</a></p></div>
+  <div class="reel"><a class="play" href="https://www.youtube.com/watch?v=6ofU30wRzsM" target="_blank" rel="noopener" aria-label="Watch my reel on YouTube"><span></span></a>
+  <p>My editing reel and select scenes. Opens on YouTube.<br><br><a href="https://www.youtube.com/watch?v=6ofU30wRzsM" target="_blank" rel="noopener">Watch on YouTube</a></p></div>
 </section>
 <section id="credits"><h2>Credits</h2><div id="list"></div></section>
 <section id="about"><h2>About</h2>
   <div class="about"><div>
-    <p>I'm drawn to stories about family dynamics, human psychology, and the ways we experience reality. Born in Hunan, adopted and raised in St. Louis, and now based in Los Angeles, my background shapes both the stories I choose and how I collaborate.</p>
-    <p>Working as both an editor and an assistant editor keeps me in the creative and the technical side of the craft, and I enjoy both. I have a particular love for animation, and I'm developing a short animated film that I'm writing and directing myself.</p>
-    <p><a href="https://www.emily-furst.com/resume" rel="noopener">Résumé</a></p></div>
-  <ul class="tools" aria-label="Software"><li>Avid Media Composer</li><li>DaVinci Resolve</li><li>Premiere Pro (branded work)</li></ul></div>
+    <p>I'm a film editor and assistant editor who loves exploring family dynamics, human psychology, and the ways we experience reality through story. Born in Hunan, China, adopted and raised in St. Louis, and now based in Los Angeles, my background influences both the stories I choose and the way I collaborate.</p>
+    <p>I work primarily in Avid Media Composer and DaVinci Resolve across narrative, unscripted, and branded projects, with branded work edited primarily in Premiere Pro. I'm currently looking to jump to scripted film and television.</p>
+    <p>Working as both an assistant editor and editor keeps me engaged with both the creative and technical sides of the craft, and I find joy in doing both kinds of work.</p>
+    <p>My personal projects often focus on stories that explore perception, memory, and human connection, and I have a particular love for animation. I'm currently directing <i>Orizuru</i>, an animated short film I wrote.</p>
+    <p>Outside of filmmaking, I enjoy gaming, rock climbing, arts and crafts, and spending time with animals. I’m always thrilled to dive into a new project, so don’t hesitate to reach out!</p>
+    <p><a href="https://drive.google.com/file/d/1RvOMhIR_NX2cugMgwY02l1zfkdiZIRLI/view" target="_blank" rel="noopener">Résumé (PDF)</a></p></div>
+  <div class="side"><ul class="tools" aria-label="Software"><li>Avid Media Composer</li><li>DaVinci Resolve</li><li>Premiere Pro (branded work)</li></ul>
+  <div class="wip"><h3>In the works</h3><p><b>Orizuru</b><br>Animated short film · Drama · Writer &amp; director · In production</p><p><b>Dimenticato</b><br>Feature script · Drama · In development</p></div></div></div>
 </section>
 <section class="contact" id="contact"><h2>Let's make<br>a cut.</h2><a class="btn" href="mailto:emilyj.furst@gmail.com">Email me</a>
   <div class="links"><a href="https://www.imdb.com/name/nm12587784/" rel="noopener">IMDb</a><a href="https://www.linkedin.com/in/efurst/" rel="noopener">LinkedIn</a><a href="https://www.instagram.com/em.furst/" rel="noopener">Instagram</a><a href="https://vimeo.com/efurst" rel="noopener">Vimeo</a></div></section>
@@ -129,11 +135,12 @@ var CREDITS=[
  {track:0,title:"Over Easy",role:"Editor",year:2023,min:10,note:"Narrative short · Comedy"},
  {track:0,title:"Ornamental Oriental",role:"Editor",year:2024,min:10,note:"Narrative short · Sci-Fi"},
  {track:0,title:"Socks",role:"Editor",year:2025,min:10,note:"Narrative short · Drama"},
- {track:0,title:"Cocoon",role:"Editor",year:2025,min:10,note:"Tribeca premiere · Focus Features & JetBlue Student Short Film Showcase winner"},
+ {track:0,title:"Cocoon",role:"Editor",year:2025,min:10,note:"Narrative short · Drama · Tribeca premiere · Focus Features & JetBlue Student Short Film Showcase winner"},
  {track:0,title:"I Don't Even Skate",role:"Editor",year:2025,min:10,note:"Narrative short · Drama"},
  {track:1,title:"Pop Star Academy: KATSEYE",role:"Assistant Editor",year:2024,min:20,note:"Netflix · Documentary series"},
  {track:1,title:"aka Charlie Sheen",role:"Assistant Editor",year:2025,min:20,note:"Netflix · Two-part documentary"},
  {track:1,title:"Paul American",role:"Assistant Editor",year:2025,min:20,note:"HBO Max · Series"},
+ {track:1,title:"Untitled development project",role:"Assistant Editor",year:2026,min:20,note:"Feature documentary"},
  {track:1,title:"Unannounced feature",role:"Assistant Editor",year:2027,min:20,note:"Feature documentary"}
 ];
 (function(){
