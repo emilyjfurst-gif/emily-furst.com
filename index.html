@@ -64,6 +64,7 @@ h1 .ghost{position:absolute;inset:0;color:var(--pink);opacity:.5;transform:trans
 .head{position:absolute;top:0;bottom:0;width:2px;margin-left:-1px;background:var(--pink);pointer-events:none;z-index:3;transition:left .25s}
 .head::before{content:"";position:absolute;top:0;left:-6px;border:7px solid transparent;border-top:10px solid var(--pink);border-bottom:0}
 .dragging .head{transition:none}
+.tch{display:none}
 .hint{font-size:.9rem;color:var(--muted);margin:.8rem 0 2rem}
 kbd{background:var(--paper);border:1.5px solid var(--ink);border-radius:5px;padding:0 .35rem;font:inherit;font-size:.85em;font-weight:600}
 
@@ -95,7 +96,7 @@ h2{font-size:clamp(1.9rem,4vw,2.8rem);line-height:1.05;letter-spacing:-.02em;mar
 .btn:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
 .links{margin-top:1.5rem;display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;font-weight:600}
 footer{text-align:center;color:var(--muted);padding:1rem 0 2rem;font-size:.95rem}
-@media (max-width:700px){.reel,.about,.mon{grid-template-columns:1fr}.credit{grid-template-columns:1fr auto}.credit .yr{grid-column:1/-1;margin-bottom:-.6rem}.kb{display:none}.clip{font-size:.7rem}.clip span{padding:.1rem .3rem}.slot{font-size:0;display:grid;place-items:center;padding:0}.slot::before{content:"+";font-size:1rem}.side{order:-1}.portrait{max-width:15rem}}
+@media (max-width:700px){.reel,.about,.mon{grid-template-columns:1fr}.credit{grid-template-columns:1fr auto}.credit .yr{grid-column:1/-1;margin-bottom:-.6rem}.kb{display:none}.tch{display:inline}.clip{font-size:.7rem}.clip span{padding:.1rem .3rem}.slot{font-size:0;display:grid;place-items:center;padding:0}.slot::before{content:"+";font-size:1rem}.side{order:-1}.portrait{max-width:15rem}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
@@ -123,7 +124,7 @@ footer{text-align:center;color:var(--muted);padding:1rem 0 2rem;font-size:.95rem
     </div>
     <div class="zoom"><button type="button" id="zout" aria-label="Zoom out">−</button><input type="range" id="zr" min="0" max="100" value="0" aria-label="Timeline zoom"><button type="button" id="zin" aria-label="Zoom in">+</button><button type="button" id="zfit">Fit</button></div>
   </div>
-  <p class="hint">Every clip is a real credit. Hover or drag across the timeline, or tap a clip. Zoom with the slider<span class="kb"> or <kbd>⌘</kbd>/<kbd>Ctrl</kbd> + scroll</span>, then scroll sideways. <span class="kb">On a keyboard, <kbd>J</kbd> and <kbd>L</kbd> jump between clips, and <kbd>−</kbd> and <kbd>=</kbd> zoom.</span></p>
+  <p class="hint">Every clip is a real credit. The monitor shows what's under the playhead<span class="kb">; hover a clip to preview it, click it to see its credit, or drag to scrub</span><span class="tch">; tap a clip to move the playhead there, and tap it again to see its credit</span>. Zoom with the slider<span class="kb"> or <kbd>⌘</kbd>/<kbd>Ctrl</kbd> + scroll</span>, then scroll sideways. <span class="kb">On a keyboard, <kbd>J</kbd> and <kbd>L</kbd> jump between clips, and <kbd>−</kbd> and <kbd>=</kbd> zoom.</span></p>
   <div id="list"></div>
 </section>
 <section id="about"><h2>About</h2>
@@ -207,20 +208,24 @@ function art(c){var v=$('pv'),t=$('pvt');
  else{v.style.backgroundImage='radial-gradient(circle at 20% 125%,'+p[1]+' 0 38%,transparent 39%),linear-gradient(160deg,'+p[0]+',#f4fafa)';v.style.backgroundColor=p[0];t.textContent=c.title}}
 function p2(n){return String(n).padStart(2,'0')}
 function tcOf(p){var s=p*TOTAL*60,f=Math.floor((s%1)*24);s=Math.floor(s);return p2(Math.floor(s/3600))+':'+p2(Math.floor(s/60)%60)+':'+p2(s%60)+':'+p2(f)}
-var active=-1,hover=-1,headP=0;
-function show(p,row){
-  headP=p;$('head').style.left=(p*100)+'%';$('tc').textContent=tcOf(p);
-  var t=p*TOTAL,hit=CREDITS.filter(function(c){return c.track===row&&t>=c.start&&t<c.start+c.min})[0];
-  hover=hit?hit.i:-1;
-  CREDITS.forEach(function(c){c.el.classList.toggle('on',c===hit);c.row.classList.toggle('hl',c===hit)});
-  if(hit){active=hit.i;art(hit);$('mtag').textContent=TRACKS[hit.track].tag+(hit.muted?' · Muted':'');$('mt').textContent=hit.title;
-    $('mm').textContent=(hit.role||'')+(hit.role?when(hit):String(hit.year||''));
-    $('mx').innerHTML=hit.note+' &nbsp;<a href="#c'+hit.i+'">See in credits</a>'}
-  else{var own=TRACKS[row].kind==='own',after=t>=last[row];art(null);$('mtag').textContent=TRACKS[row].tag;$('mm').textContent='';
-    $('mt').textContent=own?'More in development':after?'Your next project?':'Between cuts';
-    $('mx').innerHTML=!own&&after?'Got a cut that needs an editor? <a href="mailto:emilyj.furst@gmail.com">Say hello</a>':''}
+// The monitor works like a program monitor: it shows the topmost clip under the playhead
+// (V5 down to V1, then audio), unless a clip is hovered or was picked with J/L or a tap.
+var active=-1,hov=-1,sel=-1,headP=0;
+function covers(c,t){return t>=c.start&&t<c.start+c.min}
+function clipAt(t,row){return CREDITS.filter(function(c){return c.track===row&&covers(c,t)})[0]}
+function topAt(t){for(var r=0;r<TRACKS.length;r++){var c=clipAt(t,r);if(c)return c}}
+function setHead(p){headP=Math.max(0,Math.min(.9999,p));$('head').style.left=(headP*100)+'%';$('tc').textContent=tcOf(headP)}
+function render(){var t=headP*TOTAL,c=hov>=0?CREDITS[hov]:sel>=0&&covers(CREDITS[sel],t)?CREDITS[sel]:topAt(t);
+  active=c?c.i:-1;
+  CREDITS.forEach(function(x){x.el.classList.toggle('on',x===c);x.row.classList.toggle('hl',x===c)});
+  if(c){art(c);$('mtag').textContent=TRACKS[c.track].tag+(c.muted?' · Muted':'');$('mt').textContent=c.title;
+    $('mm').textContent=(c.role||'')+(c.role?when(c):String(c.year||''));
+    $('mx').innerHTML=c.note+' &nbsp;<a href="#c'+c.i+'">See in credits</a>'}
+  else{var after=t>=NOW;art(null);$('mtag').textContent='Program';$('mm').textContent='';
+    $('mt').textContent=after?'Your next project?':'Between cuts';
+    $('mx').innerHTML=after?'Got a cut that needs an editor? <a href="mailto:emilyj.furst@gmail.com">Say hello</a>':''}
 }
-function pick(i){var c=CREDITS[i];show((c.start+Math.min(c.min/2,8))/TOTAL,c.track);reveal(headP)}
+function pick(i){var c=CREDITS[i];setHead((c.start+Math.min(c.min/2,1.5))/TOTAL);sel=i;hov=-1;render();reveal(headP)}
 function goTo(i){var r=CREDITS[i].row;r.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth',block:'center'});
   r.classList.remove('flash');void r.offsetWidth;r.classList.add('flash')}
 var area=$('area'),sc=$('scroller'),down=false,tap=null;
@@ -236,15 +241,22 @@ $('zin').addEventListener('click',function(){setZoom(Z*1.5)});
 $('zout').addEventListener('click',function(){setZoom(Z/1.5)});
 $('zfit').addEventListener('click',function(){setZoom(1)});
 sc.addEventListener('wheel',function(e){if(!(e.ctrlKey||e.metaKey))return;e.preventDefault();setZoom(Z*Math.exp(-e.deltaY*(e.deltaMode?.05:.0025)),e.clientX)},{passive:false});
-function at(e){var r=area.getBoundingClientRect(),row=0;
+function posAt(e){var r=area.getBoundingClientRect(),row=0;
   lanes.forEach(function(l,i){if(i&&e.clientY>=(lanes[i-1].getBoundingClientRect().bottom+l.getBoundingClientRect().top)/2)row=i});
-  show(Math.max(0,Math.min(.9999,(e.clientX-r.left)/r.width)),row)}
-// Mouse: press and drag scrubs anywhere. Touch: swipes scroll, the ruler scrubs, and a tap selects (a second tap on the same clip jumps to its credit).
-area.addEventListener('pointerdown',function(e){var scrub=e.pointerType==='mouse'||e.target===$('ruler');
-  if(scrub){down=true;area.classList.add('dragging');area.setPointerCapture(e.pointerId);var was=hover;at(e)}tap={x:e.clientX,scrub:scrub,was:was}});
-area.addEventListener('pointermove',function(e){if(down||e.pointerType==='mouse')at(e)});
-['pointerup','pointercancel'].forEach(function(n){area.addEventListener(n,function(e){down=false;area.classList.remove('dragging');
-  if(n==='pointerup'&&tap&&Math.abs(e.clientX-tap.x)<6){var was=tap.scrub?tap.was:hover;if(!tap.scrub)at(e);if(hover>=0&&was===hover)goTo(hover)}tap=null})});
+  var p=Math.max(0,Math.min(.9999,(e.clientX-r.left)/r.width)),c=e.target===$('ruler')?null:clipAt(p*TOTAL,row);return {p:p,c:c?c.i:-1}}
+// Mouse: hovering a clip previews it; press moves the playhead (and a click on a clip jumps to its credit); dragging scrubs.
+// Touch: swipes scroll, the ruler scrubs, a tap moves the playhead to that clip, and a second tap jumps to its credit.
+area.addEventListener('pointerdown',function(e){var at=posAt(e),scrub=e.pointerType==='mouse'||e.target===$('ruler');
+  tap={x:e.clientX,scrub:scrub,was:e.pointerType==='mouse'?hov:sel,moved:false};
+  if(scrub){down=true;area.classList.add('dragging');area.setPointerCapture(e.pointerId);setHead(at.p);sel=at.c;render()}});
+area.addEventListener('pointermove',function(e){var at=posAt(e);
+  if(down){if(tap&&Math.abs(e.clientX-tap.x)>4)tap.moved=true;if(tap&&tap.moved){setHead(at.p);sel=-1;hov=-1;render()}}
+  else if(e.pointerType==='mouse'&&at.c!==hov){hov=at.c;render()}});
+area.addEventListener('pointerleave',function(e){if(!down&&hov>=0){hov=-1;render()}});
+['pointerup','pointercancel'].forEach(function(n){area.addEventListener(n,function(e){var t=tap;down=false;tap=null;area.classList.remove('dragging');
+  if(n!=='pointerup'||!t||t.moved||Math.abs(e.clientX-t.x)>=6)return;var at=posAt(e);
+  if(!t.scrub){setHead(at.p);sel=at.c;render()}
+  if(at.c>=0&&t.was===at.c)goTo(at.c)})});
 addEventListener('keydown',function(e){var k=e.key.toLowerCase();if(e.metaKey||e.ctrlKey||e.altKey||/^(INPUT|TEXTAREA)$/.test(e.target.tagName))return;
   if(k==='='||k==='+'){setZoom(Z*1.5);return}if(k==='-'||k==='_'){setZoom(Z/1.5);return}if(k==='\\'){setZoom(1);return}if(k!=='j'&&k!=='l')return;
   var n=ORDER.indexOf(active);pick(ORDER[(Math.max(n,0)+(k==='l'?1:ORDER.length-1))%ORDER.length])});
