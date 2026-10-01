@@ -39,6 +39,8 @@ h1 .ghost{position:absolute;inset:0;color:var(--pink);opacity:.5;transform:trans
 .tc{font-variant-numeric:tabular-nums;color:var(--pink);font-weight:600}
 .mon h3{margin:.2rem 0 0;font-size:clamp(1.5rem,4vw,2.4rem);line-height:1.1;font-weight:800;letter-spacing:-.02em}
 .mon p{margin:0}.mon a{color:var(--pink);font-weight:600}
+.seq{display:flex;padding:.55rem .75rem 0;border-bottom:1.5px solid var(--line)}
+.seqtab{font-size:.8rem;font-weight:700;letter-spacing:.01em;color:var(--ink);background:var(--sky);border:1.5px solid var(--line);border-top:2px solid var(--pink);border-bottom:0;border-radius:6px 6px 0 0;padding:.3rem .85rem .35rem;margin-bottom:-1.5px;font-variant-numeric:tabular-nums}
 .body{display:grid;grid-template-columns:2.6rem 1fr;padding:.6rem .75rem .9rem 0}
 .labels{display:grid;gap:.4rem;font-size:.8rem;font-weight:600;color:var(--muted);text-align:center;align-items:center}
 .scroller{min-width:0;overflow-x:auto;overflow-y:hidden;scrollbar-width:thin;scrollbar-color:var(--muted) transparent;padding-bottom:.4rem}
@@ -131,6 +133,7 @@ footer{text-align:center;color:var(--muted);padding:1rem 0 2rem;font-size:.95rem
       <div class="mon-top"><span id="mtag">Program</span><span class="tc" id="tc">00:00:00:00</span></div>
       <h3 id="mt"></h3><p id="mm"></p><p id="mx"></p></div>
     </div>
+    <div class="seq"><span class="seqtab" title="Sequence">EF_Credits_v26</span></div>
     <div class="body">
       <div class="labels" id="labels"><span></span></div>
       <div class="scroller" id="scroller"><div class="area" id="area"><div class="ruler" id="ruler"></div><div class="head" id="head"></div></div></div>
@@ -247,7 +250,7 @@ function render(){var t=headP*TOTAL,c=hov>=0?CREDITS[hov]:sel>=0&&covers(CREDITS
     $('mt').textContent=after?'Your next project?':'Between cuts';
     $('mx').innerHTML=after?'Got a cut that needs an editor? <a href="mailto:emilyj.furst@gmail.com">Say hello</a>':''}
 }
-function pick(i){var c=CREDITS[i];setHead((c.start+Math.min(c.min/2,1.5))/TOTAL);sel=i;hov=-1;render();reveal(headP)}
+function pick(i){var c=CREDITS[i];setHead((c.start+Math.min(c.min/2,3))/TOTAL);sel=i;hov=-1;render();reveal(headP)}
 // Credits list starts collapsed; the button or a clip click opens it
 function setList(open){$('list').hidden=!open;$('more').setAttribute('aria-expanded',open);$('more').textContent=open?'Hide credits':'Show all credits ('+CREDITS.length+')'}
 setList(false);$('more').addEventListener('click',function(){setList($('list').hidden)});
@@ -284,7 +287,8 @@ area.addEventListener('pointerleave',function(e){if(!down&&hov>=0){hov=-1;render
 addEventListener('keydown',function(e){var k=e.key.toLowerCase();if(e.metaKey||e.ctrlKey||e.altKey||/^(INPUT|TEXTAREA)$/.test(e.target.tagName))return;
   if(k==='='||k==='+'){setZoom(Z*1.5);return}if(k==='-'||k==='_'){setZoom(Z/1.5);return}if(k==='\\'){setZoom(1);return}if(k!=='j'&&k!=='l')return;
   var n=ORDER.indexOf(active);pick(ORDER[(Math.max(n,0)+(k==='l'?1:ORDER.length-1))%ORDER.length])});
-pick(ORDER[0]);
+// Open on a Netflix credit
+pick(Math.max(0,CREDITS.findIndex(function(c){return /^Pop Star Academy/.test(c.title)})));
 CREDITS.forEach(function(c){if(c.still)new Image().src=c.still});
 if(!window.PREVIEW)$('play').addEventListener('click',function(e){e.preventDefault();var f=document.createElement('iframe');
   f.src='https://www.youtube-nocookie.com/embed/6ofU30wRzsM?autoplay=1&rel=0&playsinline=1';f.title='Emily Furst editing reel';
