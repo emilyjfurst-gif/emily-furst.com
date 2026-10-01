@@ -35,6 +35,7 @@ h1 .ghost{position:absolute;inset:0;color:var(--pink);opacity:.5;transform:trans
 .mon{background:var(--ink);color:var(--paper);padding:1.1rem 1.25rem;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:1.5rem;align-items:center}
 .info{display:grid;gap:.15rem}
 .pv{aspect-ratio:16/9;border-radius:8px;border:2px solid var(--paper);background-size:cover;background-position:center;display:grid;place-items:center;padding:1rem;text-align:center;color:#1e1a3c;font-weight:800;font-size:clamp(1.1rem,3vw,1.8rem);line-height:1.1;letter-spacing:-.02em;overflow:hidden}
+.card{font-weight:400;letter-spacing:.12em;font-size:.8em}
 .mon-top{display:flex;justify-content:space-between;gap:1rem;font-size:.9rem;opacity:.85}
 .tc{font-variant-numeric:tabular-nums;color:var(--pink);font-weight:600}
 .mon h3{margin:.2rem 0 0;font-size:clamp(1.5rem,4vw,2.4rem);line-height:1.1;font-weight:800;letter-spacing:-.02em}
@@ -192,11 +193,11 @@ var CREDITS=[
  {track:2,at:month(2023,8)+15,len:3,title:"Socks",still:"images/stills/socks.jpg",role:"Editor",year:"Completed",sortYear:2026,note:"Narrative short · Drama"},
  {track:4,at:month(2023,8)+21,len:3,title:"aka Charlie Sheen",still:"images/stills/aka-charlie-sheen.jpg",role:"Assistant Editor",year:2025,note:"Netflix · Two-part documentary"},
  {track:4,at:35.75,len:2,title:"Untitled Michigan Football Project",role:"Assistant Editor",year:"Canceled",sortYear:2025,muted:true,still:"images/stills/media-offline.jpg",note:"Docu-series"},
- {track:5,at:36,len:NOW-36,title:"Orizuru",role:"Writer & Director",year:"In production",note:"Animated short · Drama"},
+ {track:5,at:36,len:NOW-36,title:"Orizuru",card:true,role:"Writer & Director",year:"In production",note:"Animated short · Drama"},
  {track:2,at:39.25,len:3,title:"Muse",still:"images/stills/muse.jpg",role:"Editor",year:"Completed",sortYear:2026,note:"Narrative short · Drama"},
  {track:4,at:40.25,len:NOW-40.25,title:"Untitled development project",role:"Assistant Editor",year:"In post",note:"Feature documentary"},
  {track:3,at:43.25,len:NOW-43.25,title:"Unannounced feature",role:"Assistant Editor",year:"In post",note:"Netflix · Feature documentary"},
- {track:6,at:41.25,len:NOW-41.25,title:"Dimenticato",role:"Writer",year:"In development",note:"Feature script · Drama"},
+ {track:6,at:41.25,len:NOW-41.25,title:"Dimenticato",card:true,role:"Writer",year:"In development",note:"Feature script · Drama"},
  {track:2,at:NOW-1,len:1,title:"Keeper",still:"images/stills/keeper.jpg",role:"Editor",year:"In post",note:"Narrative short · Drama"}
 ];
 (function(){
@@ -229,6 +230,8 @@ var PAL=[['#f7b6cd','#e5407a'],['#b8c9f0','#6b7fd6'],['#b9dba3','#5f8a4b'],['#f0
 function art(c){var v=$('pv'),t=$('pvt');
  // Nothing under the playhead: plain black, like an empty spot in a sequence
  if(!c){v.style.backgroundImage='none';v.style.backgroundColor='#000';t.textContent='';return}
+ // Title card: white title on black, for projects without picture yet
+ if(c.card){v.style.backgroundImage='none';v.style.backgroundColor='#000';v.style.color='#fff';t.innerHTML='<span class="card"></span>';t.firstChild.textContent=c.title;return}
  var p=PAL[c.i%PAL.length];v.style.color='#1e1a3c';
  if(c.still){v.style.backgroundImage='url('+c.still+')';t.textContent=''}
  else{v.style.backgroundImage='radial-gradient(circle at 20% 125%,'+p[1]+' 0 38%,transparent 39%),linear-gradient(160deg,'+p[0]+',#f4fafa)';v.style.backgroundColor=p[0];t.textContent=c.title}}
