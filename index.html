@@ -217,7 +217,8 @@ function art(c){var v=$('pv'),t=$('pvt');
  if(c.still){v.style.backgroundImage='url('+c.still+')';t.textContent=''}
  else{v.style.backgroundImage='radial-gradient(circle at 20% 125%,'+p[1]+' 0 38%,transparent 39%),linear-gradient(160deg,'+p[0]+',#f4fafa)';v.style.backgroundColor=p[0];t.textContent=c.title}}
 function p2(n){return String(n).padStart(2,'0')}
-function tcOf(p){var s=p*TOTAL*60,f=Math.floor((s%1)*24);s=Math.floor(s);return p2(Math.floor(s/3600))+':'+p2(Math.floor(s/60)%60)+':'+p2(s%60)+':'+p2(f)}
+// Timecode: like a film's picture start, 01:00:00:00 lands on graduation; one minute = one month
+function tcOf(p){var s=Math.round((3600+(p*TOTAL-MARKERS[0].at)*60)*24)/24,f=Math.floor((s%1)*24);s=Math.floor(s);return p2(Math.floor(s/3600))+':'+p2(Math.floor(s/60)%60)+':'+p2(s%60)+':'+p2(f)}
 // The playhead follows the cursor. The monitor works like a program monitor: it shows the topmost clip
 // at the playhead (V5 down to V1, then audio), unless the cursor is right on a lower clip or one was picked with J/L or a tap.
 var active=-1,hov=-1,sel=-1,headP=0;
