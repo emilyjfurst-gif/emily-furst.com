@@ -190,7 +190,7 @@ var CREDITS=[
  {track:2,at:month(2023,8)+11.5,len:3,title:"I Don't Even Skate",still:"images/stills/i-dont-even-skate.jpg",role:"Editor",year:2025,note:"Narrative short · Drama"},
  {track:1,at:month(2023,8)+15,len:3,title:"Socks",still:"images/stills/socks.jpg",role:"Editor",year:"Completed",sortYear:2026,note:"Narrative short · Drama"},
  {track:4,at:month(2023,8)+21,len:3,title:"aka Charlie Sheen",still:"images/stills/aka-charlie-sheen.jpg",role:"Assistant Editor",year:2025,note:"Netflix · Two-part documentary"},
- {track:4,at:35.75,len:2,title:"Untitled Michigan Football Project",role:"Assistant Editor",year:"Canceled",sortYear:2025,muted:true,note:"Docu-series"},
+ {track:4,at:35.75,len:2,title:"Untitled Michigan Football Project",role:"Assistant Editor",year:"Canceled",sortYear:2025,muted:true,offline:true,note:"Docu-series"},
  {track:5,at:36,len:NOW-36,title:"Orizuru",role:"Writer & Director",year:"In production",note:"Animated short · Drama"},
  {track:2,at:39.25,len:3,title:"Muse",role:"Editor",year:"Completed",sortYear:2026,note:"Narrative short · Drama"},
  {track:4,at:40.25,len:NOW-40.25,title:"Untitled development project",role:"Assistant Editor",year:"In post",note:"Feature documentary"},
@@ -226,7 +226,10 @@ MARKERS.forEach(function(mk){var k=tick('mark',mk.at,mk.label);k.title=mk.title;
 
 var PAL=[['#f7b6cd','#e5407a'],['#b8c9f0','#6b7fd6'],['#b9dba3','#5f8a4b'],['#f0dfae','#e0a53a']];
 function art(c){var v=$('pv'),t=$('pvt');
- if(!c){v.style.backgroundImage='repeating-linear-gradient(45deg,transparent 0 10px,rgba(238,246,246,.12) 10px 20px)';v.style.backgroundColor='#2b2858';v.style.color='#eef6f6';t.textContent='No signal';return}
+ // Nothing under the playhead: plain black, like an empty spot in a sequence
+ if(!c){v.style.backgroundImage='none';v.style.backgroundColor='#000';t.textContent='';return}
+ // Offline clip: Premiere's red Media Offline frame
+ if(c.offline){v.style.backgroundImage='none';v.style.backgroundColor='#c8102e';v.style.color='#fff';t.textContent='Media Offline';return}
  var p=PAL[c.i%PAL.length];v.style.color='#1e1a3c';
  if(c.still){v.style.backgroundImage='url('+c.still+')';t.textContent=''}
  else{v.style.backgroundImage='radial-gradient(circle at 20% 125%,'+p[1]+' 0 38%,transparent 39%),linear-gradient(160deg,'+p[0]+',#f4fafa)';v.style.backgroundColor=p[0];t.textContent=c.title}}
@@ -247,7 +250,7 @@ function render(){var t=headP*TOTAL,c=hov>=0?CREDITS[hov]:sel>=0&&covers(CREDITS
     $('mm').textContent=(c.role||'')+(c.role?when(c):String(c.year||''));
     $('mx').textContent=c.note}
   else{var after=t>=NOW;art(null);$('mtag').textContent='Program';$('mm').textContent='';
-    $('mt').textContent=after?'Your next project?':'Between cuts';
+    $('mt').textContent=after?'Your next project?':'Between projects';
     $('mx').innerHTML=after?'Got a cut that needs an editor? <a href="mailto:emilyj.furst@gmail.com">Say hello</a>':''}
 }
 function pick(i){var c=CREDITS[i];setHead((c.start+Math.min(c.min/2,3))/TOTAL);sel=i;hov=-1;render();reveal(headP)}
