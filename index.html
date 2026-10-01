@@ -56,7 +56,7 @@ h1 .ghost{position:absolute;inset:0;color:var(--pink);opacity:.5;transform:trans
 .mark{position:absolute;bottom:0;height:100%;z-index:2;cursor:help}
 .mark::before{content:"";position:absolute;left:-5px;bottom:-5px;width:10px;height:10px;background:var(--sand);border:1.5px solid var(--ink);transform:rotate(45deg)}
 .mark span{position:absolute;bottom:.75rem;left:7px;font-size:.72rem;font-weight:800;color:var(--ink);background:var(--sand);border:1.5px solid var(--ink);border-radius:4px;padding:0 .3rem;line-height:1.3;white-space:nowrap}
-.lanes-mark{position:absolute;top:1.8rem;bottom:0;width:0;border-left:1.5px dashed var(--muted);opacity:.6;pointer-events:none}
+.lanes-mark{position:absolute;top:2.4rem;bottom:0;width:0;border-left:1.5px dashed var(--muted);opacity:.6;pointer-events:none}
 .lane{position:relative;background:repeating-linear-gradient(90deg,transparent 0 calc(100% - 1px),var(--line) 0);border-radius:6px}
 .clip{position:absolute;top:0;bottom:0;border:1.5px solid var(--cd);border-radius:6px;padding:0;font:inherit;font-size:.78rem;font-weight:600;color:#1e1a3c;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;line-height:1.3}
 .clip,.zoom button{-webkit-tap-highlight-color:transparent}
@@ -199,7 +199,7 @@ var CREDITS=[
  {track:2,at:NOW-1,len:1,title:"Keeper",role:"Editor",year:"In post",note:"Narrative short · Drama"}
 ];
 (function(){
-var $=function(i){return document.getElementById(i)},TOTAL=END,rows='1.8rem',last=TRACKS.map(function(){return 0});
+var $=function(i){return document.getElementById(i)},TOTAL=END,rows='2.4rem',last=TRACKS.map(function(){return 0});
 var lanes=TRACKS.map(function(t,i){var l=document.createElement('div');l.className='lane '+t.kind+(t.kind==='own'&&TRACKS[i-1].kind!=='own'?' split':'');$('area').insertBefore(l,$('head'));
   var s=document.createElement('span');s.textContent=t.label;if(l.className.indexOf('split')>0)s.className='split';$('labels').appendChild(s);rows+=' 2.5rem';return l});
 $('labels').style.gridTemplateRows=$('area').style.gridTemplateRows=rows;
