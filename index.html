@@ -21,7 +21,7 @@ body{margin:0;background:var(--sky);color:var(--ink);font-family:"Bricolage Grot
 a{color:inherit}
 :focus-visible{outline:3px solid var(--pink);outline-offset:3px}
 .wrap{max-width:62rem;margin:0 auto;padding:0 1.25rem}
-nav{display:flex;justify-content:space-between;gap:1rem;padding:1.25rem 0;font-weight:600}
+nav{display:flex;justify-content:flex-end;gap:1rem;padding:1.25rem 0;font-weight:600}
 nav div{display:flex;gap:1.25rem;flex-wrap:wrap}nav a{text-decoration:none}nav a:hover{color:var(--pink)}
 .hero{padding:2.5rem 0 1rem}
 h1{font-size:clamp(3rem,11vw,8rem);line-height:.92;font-weight:800;letter-spacing:-.035em;margin:0;position:relative;display:inline-block}
@@ -86,7 +86,7 @@ footer{text-align:center;color:var(--muted);padding:1rem 0 2rem;font-size:.95rem
 </head>
 <body>
 <div class="wrap">
-<nav><strong>Emily Furst</strong><div><a href="#reel">Reel</a><a href="#credits">Credits</a><a href="#about">About</a><a href="#contact">Contact</a></div></nav>
+<nav><div><a href="#reel">Reel</a><a href="#credits">Credits</a><a href="#about">About</a><a href="#contact">Contact</a></div></nav>
 <header class="hero">
   <h1 id="name" aria-label="Emily Furst"><span>Emily<br>Furst</span><span class="ghost" aria-hidden="true">Emily<br>Furst</span></h1>
   <p class="lede">Film editor and assistant editor in Los Angeles. I cut narrative shorts and assist on documentary series for Netflix and HBO Max, and I'm ready to move into scripted film and television. <b>Open to work.</b></p>
