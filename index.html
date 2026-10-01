@@ -69,7 +69,11 @@ h1 .ghost{position:absolute;inset:0;color:var(--pink);opacity:.5;transform:trans
 .head::before{content:"";position:absolute;top:0;left:-6px;border:7px solid transparent;border-top:10px solid var(--pink);border-bottom:0}
 .dragging .head{transition:none}
 .kb{display:inline}.tch{display:none}
-.hint{font-size:.9rem;color:var(--muted);margin:.8rem 0 2rem}
+.hint{font-size:.9rem;color:var(--muted);margin:.8rem 0 1.5rem}
+.more{font:inherit;font-weight:700;color:var(--ink);background:var(--paper);border:1.5px solid var(--ink);border-radius:99px;padding:.45rem 1.2rem;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.more::after{content:" ↓"}.more[aria-expanded="true"]::after{content:" ↑"}
+@media (hover:hover){.more:hover{background:var(--sand);color:#1e1a3c}}
+#list{margin-top:1.25rem}
 kbd{background:var(--paper);border:1.5px solid var(--ink);border-radius:5px;padding:0 .35rem;font:inherit;font-size:.85em;font-weight:600}
 
 section{padding:3.5rem 0 1rem}
@@ -129,7 +133,8 @@ footer{text-align:center;color:var(--muted);padding:1rem 0 2rem;font-size:.95rem
     <div class="zoom"><button type="button" id="zout" aria-label="Zoom out">−</button><input type="range" id="zr" min="0" max="100" value="0" aria-label="Timeline zoom"><button type="button" id="zin" aria-label="Zoom in">+</button><button type="button" id="zfit">Fit</button></div>
   </div>
   <p class="hint"><span class="kb">Hover to scrub and click a clip for its credit. Zoom with the slider or <kbd>⌘</kbd>/<kbd>Ctrl</kbd> + scroll; <kbd>J</kbd> and <kbd>L</kbd> jump between clips.</span><span class="tch">Tap a clip to preview it, then tap again for its credit. Use the slider to zoom.</span></p>
-  <div id="list"></div>
+  <button type="button" class="more" id="more" aria-expanded="false" aria-controls="list">Show all credits</button>
+  <div id="list" hidden></div>
 </section>
 <section id="about"><h2>About</h2>
   <div class="about"><div>
@@ -231,13 +236,16 @@ function render(){var t=headP*TOTAL,c=hov>=0?CREDITS[hov]:sel>=0&&covers(CREDITS
   CREDITS.forEach(function(x){x.el.classList.toggle('on',x===c);x.row.classList.toggle('hl',x===c)});
   if(c){art(c);$('mtag').textContent=TRACKS[c.track].tag+(c.muted?' · Muted':'');$('mt').textContent=c.title;
     $('mm').textContent=(c.role||'')+(c.role?when(c):String(c.year||''));
-    $('mx').innerHTML=c.note+' &nbsp;<a href="#c'+c.i+'">See in credits</a>'}
+    $('mx').textContent=c.note}
   else{var after=t>=NOW;art(null);$('mtag').textContent='Program';$('mm').textContent='';
     $('mt').textContent=after?'Your next project?':'Between cuts';
     $('mx').innerHTML=after?'Got a cut that needs an editor? <a href="mailto:emilyj.furst@gmail.com">Say hello</a>':''}
 }
 function pick(i){var c=CREDITS[i];setHead((c.start+Math.min(c.min/2,1.5))/TOTAL);sel=i;hov=-1;render();reveal(headP)}
-function goTo(i){var r=CREDITS[i].row;r.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth',block:'center'});
+// Credits list starts collapsed; the button or a clip click opens it
+function setList(open){$('list').hidden=!open;$('more').setAttribute('aria-expanded',open);$('more').textContent=open?'Hide credits':'Show all credits ('+CREDITS.length+')'}
+setList(false);$('more').addEventListener('click',function(){setList($('list').hidden)});
+function goTo(i){setList(true);sel=i;hov=-1;render();var r=CREDITS[i].row;r.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth',block:'center'});
   r.classList.remove('flash');void r.offsetWidth;r.classList.add('flash')}
 var area=$('area'),sc=$('scroller'),down=false,tap=null;
 // Zoom: the track area grows to Z times the window and scrolls sideways; labels stay put
