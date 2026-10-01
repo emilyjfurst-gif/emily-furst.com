@@ -135,7 +135,7 @@ footer{text-align:center;color:var(--muted);padding:1rem 0 2rem;font-size:.95rem
 <section id="credits">
   <div class="nle">
     <div class="mon"><div class="pv" id="pv" aria-hidden="true"><span id="pvt"></span></div><div class="info" aria-live="polite">
-      <div class="mon-top"><span id="mtag">Program</span><span class="tc" id="tc">00:00:00:00</span></div>
+      <div class="mon-top"><span id="mtag">Program Monitor</span><span class="tc" id="tc">00:00:00:00</span></div>
       <h3 id="mt"></h3><p id="mm"></p><p id="mx"></p></div>
     </div>
     <div class="seq"><span class="seqtab" title="Sequence">EF_Credits_v26</span></div>
@@ -260,7 +260,7 @@ function render(){var t=headP*TOTAL,c=hov>=0?CREDITS[hov]:sel>=0&&covers(CREDITS
   if(c){art(c);$('mtag').textContent=TRACKS[c.track].tag;$('mt').textContent=c.title;
     $('mm').textContent=(c.role||'')+(c.role?when(c):String(c.year||''));
     $('mx').textContent=c.note}
-  else{var after=t>=NOW,slot=hovRow>=0&&TRACKS[hovRow].slot;art(null);$('mtag').textContent=after&&slot?TRACKS[hovRow].tag:'Program';$('mm').textContent='';
+  else{var after=t>=NOW,slot=hovRow>=0&&TRACKS[hovRow].slot;art(null);$('mtag').textContent=after&&slot?TRACKS[hovRow].tag:'Program Monitor';$('mm').textContent='';
     $('mt').textContent=after?(slot?slot.ask:'Your next project?'):'Between projects';
     $('mx').innerHTML=after?'Got a project that needs one? <a href="mailto:emilyj.furst@gmail.com">Say hello</a>':''}
 }
