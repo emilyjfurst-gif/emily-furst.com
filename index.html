@@ -189,7 +189,7 @@ var CREDITS=[
  {track:5,at:month(2023,8),len:9,title:"Pop Star Academy: KATSEYE",still:"images/stills/pop-star-academy.jpg",role:"Assistant Editor",year:2024,note:"Netflix · Documentary series"},
  {track:3,at:month(2023,8)+1.5,len:3,title:"Cocoon",still:"images/stills/cocoon.jpg",role:"Editor",year:2025,note:"Narrative short · Drama"},
  {track:2,at:month(2023,8)+1.9,len:3,title:"Ornamental Oriental",still:"images/stills/ornamental-oriental.jpg",role:"Editor",year:2024,note:"Narrative short · Sci-Fi"},
- {track:0,at:month(2022,12),len:1,title:"Faye and Lexi",still:"images/stills/faye-and-lexi.jpg",role:"Colorist",year:2022,note:"Narrative short"},
+ {track:0,at:month(2022,12),len:1,title:"Faye & Lexi",still:"images/stills/faye-and-lexi.jpg",role:"Colorist",year:2022,note:"Narrative short"},
  {track:0,at:month(2023,4),len:1,title:"That's the Spirit",still:"images/stills/thats-the-spirit.jpg",role:"Colorist",year:2023,note:"Narrative short"},
  {track:0,at:month(2023,9),len:1,title:"White Gaze",still:"images/stills/white-gaze.jpg",role:"Colorist",year:2023,note:"Narrative short · Drama"},
  {track:5,at:month(2023,8)+11,len:9,title:"Paul American",still:"images/stills/paul-american.jpg",role:"Assistant Editor",year:2025,note:"HBO Max · Series"},
@@ -217,7 +217,8 @@ CREDITS.forEach(function(c){
   b.title=c.title;b.appendChild(document.createElement('span')).textContent=c.title;b.setAttribute('aria-label',c.title+(c.role?', '+c.role:'')+(c.year?', '+c.year:''));b.dataset.i=c.i;c.el=b;lanes[c.track].appendChild(b);
   b.addEventListener('click',function(e){if(e.detail===0){if(active===c.i)goTo(c.i);else pick(c.i)}});
   var r=document.createElement('div');r.className='credit';r.id='c'+c.i;c.row=r;
-  r.innerHTML='<span class="yr">'+c.year+'</span><h3>'+c.title+'<small>'+c.note+'</small></h3>'+(c.role?'<span class="role '+TRACKS[c.track].kind+'">'+c.role+'</span>':'');
+  function esc(x){return String(x).replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+  r.innerHTML='<span class="yr">'+c.year+'</span><h3>'+esc(c.title)+'<small>'+esc(c.note)+'</small></h3>'+(c.role?'<span class="role '+TRACKS[c.track].kind+'">'+c.role+'</span>':'');
 });
 // Newest first; undated next; personal projects last
 function yr(c){return TRACKS[c.track].kind==='own'?-2:typeof c.year==='number'?c.year:c.sortYear||9999}
