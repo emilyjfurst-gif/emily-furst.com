@@ -49,6 +49,7 @@ h1 .ghost{position:absolute;inset:0;color:var(--pink);opacity:.5;transform:trans
 .lane.short .clip{background:var(--c0)}.lane.doc .clip{background:var(--c1)}.lane.own .clip{background:var(--c2)}
 .lane.own .clip::after{content:"";position:absolute;left:5px;right:5px;bottom:3px;height:30%;opacity:.7;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='20' fill='%231e1a3c' fill-opacity='.45'%3E%3Crect x='0' y='7' width='1.6' height='6'/%3E%3Crect x='3' y='4' width='1.6' height='12'/%3E%3Crect x='6' y='6' width='1.6' height='8'/%3E%3Crect x='9' y='2' width='1.6' height='16'/%3E%3Crect x='12' y='5' width='1.6' height='10'/%3E%3Crect x='15' y='1' width='1.6' height='18'/%3E%3Crect x='18' y='4' width='1.6' height='12'/%3E%3Crect x='21' y='7' width='1.6' height='6'/%3E%3Crect x='24' y='3' width='1.6' height='14'/%3E%3Crect x='27' y='0' width='1.6' height='20'/%3E%3Crect x='30' y='4' width='1.6' height='12'/%3E%3Crect x='33' y='6' width='1.6' height='8'/%3E%3Crect x='36' y='2' width='1.6' height='16'/%3E%3Crect x='39' y='5' width='1.6' height='10'/%3E%3Crect x='42' y='7' width='1.6' height='6'/%3E%3Crect x='45' y='4' width='1.6' height='12'/%3E%3Crect x='48' y='1' width='1.6' height='18'/%3E%3Crect x='51' y='3' width='1.6' height='14'/%3E%3Crect x='54' y='6' width='1.6' height='8'/%3E%3Crect x='57' y='5' width='1.6' height='10'/%3E%3C/svg%3E") left center/auto 100% repeat-x}
 .slot{position:absolute;top:0;bottom:0;border:1.5px dashed var(--muted);border-radius:6px;font-size:.75rem;color:var(--muted);padding:.15rem .45rem;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.clip.muted{opacity:.55;background-image:repeating-linear-gradient(135deg,transparent 0 5px,rgba(30,26,60,.18) 5px 7px)!important}
 .lane.split,.labels .split{margin-top:.6rem}
 .lane.split::before{content:"";position:absolute;left:0;right:0;top:calc(-.5rem - 1px);border-top:1.5px solid var(--line)}
 .clip.on{box-shadow:0 0 0 3px var(--ink);z-index:2}
@@ -132,9 +133,9 @@ footer{text-align:center;color:var(--muted);padding:1rem 0 2rem;font-size:.95rem
 <script>
 // EDIT ME: one list drives the timeline, preview and credits.
 // TRACKS run top to bottom like an editing timeline. Each credit sits on a track (index into TRACKS),
-// starts at `at` and lasts `len` (timeline units; END marks the end of the timeline). still = optional preview image (data URI).
-// Tracks with slot:true get a dotted "Your next project?" box after their last clip.
-var END=130;
+// starts at `at` and lasts `len`, both in months from the first project. muted:true dims a clip (project on hold).
+// still = optional preview image (data URI). Tracks with slot:true get a dotted "Your next project?" box after their last clip.
+var NOW=45,END=NOW+4; // NOW = where current projects end
 var TRACKS=[
  {label:'V5',kind:'short',tag:'V5 · Short'},
  {label:'V4',kind:'short',tag:'V4 · Short'},
@@ -145,23 +146,24 @@ var TRACKS=[
  {label:'A2',kind:'own',tag:'A2 · Personal'}
 ];
 var CREDITS=[
- {track:2,at:0,len:8,title:"Attached",role:"Editor",year:2022,note:"Narrative short · Sci-Fi · Horror"},
- {track:2,at:10,len:8,title:"Over Easy",role:"Editor",year:2023,note:"Narrative short · Comedy"},
- {track:1,at:10,len:8,title:"Promises, Promises",role:"Editor",year:2023,note:"Narrative short · Drama"},
- {track:0,at:10,len:8,title:"Mom Is Visiting 妈妈来了",role:"Editor",year:2023,note:"Narrative short · Drama · Comedy"},
- {track:2,at:48,len:8,title:"I Don't Even Skate",role:"Editor",year:2025,note:"Narrative short · Drama"},
- {track:1,at:24,len:8,title:"Cocoon",role:"Editor",year:2025,note:"Narrative short · Drama · Tribeca premiere · Focus Features & JetBlue Student Short Film Showcase winner"},
- {track:0,at:25,len:8,title:"Ornamental Oriental",role:"Editor",year:2024,note:"Narrative short · Sci-Fi"},
- {track:1,at:58,len:8,title:"Socks",role:"Editor",year:2025,note:"Narrative short · Drama"},
- {track:4,at:20,len:24,title:"Pop Star Academy: KATSEYE",role:"Assistant Editor",year:2024,note:"Netflix · Documentary series"},
- {track:4,at:46,len:24,title:"Paul American",role:"Assistant Editor",year:2025,note:"HBO Max · Series"},
- {track:4,at:73,len:18,title:"aka Charlie Sheen",role:"Assistant Editor",year:2025,note:"Netflix · Two-part documentary"},
- {track:2,at:96,len:8,title:"Muse",role:"",year:"",note:"Details coming soon"},
- {track:2,at:107,len:13,title:"Keeper",role:"",year:"",note:"Details coming soon"},
- {track:4,at:94,len:26,title:"Untitled development project",role:"Assistant Editor",year:"Now",note:"Feature documentary"},
- {track:3,at:100,len:20,title:"Unannounced feature",role:"Assistant Editor",year:"Now",note:"Feature documentary"},
- {track:5,at:76,len:44,title:"Orizuru",role:"Writer & Director",year:"Now",note:"Animated short film · Drama · In production"},
- {track:6,at:101,len:19,title:"Dimenticato",role:"Writer",year:"Now",note:"Feature script · Drama · In development"}
+ {track:2,at:0,len:3,title:"Attached",role:"Editor",year:2022,note:"Narrative short · Sci-Fi · Horror"},
+ {track:2,at:3.75,len:3,title:"Over Easy",role:"Editor",year:2023,note:"Narrative short · Comedy"},
+ {track:1,at:3.75,len:3,title:"Promises, Promises",role:"Editor",year:2023,note:"Narrative short · Drama"},
+ {track:0,at:3.75,len:3,title:"Mom Is Visiting 妈妈来了",role:"Editor",year:2023,note:"Narrative short · Drama · Comedy"},
+ {track:4,at:7.5,len:9,title:"Pop Star Academy: KATSEYE",role:"Assistant Editor",year:2024,note:"Netflix · Documentary series"},
+ {track:1,at:9,len:3,title:"Cocoon",role:"Editor",year:2025,note:"Narrative short · Drama · Tribeca premiere · Focus Features & JetBlue Student Short Film Showcase winner"},
+ {track:0,at:9.4,len:3,title:"Ornamental Oriental",role:"Editor",year:2024,note:"Narrative short · Sci-Fi"},
+ {track:4,at:18.5,len:9,title:"Paul American",role:"Assistant Editor",year:2025,note:"HBO Max · Series"},
+ {track:2,at:19,len:3,title:"I Don't Even Skate",role:"Editor",year:2025,note:"Narrative short · Drama"},
+ {track:1,at:22.5,len:3,title:"Socks",role:"Editor",year:2025,note:"Narrative short · Drama"},
+ {track:4,at:28.5,len:6.75,title:"aka Charlie Sheen",role:"Assistant Editor",year:2025,note:"Netflix · Two-part documentary"},
+ {track:4,at:35.75,len:2,title:"Untitled Michigan Footage Docu-series",role:"",year:"",muted:true,note:"Shadow Lion · Docu-series · Project put on hold"},
+ {track:5,at:36,len:NOW-36,title:"Orizuru",role:"Writer & Director",year:"Now",note:"Animated short film · Drama · In production"},
+ {track:2,at:37,len:3,title:"Muse",role:"",year:"",note:"Details coming soon"},
+ {track:4,at:40.25,len:NOW-40.25,title:"Untitled development project",role:"Assistant Editor",year:"Now",note:"Feature documentary"},
+ {track:3,at:41.25,len:NOW-41.25,title:"Unannounced feature",role:"Assistant Editor",year:"Now",note:"Feature documentary"},
+ {track:6,at:41.5,len:NOW-41.5,title:"Dimenticato",role:"Writer",year:"Now",note:"Feature script · Drama · In development"},
+ {track:2,at:NOW-1,len:1,title:"Keeper",role:"",year:"",note:"Details coming soon"}
 ];
 (function(){
 var $=function(i){return document.getElementById(i)},TOTAL=END,rows='1.4rem',last=TRACKS.map(function(){return 0});
@@ -172,7 +174,7 @@ CREDITS.forEach(function(c,i){c.i=i;c.start=c.at;c.min=c.len;last[c.track]=Math.
 function pct(m){return (m/TOTAL*100)+'%'}
 function when(c){return c.year===''?'':' · '+c.year}
 CREDITS.forEach(function(c){
-  var b=document.createElement('button');b.className='clip';b.style.left=pct(c.start);b.style.width=pct(c.min);
+  var b=document.createElement('button');b.className='clip'+(c.muted?' muted':'');b.style.left=pct(c.start);b.style.width=pct(c.min);
   b.textContent=b.title=c.title;b.setAttribute('aria-label',c.title+(c.role?', '+c.role:'')+(c.year?', '+c.year:''));b.dataset.i=c.i;c.el=b;lanes[c.track].appendChild(b);
   b.addEventListener('click',function(e){if(e.detail===0)pick(c.i)});
   var r=document.createElement('div');r.className='credit';r.id='c'+c.i;c.row=r;
@@ -184,7 +186,7 @@ CREDITS.slice().sort(function(a,b){return yr(b)-yr(a)||b.start-a.start}).forEach
 TRACKS.forEach(function(tr,t){if(!tr.slot||last[t]>=TOTAL)return;var s=document.createElement('div');s.className='slot';s.style.left=pct(last[t]);s.style.width=pct(TOTAL-last[t]);s.textContent='Your next project?';s.setAttribute('aria-hidden','true');lanes[t].appendChild(s)});
 // J/L step through clips left to right
 var ORDER=CREDITS.slice().sort(function(a,b){return a.start-b.start||a.track-b.track}).map(function(c){return c.i});
-for(var m=0;m<=TOTAL;m+=10){var k=document.createElement('div');k.className='tick';k.style.left=pct(m);$('ruler').appendChild(k)}
+for(var m=0;m<=TOTAL;m+=3){var k=document.createElement('div');k.className='tick';k.style.left=pct(m);$('ruler').appendChild(k)}
 
 var PAL=[['#f7b6cd','#e5407a'],['#b8c9f0','#6b7fd6'],['#b9dba3','#5f8a4b'],['#f0dfae','#e0a53a']];
 function art(c){var v=$('pv'),t=$('pvt');
@@ -199,7 +201,7 @@ function show(p,row){
   $('head').style.left=(p*100)+'%';$('tc').textContent=tcOf(p);
   var t=p*TOTAL,hit=CREDITS.filter(function(c){return c.track===row&&t>=c.start&&t<c.start+c.min})[0];
   CREDITS.forEach(function(c){c.el.classList.toggle('on',c===hit);c.row.classList.toggle('hl',c===hit)});
-  if(hit){active=hit.i;art(hit);$('mtag').textContent=TRACKS[hit.track].tag;$('mt').textContent=hit.title;
+  if(hit){active=hit.i;art(hit);$('mtag').textContent=TRACKS[hit.track].tag+(hit.muted?' · Muted':'');$('mt').textContent=hit.title;
     $('mm').textContent=(hit.role||'')+(hit.role?when(hit):String(hit.year||''));
     $('mx').innerHTML=hit.note+' &nbsp;<a href="#c'+hit.i+'">See in credits</a>'}
   else{var own=TRACKS[row].kind==='own',after=t>=last[row];art(null);$('mtag').textContent=TRACKS[row].tag;$('mm').textContent='';
