@@ -79,8 +79,9 @@ kbd{background:var(--paper);border:1.5px solid var(--ink);border-radius:5px;padd
 section{padding:3.5rem 0 1rem}
 h2{font-size:clamp(1.9rem,4vw,2.8rem);line-height:1.05;letter-spacing:-.02em;margin:0 0 1.5rem;font-weight:800}
 .reel{display:grid;grid-template-columns:1.4fr 1fr;gap:1.5rem;align-items:center}
-.play{display:grid;place-items:center;aspect-ratio:16/9;background:var(--ink);border-radius:14px;text-decoration:none;position:relative;overflow:hidden}
-.play::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 25% 125%,#7fa86a 0 30%,transparent 31%),radial-gradient(circle at 80% 130%,var(--pink) 0 28%,transparent 29%)}
+.play{display:grid;place-items:center;aspect-ratio:16/9;max-width:100%;background:var(--ink) url(images/reel.jpg) center/cover no-repeat;border:2px solid var(--ink);border-radius:14px;text-decoration:none;position:relative;overflow:hidden}
+.play::before{content:"";position:absolute;inset:0;background:rgba(30,26,60,.18);transition:background .2s}
+.play:hover::before{background:rgba(30,26,60,.05)}
 .play span{position:relative;width:4.5rem;height:4.5rem;border-radius:50%;background:var(--paper);display:grid;place-items:center;transition:transform .2s}
 .play:hover span{transform:scale(1.12)}
 .play span::after{content:"";border:12px solid transparent;border-left:19px solid #1e1a3c;border-right:0;margin-left:5px}
@@ -117,8 +118,8 @@ footer{text-align:center;color:var(--muted);padding:1rem 0 2rem;font-size:.95rem
 </header>
 
 <section id="reel"><h2>Watch the reel</h2>
-  <div class="reel"><a class="play" href="https://www.youtube.com/watch?v=6ofU30wRzsM" target="_blank" rel="noopener" aria-label="Watch my reel on YouTube"><span></span></a>
-  <p>My editing reel and select scenes. Opens on YouTube.<br><br><a href="https://www.youtube.com/watch?v=6ofU30wRzsM" target="_blank" rel="noopener">Watch on YouTube</a></p></div>
+  <div class="reel"><a class="play" href="https://youtu.be/6ofU30wRzsM" target="_blank" rel="noopener" aria-label="Watch my reel on YouTube"><span></span></a>
+  <p>My editing reel and select scenes. Opens on YouTube.<br><br><a href="https://youtu.be/6ofU30wRzsM" target="_blank" rel="noopener">Watch on YouTube</a></p></div>
 </section>
 <section id="credits"><h2>Credits</h2>
   <div class="nle">
