@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Emily Furst · Film Editor</title>
+<meta name="description" content="Emily Furst is a film editor and assistant editor in Los Angeles, cutting narrative shorts and assisting on documentary series for Netflix and HBO Max.">
+<meta property="og:title" content="Emily Furst · Film Editor">
+<meta property="og:description" content="Film editor and assistant editor in Los Angeles. Narrative shorts, Netflix and HBO Max documentary series.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.emily-furst.com/">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;600;800&display=swap&text=%E5%A6%88%E6%9D%A5%E4%BA%86" rel="stylesheet">
+<style>
+:root{--sky:#dcefef;--paper:#f4fafa;--ink:#1e1a3c;--pink:#e5407a;--sand:#f0dfae;--muted:#52506b;--line:rgba(30,26,60,.18);--c0:#f7b6cd;--c1:#b8c9f0;--c2:#d4d3de;--c3:#a6dcc6;--cd:#1e1a3c;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--sky:#17163a;--paper:#201e4a;--ink:#eef6f6;--pink:#ff6b9c;--sand:#d9c27a;--muted:#b4b2d0;--line:rgba(238,246,246,.2)}}
+:root[data-theme="dark"]{--sky:#17163a;--paper:#201e4a;--ink:#eef6f6;--pink:#ff6b9c;--sand:#d9c27a;--muted:#b4b2d0;--line:rgba(238,246,246,.2)}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;background:var(--sky);color:var(--ink);font-family:"Bricolage Grotesque","Noto Sans SC",system-ui,sans-serif;font-size:1.0625rem;line-height:1.6}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--pink);outline-offset:3px}
+.wrap{max-width:62rem;margin:0 auto;padding:0 1.25rem}
+nav{display:flex;justify-content:flex-end;gap:1rem;padding:1.25rem 0;font-weight:600}
+nav div{display:flex;gap:1.25rem;flex-wrap:wrap}nav a{text-decoration:none}nav a:hover{color:var(--pink)}
+.hero{padding:2.5rem 0 1rem}
+h1{font-size:clamp(3rem,11vw,8rem);line-height:.92;font-weight:800;letter-spacing:-.035em;margin:0;position:relative;display:inline-block}
+h1 .ghost{position:absolute;inset:0;color:var(--pink);opacity:.5;transform:translate(3px,2px);mix-blend-mode:multiply;pointer-events:none}
+@media (prefers-color-scheme:dark){h1 .ghost{mix-blend-mode:screen}}
+.stack{display:none}
+.lede{font-size:clamp(1.25rem,2.6vw,1.6rem);font-weight:600;letter-spacing:-.01em;margin:1.25rem 0 0}
+
+/* edit window */
+.nle{border:2px solid var(--ink);border-radius:14px;overflow:hidden;background:var(--paper)}
+.mon{background:#1e1a3c;color:#f4fafa;padding:1.1rem 1.25rem;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:1.5rem;align-items:center}
+.info{display:grid;gap:.15rem;align-self:start;align-content:start}
+.pv{aspect-ratio:16/9;border-radius:8px;border:2px solid var(--paper);background-size:cover;background-position:center;display:grid;place-items:center;padding:1rem;text-align:center;color:#1e1a3c;font-weight:800;font-size:clamp(1.1rem,3vw,1.8rem);line-height:1.1;letter-spacing:-.02em;overflow:hidden}
+.card{font-weight:400;letter-spacing:.12em;font-size:.8em}
+.mon-top{display:flex;justify-content:space-between;gap:1rem;font-size:.9rem;opacity:.85}
+.tc{font-variant-numeric:tabular-nums;color:var(--pink);font-weight:600}
+.mon h3{white-space:pre-line;margin:.35rem 0 .1rem;font-size:clamp(1.25rem,2.8vw,1.75rem);line-height:1.1;font-weight:800;letter-spacing:-.02em}
+.mon p{margin:0;font-size:1.0625rem;font-weight:400;line-height:1.6}.mon a{color:var(--pink);font-weight:600}
+.seq{display:flex;padding:.55rem .75rem 0;border-bottom:1.5px solid var(--line)}
+.seqtab{font-size:.8rem;font-weight:700;letter-spacing:.01em;color:var(--ink);background:var(--sky);border:1.5px solid var(--line);border-top:2px solid var(--pink);border-bottom:0;border-radius:6px 6px 0 0;padding:.3rem .85rem .35rem;margin-bottom:-1.5px;font-variant-numeric:tabular-nums}
+.body{display:grid;grid-template-columns:4.6rem 1fr;padding:.6rem .75rem .9rem 0}
+.labels{display:grid;gap:.4rem;font-size:.75rem;font-weight:700;color:var(--muted);align-items:center;padding-left:.4rem}
+.th{display:grid;grid-template-columns:1rem .9rem 1fr;gap:.15rem;align-items:center;height:100%;padding-right:.35rem}
+.ic{display:grid;place-items:center}.ic svg{width:.85rem;height:.85rem;fill:none;stroke:var(--muted);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+.ic.lk svg{width:.7rem;opacity:.55}
+.tb{display:grid;place-items:center;height:1.45rem;border:1px solid var(--line);border-radius:3px;background:var(--paper);color:var(--muted);font-variant-numeric:tabular-nums;transition:background .15s,color .15s}
+.th.on .tb{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.th.tcl .tb{border-style:dashed}
+.tc1{background:none;border-top:1px solid var(--line);border-bottom:1px solid var(--line);border-radius:0}
+.tcv{position:absolute;top:50%;transform:translateY(-50%);padding-left:4px;border-left:1px solid var(--muted);font-size:.68rem;line-height:1;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap;pointer-events:none}
+.scroller{min-width:0;overflow-x:auto;overflow-y:hidden;scrollbar-width:thin;scrollbar-color:var(--muted) transparent;padding-bottom:.4rem}
+.area{position:relative;display:grid;gap:.4rem;width:100%;cursor:ew-resize;touch-action:pan-x pan-y;user-select:none}
+.ruler{touch-action:none}
+.zoom{display:flex;align-items:center;justify-content:flex-end;gap:.5rem;padding:0 .75rem .75rem 2.6rem}
+.zoom button{font:inherit;font-weight:600;font-size:.85rem;line-height:1;color:var(--ink);background:var(--paper);border:1.5px solid var(--ink);border-radius:99px;min-width:2rem;height:2rem;padding:0 .7rem;cursor:pointer}
+@media (hover:hover){.zoom button:hover{background:var(--sand);color:#1e1a3c}}
+.zoom input{width:min(12rem,40vw);accent-color:var(--pink)}
+.ruler{position:relative;border-bottom:1.5px solid var(--line)}
+.tick{position:absolute;bottom:0;height:.3rem;border-left:1px solid var(--muted);opacity:.55}
+.tick.major{height:.65rem;opacity:1}
+.tick span{position:absolute;bottom:.15rem;left:4px;font-size:.72rem;font-weight:600;color:var(--muted);white-space:nowrap;line-height:1}
+.mark{position:absolute;bottom:0;height:100%;z-index:2;cursor:help}
+.mark::before{content:"";position:absolute;left:-5px;bottom:-5px;width:10px;height:10px;background:var(--sand);border:1.5px solid var(--ink);transform:rotate(45deg)}
+.mark span{position:absolute;bottom:.75rem;left:7px;font-size:.72rem;font-weight:800;color:var(--ink);background:var(--sand);border:1.5px solid var(--ink);border-radius:4px;padding:0 .3rem;line-height:1.3;white-space:nowrap}
+.lanes-mark{position:absolute;top:2.4rem;bottom:0;width:0;border-left:1.5px dashed var(--muted);opacity:.6;pointer-events:none}
+.lane{position:relative;background:repeating-linear-gradient(90deg,transparent 0 calc(100% - 1px),var(--line) 0);border-radius:6px}
+.clip{position:absolute;top:0;bottom:0;border:1px solid var(--edge,var(--cd));border-radius:3px;padding:0;font:inherit;font-size:.78rem;font-weight:600;color:#1e1a3c;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;line-height:1.3}
+.clip,.zoom button{-webkit-tap-highlight-color:transparent}
+.clip span{display:block;padding:.15rem .45rem;overflow:hidden;text-overflow:ellipsis}
+.lane.short .clip{background:var(--c0);--edge:#c25a83}.lane.doc .clip{background:var(--c1);--edge:#5b70b3}.lane.own .clip{background:var(--c2);--edge:#85839a}.lane.color .clip{background:var(--c3);--edge:#4a9578}
+/* Video clips: name bar on top, the still repeated as a thumbnail strip below, tinted by the clip color */
+.clip.vid span{position:absolute;z-index:1;left:0;right:0;top:0;height:1.15rem;padding:0 .4rem;line-height:1.15rem;background:inherit}
+.clip.vid::after{content:"";position:absolute;left:0;right:0;top:1.15rem;bottom:0;background:var(--still) left center/auto 100% repeat-x;mix-blend-mode:multiply;opacity:.9;border-top:1px solid var(--edge)}
+.clip.tcard::after{background:#000;mix-blend-mode:normal;opacity:1}
+.lane.own .clip::after{content:"";position:absolute;left:5px;right:5px;bottom:3px;height:30%;opacity:.7;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='20' fill='%231e1a3c' fill-opacity='.45'%3E%3Crect x='0' y='7' width='1.6' height='6'/%3E%3Crect x='3' y='4' width='1.6' height='12'/%3E%3Crect x='6' y='6' width='1.6' height='8'/%3E%3Crect x='9' y='2' width='1.6' height='16'/%3E%3Crect x='12' y='5' width='1.6' height='10'/%3E%3Crect x='15' y='1' width='1.6' height='18'/%3E%3Crect x='18' y='4' width='1.6' height='12'/%3E%3Crect x='21' y='7' width='1.6' height='6'/%3E%3Crect x='24' y='3' width='1.6' height='14'/%3E%3Crect x='27' y='0' width='1.6' height='20'/%3E%3Crect x='30' y='4' width='1.6' height='12'/%3E%3Crect x='33' y='6' width='1.6' height='8'/%3E%3Crect x='36' y='2' width='1.6' height='16'/%3E%3Crect x='39' y='5' width='1.6' height='10'/%3E%3Crect x='42' y='7' width='1.6' height='6'/%3E%3Crect x='45' y='4' width='1.6' height='12'/%3E%3Crect x='48' y='1' width='1.6' height='18'/%3E%3Crect x='51' y='3' width='1.6' height='14'/%3E%3Crect x='54' y='6' width='1.6' height='8'/%3E%3Crect x='57' y='5' width='1.6' height='10'/%3E%3C/svg%3E") left center/auto 100% repeat-x}
+.slot{position:absolute;top:0;bottom:0;border:1.5px dashed var(--muted);border-radius:6px;font-size:.75rem;line-height:1.2;color:var(--muted);padding:.2rem .45rem;overflow:hidden}
+.clip.muted{opacity:.55;background-image:repeating-linear-gradient(135deg,transparent 0 5px,rgba(30,26,60,.18) 5px 7px)!important}
+.lane.split,.labels .split{margin-top:.6rem}
+.tc1+.lane{margin-top:0}
+.lane.split::before{content:"";position:absolute;left:0;right:0;top:calc(-.5rem - 1px);border-top:1.5px solid var(--line)}
+.clip.on{box-shadow:0 0 0 2px #fff,0 0 0 3.5px var(--ink);z-index:2}
+.head{position:absolute;top:0;bottom:0;width:1.5px;margin-left:-.75px;background:var(--pink);pointer-events:none;z-index:3;transition:left .25s}
+.head::before{content:"";position:absolute;top:.35rem;left:-4.25px;width:10px;height:1.1rem;background:var(--pink);border-radius:2px}
+.dragging .head{transition:none}
+.kb{display:inline}.tch{display:none}
+.hint{font-size:.9rem;color:var(--muted);margin:.8rem 1.25rem 1.5rem}
+.more{font:inherit;font-weight:700;color:var(--ink);background:var(--paper);border:1.5px solid var(--ink);border-radius:99px;padding:.45rem 1.2rem;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.more::after{content:" ↓"}.more[aria-expanded="true"]::after{content:" ↑"}
+@media (hover:hover){.more:hover{background:var(--sand);color:#1e1a3c}}
+#list{margin-top:1.25rem}
+.note{font-size:.9rem;color:var(--muted);margin:0 0 .75rem}
+kbd{background:var(--paper);border:1.5px solid var(--ink);border-radius:5px;padding:0 .35rem;font:inherit;font-size:.85em;font-weight:600}
+
+section{padding:3.5rem 0 1rem}
+h2{font-size:clamp(1.9rem,4vw,2.8rem);line-height:1.05;letter-spacing:-.02em;margin:0 0 1.5rem;font-weight:800}
+#reel{padding-top:2rem}
+#credits{padding-top:2.5rem}
+.reel{position:relative;aspect-ratio:16/9;max-width:100%}
+.reel iframe{position:absolute;inset:0;width:100%;height:100%;border:2px solid var(--ink);border-radius:14px;background:#000}
+.play .tag{position:absolute;left:1rem;bottom:1rem;background:var(--paper);color:var(--ink);border:1.5px solid var(--ink);border-radius:99px;padding:.15rem .8rem;font-size:.9rem;font-weight:700}
+.play{display:grid;place-items:center;width:100%;height:100%;background:var(--ink) url(images/reel.jpg) center/cover no-repeat;border:2px solid var(--ink);border-radius:14px;text-decoration:none;position:relative;overflow:hidden}
+.play::before{content:"";position:absolute;inset:0;background:rgba(30,26,60,.18);transition:background .2s}
+.play:hover::before{background:rgba(30,26,60,.05)}
+.play span{position:relative;width:4.5rem;height:4.5rem;border-radius:50%;background:var(--paper);display:grid;place-items:center;transition:transform .2s}
+.play:hover span{transform:scale(1.12)}
+.play span::after{content:"";border:12px solid transparent;border-left:19px solid #1e1a3c;border-right:0;margin-left:5px}
+.credit{border-top:1.5px solid var(--line)}
+.credit:last-child{border-bottom:1.5px solid var(--line)}
+/* Each credit is a <details>: the summary is the row, the panel holds more about the project */
+.credit summary{display:grid;grid-template-columns:8.5rem 1fr auto 1.5rem;gap:1rem;align-items:baseline;padding:1rem 0;cursor:pointer;list-style:none;-webkit-tap-highlight-color:transparent}
+.credit summary::-webkit-details-marker{display:none}
+.credit summary::after{content:"+";justify-self:center;font-size:1.35rem;font-weight:600;line-height:1;color:var(--muted);transition:transform .2s,color .15s}
+.credit[open] summary::after{transform:rotate(45deg);color:var(--pink)}
+@media (hover:hover){.credit summary:hover h3{color:var(--pink)}.credit summary:hover::after{color:var(--pink)}}
+.cx{display:grid;grid-template-columns:minmax(0,15rem) 1fr;gap:1.25rem;margin:0 2.5rem 1.25rem 9.5rem;animation:cx .25s ease-out}
+.cx.nopic{grid-template-columns:1fr}
+@keyframes cx{from{opacity:0;transform:translateY(-4px)}}
+.cx img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border:2px solid var(--ink);border-radius:8px;background:#000}
+.cx .tcard{display:grid;place-items:center;aspect-ratio:16/9;border:2px solid var(--ink);border-radius:8px;background:#000;color:#fff;font-size:.8rem;letter-spacing:.12em;text-align:center;padding:.5rem}
+.cx dl{display:grid;grid-template-columns:auto 1fr;gap:.2rem 1rem;margin:0;font-size:.95rem}
+.cx dt{color:var(--muted);font-weight:600}.cx dd{margin:0}
+.cx p{margin:.75rem 0 0;font-size:.95rem;max-width:36rem}
+.cx .acts{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.9rem}
+.cx .acts a,.cx .acts button{font:inherit;font-size:.85rem;font-weight:700;color:var(--ink);background:var(--paper);border:1.5px solid var(--ink);border-radius:99px;padding:.25rem .9rem;cursor:pointer;text-decoration:none}
+@media (hover:hover){.cx .acts a:hover,.cx .acts button:hover{background:var(--sand);color:#1e1a3c}}
+.credit.hl{background:linear-gradient(90deg,rgba(229,64,122,.14),transparent)}
+.credit.flash{animation:flash 1.6s ease-out}
+@keyframes flash{0%,30%{background-color:rgba(229,64,122,.35)}100%{background-color:transparent}}
+.yr{color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.credit h3{margin:0;font-size:1.3rem;font-weight:600;line-height:1.25}
+.credit small{display:block;font-size:.95rem;font-weight:400;color:var(--muted)}
+.role.short{background:var(--c0)}.role.doc{background:var(--c1)}.role.own{background:var(--c2)}.role.color{background:var(--c3)}
+.role{background:var(--sand);color:#1e1a3c;border:1.5px solid var(--ink);border-radius:99px;padding:.1rem .8rem;font-size:.9rem;font-weight:600;white-space:nowrap}
+.about{display:grid;grid-template-columns:1.3fr 1fr;gap:2.5rem}.about p{margin:0 0 1rem;max-width:36rem}
+.tools{display:flex;flex-wrap:wrap;gap:.5rem;align-content:flex-start;padding:0;margin:0;list-style:none}
+.side{display:grid;gap:1.75rem;align-content:start}
+.portrait{display:block;width:100%;max-width:22rem;height:auto;aspect-ratio:790/1200;border:2px solid var(--ink);border-radius:14px;box-shadow:6px 6px 0 var(--pink)}
+.tools li{background:var(--paper);border:1.5px solid var(--ink);border-radius:99px;padding:.15rem .9rem;font-weight:600}
+.contact{text-align:center;padding:5rem 0 3rem}.contact h2{font-size:clamp(1.6rem,6.5vw,3.25rem);white-space:nowrap}
+.btn{display:inline-block;background:var(--pink);color:#1e1a3c;border:2px solid var(--ink);border-radius:99px;padding:.7rem 1.8rem;font-weight:800;font-size:1.15rem;text-decoration:none;box-shadow:4px 4px 0 var(--ink);transition:transform .15s,box-shadow .15s}
+.btn-alt{background:var(--paper);color:var(--ink);font-size:1rem;padding:.55rem 1.4rem;margin-top:.5rem}
+.btn:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
+.links{margin-top:1.75rem;display:flex;gap:1.25rem;justify-content:center;flex-wrap:wrap}
+.links a{display:grid;place-items:center;width:3rem;height:3rem;border-radius:50%;color:var(--ink);transition:color .15s,transform .15s}
+.links a:hover{color:var(--pink);transform:translateY(-2px)}
+.links svg{width:1.75rem;height:1.75rem;fill:currentColor}
+footer{text-align:center;color:var(--muted);padding:1rem 0 2rem;font-size:.95rem}
+@media (max-width:700px){.stack{display:inline}.body{grid-template-columns:2.5rem 1fr}.labels{padding-left:.25rem}.th{grid-template-columns:1fr;padding-right:.25rem}.ic{display:none}.tcv.half{display:none}.tcv{font-size:.52rem;padding-left:2px}.about,.mon{grid-template-columns:1fr}.credit summary{grid-template-columns:1fr auto 1.25rem;gap:.75rem}.credit .yr{grid-column:1/-1;margin-bottom:-.6rem}.cx{grid-template-columns:1fr;margin:0 0 1.25rem}.cx img,.cx .tcard{max-width:20rem}.kb{display:none}.tch{display:inline}.clip{font-size:.7rem}.clip span{padding:.1rem .3rem}.slot{font-size:0;display:grid;place-items:center;padding:0}.slot::before{content:"+";font-size:1rem}.side{order:-1}.portrait{max-width:15rem}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+/* Premiere skin for the editor: fixed dark panel in both themes */
+.nle{--pp-bg:#1c1c1c;--pp-hd:#252525;--pp-row:#232323;--pp-sep:#141414;--pp-tx:#c4c4c4;--pp-dim:#808080;--pp-blue:#2d8ceb;background:var(--pp-bg)}
+.mon{background:#1f1f1f;border-bottom:1px solid var(--pp-sep)}
+.pv{border-color:#3a3a3a;border-radius:2px}
+.seq{background:var(--pp-hd);border-bottom:1px solid var(--pp-sep);padding:.35rem .75rem 0}
+.seqtab{background:transparent;color:#e6e6e6;border:0;border-bottom:2px solid #d0d0d0;border-radius:0;font-weight:500;font-size:.78rem;padding:.25rem .6rem .35rem;margin-bottom:-1px}
+.seqtab::before{content:"\00d7";margin-right:.55rem;color:var(--pp-dim)}.seqtab::after{content:"\2261";margin-left:.55rem;color:var(--pp-dim)}
+.body{background:var(--pp-bg);padding:0 .5rem .6rem 0;grid-template-columns:5.6rem 1fr}
+.labels,.area{gap:2px}
+.labels{background:var(--pp-hd);border-right:1px solid var(--pp-sep);padding-left:.35rem;color:var(--pp-dim);font-weight:500}
+.tlc{align-self:center;color:var(--pp-blue);font-size:.74rem;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:.01em}
+.th{grid-template-columns:.95rem 1fr auto;gap:.3rem;padding-right:.3rem}
+.ic svg{stroke:var(--pp-dim);width:.8rem;height:.8rem}.ic.lk svg{width:.66rem;opacity:.8}
+.tail{display:flex;gap:.2rem}
+.ms{font-style:normal;font-size:.58rem;font-weight:600;color:var(--pp-dim);border:1px solid #3c3c3c;border-radius:2px;width:.9rem;height:.9rem;display:grid;place-items:center}
+.tb{height:1.3rem;border:1px solid #3a3a3a;border-radius:2px;background:transparent;color:#9c9c9c;font-size:.7rem;font-weight:600}
+.th.on .tb{background:var(--pp-blue);border-color:var(--pp-blue);color:#fff}
+.th.tcl .tb{border-style:solid}
+.lane{background:var(--pp-row);border-radius:0;box-shadow:0 1px 0 var(--pp-sep)}
+.lane.split::before{border-top:1px solid #3a3a3a}
+.tc1{background:#202020;border-top:1px solid var(--pp-sep);border-bottom:1px solid var(--pp-sep)}
+.tcv{color:var(--pp-dim);border-left-color:#4a4a4a}
+.scroller{scrollbar-color:#555 transparent}
+.ruler{background:var(--pp-bg);border-bottom:2px solid #d9c84a}
+.tick{border-left-color:#777}
+.clip{border-radius:0;font-size:.7rem}
+.clip.vid span{height:1.05rem;line-height:1.05rem}.clip.vid::after{top:1.05rem}
+.clip.on{box-shadow:0 0 0 1px #fff,0 0 0 2.5px var(--pp-blue)}
+.slot{border:1px dashed #555;border-radius:0;color:#8c8c8c}
+.clip.muted{background-image:repeating-linear-gradient(135deg,transparent 0 5px,rgba(0,0,0,.25) 5px 7px)!important}
+.mark{--mk:#5cc46d}.mark.grad{--mk:#f0a23c}
+.mark::before{left:-4.5px;bottom:2px;width:9px;height:11px;background:var(--mk);border:0;transform:none;clip-path:polygon(0 0,100% 0,100% 62%,50% 100%,0 62%)}
+.mark span{bottom:15px;left:-1px;background:none;border:0;padding:0;color:var(--mk);font-size:.68rem;font-weight:700}
+.lanes-mark{border-left:1px dashed #f0a23c;opacity:.55}
+.zoom{background:var(--pp-hd);border-top:1px solid var(--pp-sep);padding:.45rem .75rem}
+.zoom button{background:#2f2f2f;color:#ddd;border:1px solid #474747;border-radius:3px;height:1.7rem;min-width:1.7rem;font-size:.78rem}
+@media (hover:hover){.zoom button:hover{background:#3a3a3a;color:#fff}}
+.zoom input{accent-color:var(--pp-blue)}
+/* Premiere blue for the playhead and timecode readouts (Avid-shaped indicator) */
+.head,.head::before{background:var(--pp-blue)}
+.tc{color:var(--pp-blue)}
+@media (max-width:700px){.body{grid-template-columns:2.5rem 1fr}.tlc{visibility:hidden;width:0;overflow:hidden}.tail,.ic.lk{display:none}.th{grid-template-columns:1fr}.mark.grad span{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><div><a href="#reel">Reel</a><a href="#credits">Credits</a><a href="#about">About</a><a href="#contact">Contact</a></div></nav>
+<header class="hero">
+  <h1 id="name" aria-label="Emily Furst"><span>Emily <br class="stack">Furst</span><span class="ghost" aria-hidden="true">Emily <br class="stack">Furst</span></h1>
+  <p class="lede">Film Assistant Editor &amp; Editor</p>
+</header>
+
+<section id="reel">
+  <div class="reel" id="reelbox"><a class="play" id="play" href="https://youtu.be/6ofU30wRzsM" target="_blank" rel="noopener" aria-label="Play my editing reel"><span></span><b class="tag">Editing reel</b></a></div>
+</section>
+<section id="credits">
+  <div class="nle">
+    <div class="mon"><div class="pv" id="pv" aria-hidden="true"><span id="pvt"></span></div><div class="info" aria-live="polite">
+      <div class="mon-top"><span id="mtag">Record Monitor</span><span class="tc" id="tc">00:00:00:00</span></div>
+      <h3 id="mt"></h3><p id="mm"></p><p id="mx"></p></div>
+    </div>
+    <div class="seq"><span class="seqtab" title="Sequence">EF_Credits_v26</span></div>
+    <div class="body">
+      <div class="labels" id="labels"><span class="tlc" id="tlc">00:00:00:00</span></div>
+      <div class="scroller" id="scroller"><div class="area" id="area"><div class="ruler" id="ruler"></div><div class="head" id="head"></div></div></div>
+    </div>
+    <div class="zoom"><button type="button" id="zout" aria-label="Zoom out">−</button><input type="range" id="zr" min="0" max="100" value="0" aria-label="Timeline zoom"><button type="button" id="zin" aria-label="Zoom in">+</button><button type="button" id="zfit">Fit</button></div>
+  </div>
+  <p class="hint"><span class="kb">Hover to scrub and click a clip for its credit. Zoom with the slider or <kbd>⌘</kbd>/<kbd>Ctrl</kbd> + scroll; <kbd>J</kbd> and <kbd>L</kbd> jump between clips.</span></p>
+  <button type="button" class="more" id="more" aria-expanded="false" aria-controls="list">Show all credits</button>
+  <div id="list" hidden><p class="note">Years are release years. The timeline shows when I worked on each project.</p></div>
+</section>
+<section id="about"><h2>About</h2>
+  <div class="about"><div>
+    <p>I'm a film editor and assistant editor who loves exploring family dynamics, human psychology, and the ways we experience reality through story. Born in Hunan, China, adopted and raised in St. Louis, and now based in Los Angeles, my background influences both the stories I choose and the way I collaborate.</p>
+    <p>I work primarily in Avid Media Composer and DaVinci Resolve across narrative, unscripted, and branded projects, with branded work edited primarily in Premiere Pro. I'm currently looking to jump to scripted film and television.</p>
+    <p>Working as both an assistant editor and editor keeps me engaged with both the creative and technical sides of the craft, and I find joy in doing both kinds of work.</p>
+    <p>My personal projects often focus on stories that explore perception, memory, and human connection, and I have a particular love for animation. I'm currently directing <i>Orizuru</i>, an animated short film I wrote.</p>
+    <p>Outside of filmmaking, I enjoy gaming, rock climbing, arts and crafts, and spending time with animals. I’m always thrilled to dive into a new project, so don’t hesitate to reach out!</p>
+    <p><a class="btn btn-alt" href="https://drive.google.com/file/d/1RvOMhIR_NX2cugMgwY02l1zfkdiZIRLI/view" target="_blank" rel="noopener">View resume (PDF)</a></p></div>
+  <div class="side"><img class="portrait" src="images/emily-furst.jpg" width="790" height="1200" alt="Illustrated portrait of Emily Furst smiling in a gray hoodie, with palm trees behind her" loading="lazy">
+  <ul class="tools" aria-label="Software"><li>Avid Media Composer</li><li>DaVinci Resolve</li><li>Premiere Pro (branded work)</li></ul></div></div>
+</section>
+<section class="contact" id="contact"><h2>Let's work together!</h2><a class="btn" href="mailto:emilyj.furst@gmail.com">Email me</a>
+  <div class="links"><a href="https://www.imdb.com/name/nm12587784/" target="_blank" rel="noopener" aria-label="IMDb" title="IMDb"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22.3781 0H1.6218C.7411.0583.0587.7437.0018 1.5953l-.001 20.783c.0585.8761.7125 1.543 1.5559 1.6191A.337.337 0 0 0 1.6016 24h20.7971a.4579.4579 0 0 0 .0437-.002c.8727-.0768 1.5568-.8271 1.5568-1.7085V1.7098c0-.8914-.696-1.6416-1.584-1.7078A.3294.3294 0 0 0 22.3781 0zm0 .496a1.2144 1.2144 0 0 1 1.1252 1.2139v20.5797c0 .6377-.4875 1.1602-1.1045 1.2145H1.6016c-.5967-.0543-1.0645-.5297-1.1053-1.1258V1.6284C.5371 1.0185 1.0184.5364 1.6217.496h20.7564zM4.7954 8.2603v7.3636H2.8899V8.2603h1.9055zm6.5367 0v7.3636H9.6707v-4.9704l-.6711 4.9704H7.813l-.6986-4.8618-.0066 4.8618h-1.668V8.2603h2.468c.0748.4476.1492.9694.2307 1.5734l.2712 1.8713.4407-3.4447h2.4817zm2.9772 1.3289c.0742.0404.122.108.1417.2034.0279.0953.0345.3118.0345.6442v2.8548c0 .4881-.0345.7867-.0955.8954-.0609.1152-.2304.1695-.5018.1695V9.5211c.204 0 .3457.0205.4211.0681zm-.0211 6.0347c.4543 0 .8006-.0265 1.0245-.0742.2304-.0477.4204-.1357.5694-.2648.1556-.1218.2642-.298.3251-.5219.0611-.2238.1021-.6648.1021-1.3224v-2.5832c0-.6986-.0271-1.1668-.0742-1.4039-.041-.237-.1431-.4543-.3126-.6437-.1695-.1973-.4198-.3324-.7456-.421-.3191-.0808-.8542-.1285-1.7694-.1285h-1.4244v7.3636h2.3051zm5.14-1.7827c0 .3523-.0199.5762-.0544.6708-.033.0947-.1894.1424-.3046.1424-.1086 0-.19-.0477-.2238-.1351-.041-.0887-.0609-.2986-.0609-.6238v-1.9469c0-.3324.0199-.5423.0543-.6237.0338-.0808.1086-.122.2171-.122.1153 0 .2709.0412.3114.1425.041.0947.0609.2986.0609.6032v1.8926zm-2.4747-5.5809v7.3636h1.7157l.1152-.4675c.1556.1894.3251.3324.5152.4271.1828.0881.4608.1357.678.1357.3047 0 .5629-.0748.7802-.237.2165-.1562.3589-.3462.4198-.5628.0543-.2173.0887-.543.0887-.9841v-2.0675c0-.4409-.0139-.7324-.0344-.8681-.0199-.1357-.0742-.2781-.1695-.4204-.1021-.1425-.2437-.251-.4272-.3325-.1834-.0742-.3999-.1152-.6576-.1152-.2172 0-.4952.0477-.6846.1285-.1835.0887-.353.2238-.5086.4007V8.2603h-1.8309z"/></svg></a><a href="https://www.instagram.com/em.furst/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"/></svg></a><a href="https://www.linkedin.com/in/efurst/" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a><a href="https://vimeo.com/efurst" target="_blank" rel="noopener" aria-label="Vimeo" title="Vimeo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.9765 6.4168c-.105 2.338-1.739 5.5429-4.894 9.6088-3.2679 4.247-6.0258 6.3699-8.2898 6.3699-1.409 0-2.578-1.294-3.553-3.881l-1.9179-7.1138c-.719-2.584-1.488-3.878-2.312-3.878-.179 0-.806.378-1.8809 1.132l-1.129-1.457a315.06 315.06 0 003.501-3.1279c1.579-1.368 2.765-2.085 3.5539-2.159 1.867-.18 3.016 1.1 3.447 3.838.465 2.953.789 4.789.971 5.5069.5389 2.45 1.1309 3.674 1.7759 3.674.502 0 1.256-.796 2.265-2.385 1.004-1.589 1.54-2.797 1.612-3.628.144-1.371-.395-2.061-1.614-2.061-.574 0-1.167.121-1.777.391 1.186-3.8679 3.434-5.7568 6.7619-5.6368 2.4729.06 3.6279 1.664 3.4929 4.7969z"/></svg></a></div></section>
+<footer>That's a wrap. © Emily Furst</footer>
+</div>
+<script>
+// EDIT ME: one list drives the timeline, preview and credits.
+// TRACKS run top to bottom like an editing timeline. Each credit sits on a track (index into TRACKS),
+// starts at `at` and lasts `len`, both in months from the first project. muted:true dims a clip (project on hold).
+// still = optional preview image (data URI). Tracks with a slot get a dotted box after their last clip:
+// slot.label is the box text, slot.ask is what the monitor asks when the cursor is there.
+// Clicking a row in the credits list expands it. The panel shows the still, role, format, when I worked on it
+// (from `at`/`len`) and status, plus two optional fields: about = a short paragraph on the project,
+// links = [{label:'Watch on Netflix',url:'https://...'}].
+var JAN2026=40.25,NOW=49.25,GAP=.5,SLOT=5,END=NOW+GAP+SLOT; // NOW = today (early Oct 2026)
+function month(y,m){return JAN2026+(y-2026)*12+(m-1)} // month(2023,5) = May 2023 on the timeline
+// Markers on the ruler, like NLE markers
+var MARKERS=[{at:month(2023,5),label:'Graduated!',title:'Graduated with my MFA · May 2023',kind:'grad'}];
+[2023,2024,2025,2026].forEach(function(y){MARKERS.push({at:month(y,1),label:String(y),title:String(y),kind:'year'})});
+var TRACKS=[
+ {label:'V6',kind:'color',tag:'V6 · Color Work',slot:{label:'Need a colorist?',ask:'Need a colorist?'}},
+ {label:'V5',kind:'short',tag:'V5 · Shorts'},
+ {label:'V4',kind:'short',tag:'V4 · Shorts'},
+ {label:'V3',kind:'short',tag:'V3 · Shorts',slot:{label:'Need an editor?',ask:'Need an editor?'}},
+ {label:'V2',kind:'doc',tag:'V2 · Docs'},
+ {label:'V1',kind:'doc',tag:'V1 · Docs',slot:{label:'Need an AE?',ask:'Need an assistant editor?'}},
+ {label:'A1',kind:'own',tag:'A1 · Personal Projects'},
+ {label:'A2',kind:'own',tag:'A2 · Personal Projects'}
+];
+var CREDITS=[
+ {track:3,at:0,len:3,title:"Attached",still:"images/stills/attached.jpg",role:"Editor",year:2022,note:"Narrative short · Sci-Fi · Horror"},
+ {track:3,at:month(2023,2)-.25,len:3,title:"Over Easy",still:"images/stills/over-easy.jpg",role:"Editor",year:2023,note:"Narrative short · Comedy"},
+ {track:2,at:month(2023,2)-.25,len:3,title:"Promises, Promises",still:"images/stills/promises-promises.jpg",role:"Editor",year:2024,note:"Narrative short · Drama"},
+ {track:1,at:month(2023,2)-.25,len:3,title:"Mom Is Visiting 妈妈来了",monTitle:"Mom Is Visiting\n妈妈来了",still:"images/stills/mom-is-visiting.jpg",role:"Editor",year:2023,note:"Narrative short · Drama · Comedy"},
+ {track:5,at:month(2023,8),len:9,title:"Pop Star Academy: KATSEYE",still:"images/stills/pop-star-academy.jpg",role:"Assistant Editor",year:2024,note:"Netflix · Documentary series"},
+ {track:3,at:month(2023,11),len:5,title:"Cocoon",still:"images/stills/cocoon.jpg",role:"Editor",year:2025,note:"Narrative short · Drama"},
+ {track:2,at:month(2024,2),len:3,title:"Ornamental Oriental",still:"images/stills/ornamental-oriental.jpg",role:"Editor",year:2024,note:"Narrative short · Sci-Fi"},
+ {track:0,at:month(2022,12),len:1,title:"Faye & Lexi",still:"images/stills/faye-and-lexi.jpg",role:"Colorist",year:2022,note:"Narrative short · Drama"},
+ {track:0,at:month(2023,4)-.1,len:1,title:"That's the Spirit",still:"images/stills/thats-the-spirit.jpg",role:"Colorist",year:2023,note:"Narrative short · Mockumentary"},
+ {track:0,at:month(2023,9),len:1,title:"White Gaze",still:"images/stills/white-gaze.jpg",role:"Colorist",year:2023,note:"Narrative short · Drama"},
+ {track:5,at:month(2023,8)+11,len:9,title:"Paul American",still:"images/stills/paul-american.jpg",role:"Assistant Editor",year:2025,note:"HBO Max · Series"},
+ {track:3,at:month(2023,8)+11.5,len:3,title:"I Don't Even Skate",still:"images/stills/i-dont-even-skate.jpg",role:"Editor",year:2025,note:"Narrative short · Drama"},
+ {track:3,at:month(2023,8)+15,len:3,title:"Socks",still:"images/stills/socks.jpg",role:"Editor",year:"Completed",sortYear:2026,note:"Narrative short · Drama"},
+ {track:5,at:month(2023,8)+21,len:3,title:"aka Charlie Sheen",still:"images/stills/aka-charlie-sheen.jpg",role:"Assistant Editor",year:2025,note:"Netflix · Two-part documentary"},
+ {track:5,at:35.75,len:2,title:"Untitled Michigan Football Project",role:"Assistant Editor",year:"Canceled",sortYear:2025,muted:true,still:"images/stills/media-offline.jpg",note:"Docu-series"},
+ {track:6,at:36,len:NOW-36,title:"Orizuru",card:true,role:"Writer & Director",year:"In production",note:"Animated short · Drama",about:"An animated short film I wrote and am currently directing."},
+ {track:3,at:39.25,len:3,title:"Muse",still:"images/stills/muse.jpg",role:"Editor",year:"Completed",sortYear:2026,note:"Narrative short · Drama"},
+ {track:5,at:40.25,len:NOW-40.25,title:"Untitled development project",card:true,role:"Assistant Editor",year:"In post",note:"Feature documentary"},
+ {track:4,at:43.25,len:NOW-43.25,title:"Unannounced feature",card:true,role:"Assistant Editor",year:"In post",note:"Netflix · Feature documentary"},
+ {track:7,at:41.25,len:NOW-41.25,title:"Dimenticato",card:true,role:"Writer",year:"In development",note:"Feature script · Drama"},
+ {track:3,at:NOW-1,len:1,title:"Keeper",still:"images/stills/keeper.jpg",role:"Editor",year:"In post",note:"Narrative short · Drama"}
+];
+(function(){
+var $=function(i){return document.getElementById(i)},TOTAL=END,rows='2.4rem',last=TRACKS.map(function(){return 0});
+// Premiere-style track headers: lock, track name (lit when targeted), eye for video, M/S for audio
+var ICON={eye:'<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 8s2.4-4.5 6.5-4.5S14.5 8 14.5 8 12.1 12.5 8 12.5 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></svg>',
+  lock:'<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3.5" y="7" width="9" height="7" rx="1"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2"/></svg>'};
+function header(label,icon,cls){var h=document.createElement('div');h.className='th'+(cls?' '+cls:'');
+  h.innerHTML='<i class="ic lk">'+(icon?ICON.lock:'')+'</i><b class="tb"></b><i class="ic tail">'+(icon==='vid'?ICON.eye:icon==='aud'?'<i class="ms">M</i><i class="ms">S</i>':'')+'</i>';
+  h.querySelector('.tb').textContent=label;$('labels').appendChild(h);return h}
+var heads=[],lanes=TRACKS.map(function(t,i){
+  if(t.kind==='own'&&TRACKS[i-1].kind!=='own'){ // TC1 timecode track sits between the video and audio tracks
+    var tc=document.createElement('div');tc.className='lane tc1 split';$('area').insertBefore(tc,$('head'));header('TC1','','split tcl');rows+=' 1.5rem'}
+  var l=document.createElement('div');l.className='lane '+t.kind;$('area').insertBefore(l,$('head'));
+  heads.push(header(t.label,t.kind==='own'?'aud':'vid'));rows+=' 2.5rem';return l});
+$('labels').style.gridTemplateRows=$('area').style.gridTemplateRows=rows;
+CREDITS.forEach(function(c,i){c.i=i;c.start=c.at;c.min=c.len;last[c.track]=Math.max(last[c.track],c.at+c.len)});
+function pct(m){return (m/TOTAL*100)+'%'}
+function when(c){return c.year===''?'':' · '+(typeof c.year==='number'?'Released '+c.year:c.year)}
+function esc(x){return String(x).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;')}
+// Timeline months back to calendar months, for the "Worked on" line
+var MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+function cal(m){var n=2026*12+Math.round(m-JAN2026);return MON[n%12]+' '+Math.floor(n/12)}
+function span(c){var a=cal(c.at);if(c.at+c.len>=NOW-.01)return a+' – present';var b=cal(c.at+c.len-1);return a===b?a:a+' – '+b}
+function status(c){return typeof c.year==='number'?'Released '+c.year:c.year}
+function panel(c){
+  var pic=c.card?'<div class="tcard">'+esc(c.title)+'</div>':c.still?'<img src="'+esc(c.still)+'" alt="Still from '+esc(c.title)+'" loading="lazy">':'';
+  return '<div class="cx'+(pic?'':' nopic')+'">'+pic+'<div><dl>'+
+    (c.role?'<dt>Role</dt><dd>'+esc(c.role)+'</dd>':'')+
+    '<dt>Format</dt><dd>'+esc(c.note)+'</dd><dt>Worked on</dt><dd>'+span(c)+'</dd><dt>Status</dt><dd>'+esc(status(c))+'</dd></dl>'+
+    (c.about?'<p>'+esc(c.about)+'</p>':'')+
+    '<div class="acts"><button type="button" class="show">Show on timeline</button>'+
+    (c.links||[]).map(function(l){return '<a href="'+esc(l.url)+'" target="_blank" rel="noopener">'+esc(l.label)+'</a>'}).join('')+
+    '</div></div></div>'}
+CREDITS.forEach(function(c){
+  var b=document.createElement('button');b.className='clip'+(c.muted?' muted':'');b.style.left=pct(c.start);b.style.width=pct(c.min);
+  b.title=c.title;if(TRACKS[c.track].kind!=='own'){b.classList.add('vid');if(c.card)b.classList.add('tcard');else if(c.still)b.style.setProperty('--still','url("'+c.still+'")')}b.appendChild(document.createElement('span')).textContent=c.title;b.setAttribute('aria-label',c.title+(c.role?', '+c.role:'')+(c.year?', '+c.year:''));b.dataset.i=c.i;c.el=b;lanes[c.track].appendChild(b);
+  b.addEventListener('click',function(e){if(e.detail===0){if(active===c.i)goTo(c.i);else pick(c.i)}});
+  var r=document.createElement('details');r.className='credit';r.id='c'+c.i;c.row=r;
+  r.innerHTML='<summary><span class="yr">'+esc(c.year)+'</span><h3>'+esc(c.title)+'<small>'+esc(c.note)+'</small></h3><span>'+(c.role?'<span class="role '+TRACKS[c.track].kind+'">'+esc(c.role)+'</span>':'')+'</span></summary>'+panel(c);
+  r.querySelector('.show').addEventListener('click',function(){pick(c.i);$('credits').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'})});
+});
+// Newest first; undated next; personal projects last
+function yr(c){return TRACKS[c.track].kind==='own'?-2:typeof c.year==='number'?c.year:c.sortYear||9999}
+CREDITS.slice().sort(function(a,b){return yr(b)-yr(a)||(yr(a)===-2?a.start-b.start:b.start-a.start)}).forEach(function(c){$('list').appendChild(c.row)});
+// Slots start at today, after any clip that runs up to it
+TRACKS.forEach(function(tr,t){var from=Math.max(last[t],NOW)+GAP;if(!tr.slot||from>=TOTAL)return;var s=document.createElement('div');s.className='slot';s.style.left=pct(from);s.style.width=pct(TOTAL-from);s.textContent=tr.slot.label;s.setAttribute('aria-hidden','true');lanes[t].appendChild(s)});
+// J/L step through clips left to right
+var ORDER=CREDITS.slice().sort(function(a,b){return a.start-b.start||a.track-b.track}).map(function(c){return c.i});
+function tick(cls,m,text){var k=document.createElement('div');k.className=cls;k.style.left=pct(m);if(text)k.appendChild(document.createElement('span')).textContent=text;$('ruler').appendChild(k);return k}
+for(var m=MARKERS[0].at%1;m<TOTAL;m+=1)if(m>0)tick(Math.round(m-MARKERS[0].at)%6?'tick':'tick major',m);
+for(var m=MARKERS[0].at%6;m<TOTAL-2;m+=6){var k=document.createElement('span');k.className='tcv'+((m-MARKERS[0].at)%12?' half':'');k.style.left=pct(m);k.textContent=tcOf(m/TOTAL);$('area').querySelector('.tc1').appendChild(k)}
+MARKERS.forEach(function(mk){var k=tick('mark '+mk.kind,mk.at,mk.label);k.title=mk.title;k.setAttribute('aria-label',mk.title);if(mk.kind!=='grad')return;
+  var l=document.createElement('div');l.className='lanes-mark';l.style.left=pct(mk.at);$('area').insertBefore(l,$('head'))});
+
+var PAL=[['#f7b6cd','#e5407a'],['#b8c9f0','#6b7fd6'],['#b9dba3','#5f8a4b'],['#f0dfae','#e0a53a']];
+function art(c){var v=$('pv'),t=$('pvt');
+ // Nothing under the playhead: plain black, like an empty spot in a sequence
+ if(!c){v.style.backgroundImage='none';v.style.backgroundColor='#000';t.textContent='';return}
+ // Title card: white title on black, for projects without picture yet
+ if(c.card){v.style.backgroundImage='none';v.style.backgroundColor='#000';v.style.color='#fff';t.innerHTML='<span class="card"></span>';t.firstChild.textContent=c.title;return}
+ var p=PAL[c.i%PAL.length];v.style.color='#1e1a3c';
+ if(c.still){v.style.backgroundImage='url('+c.still+')';t.textContent=''}
+ else{v.style.backgroundImage='radial-gradient(circle at 20% 125%,'+p[1]+' 0 38%,transparent 39%),linear-gradient(160deg,'+p[0]+',#f4fafa)';v.style.backgroundColor=p[0];t.textContent=c.title}}
+function p2(n){return String(n).padStart(2,'0')}
+// Timecode: like a film's picture start, 01:00:00:00 lands on graduation; one minute = one month
+function tcOf(p){var s=Math.round((3600+(p*TOTAL-MARKERS[0].at)*60)*24)/24,f=Math.floor((s%1)*24);s=Math.floor(s);return p2(Math.floor(s/3600))+':'+p2(Math.floor(s/60)%60)+':'+p2(s%60)+':'+p2(f)}
+// The playhead follows the cursor. The monitor works like a program monitor: it shows the topmost clip
+// at the playhead (V5 down to V1, then audio), unless the cursor is right on a lower clip or one was picked with J/L or a tap.
+var active=-1,hov=-1,hovRow=-1,sel=-1,headP=0;
+function covers(c,t){return t>=c.start&&t<c.start+c.min}
+function clipAt(t,row){return CREDITS.filter(function(c){return c.track===row&&covers(c,t)})[0]}
+function topAt(t){for(var r=0;r<TRACKS.length;r++){var c=clipAt(t,r);if(c)return c}}
+function setHead(p){headP=Math.max(0,Math.min(.9999,p));$('head').style.left=(headP*100)+'%';$('tc').textContent=$('tlc').textContent=tcOf(headP)}
+function render(){var t=headP*TOTAL,c=hov>=0?CREDITS[hov]:sel>=0&&covers(CREDITS[sel],t)?CREDITS[sel]:topAt(t);
+  active=c?c.i:-1;
+  heads.forEach(function(h,i){h.classList.toggle('on',!!c&&c.track===i)});
+  CREDITS.forEach(function(x){x.el.classList.toggle('on',x===c);x.row.classList.toggle('hl',x===c)});
+  if(c){art(c);$('mtag').textContent=TRACKS[c.track].tag;$('mt').textContent=c.monTitle||c.title;
+    $('mm').textContent=(c.role||'')+(c.role?when(c):String(c.year||''));
+    $('mx').textContent=c.note}
+  else{var after=t>=NOW,slot=hovRow>=0&&TRACKS[hovRow].slot;art(null);$('mtag').textContent=after&&slot?TRACKS[hovRow].tag:'Record Monitor';$('mm').textContent='';
+    $('mt').textContent=after?(slot?slot.ask:'Your next project?'):'Between projects';
+    $('mx').innerHTML=after?'Got a project that needs one? <a href="mailto:emilyj.furst@gmail.com">Say hello</a>':''}
+}
+function pick(i){var c=CREDITS[i];setHead((c.start+Math.min(c.min/2,3))/TOTAL);sel=i;hov=-1;render();reveal(headP)}
+// Credits list starts collapsed; the button or a clip click opens it
+function setList(open){$('list').hidden=!open;$('more').setAttribute('aria-expanded',open);$('more').textContent=open?'Hide credits':'Show all credits ('+CREDITS.length+')'}
+setList(false);$('more').addEventListener('click',function(){setList($('list').hidden)});
+function goTo(i){setList(true);sel=i;hov=-1;render();var r=CREDITS[i].row;r.open=true;r.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth',block:'center'});
+  r.classList.remove('flash');void r.offsetWidth;r.classList.add('flash')}
+var area=$('area'),sc=$('scroller'),down=false,tap=null;
+// Zoom: the track area grows to Z times the window and scrolls sideways; labels stay put
+var Z=1,ZMAX=12;
+function reveal(p){var x=p*area.offsetWidth;if(x<sc.scrollLeft+24||x>sc.scrollLeft+sc.clientWidth-24)sc.scrollLeft=x-sc.clientWidth/2}
+function setZoom(z,clientX){z=Math.max(1,Math.min(ZMAX,z));
+  var hx=headP*area.offsetWidth-sc.scrollLeft,ax=clientX!=null?clientX-sc.getBoundingClientRect().left:hx>=0&&hx<=sc.clientWidth?hx:sc.clientWidth/2,
+      f=(sc.scrollLeft+ax)/area.offsetWidth;
+  Z=z;area.style.width=(z*100)+'%';sc.scrollLeft=f*area.offsetWidth-ax;$('zr').value=Math.round(Math.log(z)/Math.log(ZMAX)*100)}
+$('zr').addEventListener('input',function(){setZoom(Math.pow(ZMAX,this.value/100))});
+$('zin').addEventListener('click',function(){setZoom(Z*1.5)});
+$('zout').addEventListener('click',function(){setZoom(Z/1.5)});
+$('zfit').addEventListener('click',function(){setZoom(1)});
+sc.addEventListener('wheel',function(e){if(!(e.ctrlKey||e.metaKey))return;e.preventDefault();setZoom(Z*Math.exp(-e.deltaY*(e.deltaMode?.05:.0025)),e.clientX)},{passive:false});
+function posAt(e){var r=area.getBoundingClientRect(),row=0;
+  lanes.forEach(function(l,i){if(i&&e.clientY>=(lanes[i-1].getBoundingClientRect().bottom+l.getBoundingClientRect().top)/2)row=i});
+  var p=Math.max(0,Math.min(.9999,(e.clientX-r.left)/r.width)),c=e.target.closest('.ruler,.tc1')?null:clipAt(p*TOTAL,row);return {p:p,c:c?c.i:-1,row:e.target.closest('.ruler')?-1:row}}
+// Mouse: the playhead follows the cursor; clicking a clip jumps to its credit.
+// Touch: swipes scroll, the ruler scrubs, a tap moves the playhead to that clip, and a second tap jumps to its credit.
+area.addEventListener('pointerdown',function(e){var at=posAt(e),scrub=e.pointerType==='mouse'||!!e.target.closest('.ruler');
+  tap={x:e.clientX,scrub:scrub,was:e.pointerType==='mouse'?hov:sel,moved:false};
+  if(scrub){down=true;area.classList.add('dragging');area.setPointerCapture(e.pointerId);setHead(at.p);hov=at.c;sel=-1;render()}});
+area.addEventListener('pointermove',function(e){if(!down&&e.pointerType!=='mouse')return;var at=posAt(e);
+  if(tap&&Math.abs(e.clientX-tap.x)>4)tap.moved=true;setHead(at.p);hov=e.pointerType==='mouse'?at.c:-1;hovRow=at.row;sel=-1;render()});
+area.addEventListener('pointerleave',function(e){if(!down){hov=-1;hovRow=-1;render()}});
+['pointerup','pointercancel'].forEach(function(n){area.addEventListener(n,function(e){var t=tap;down=false;tap=null;area.classList.remove('dragging');
+  if(n!=='pointerup'||!t||t.moved||Math.abs(e.clientX-t.x)>=6)return;var at=posAt(e);
+  if(!t.scrub){setHead(at.p);sel=at.c;render()}
+  if(at.c>=0&&t.was===at.c)goTo(at.c)})});
+addEventListener('keydown',function(e){var k=e.key.toLowerCase();if(e.metaKey||e.ctrlKey||e.altKey||/^(INPUT|TEXTAREA)$/.test(e.target.tagName))return;
+  if(k==='='||k==='+'){setZoom(Z*1.5);return}if(k==='-'||k==='_'){setZoom(Z/1.5);return}if(k==='\\'){setZoom(1);return}if(k!=='j'&&k!=='l')return;
+  var n=ORDER.indexOf(active);pick(ORDER[(Math.max(n,0)+(k==='l'?1:ORDER.length-1))%ORDER.length])});
+// Open on a Netflix credit
+pick(Math.max(0,CREDITS.findIndex(function(c){return /^Pop Star Academy/.test(c.title)})));
+CREDITS.forEach(function(c){if(c.still)new Image().src=c.still});
+if(!window.PREVIEW)$('play').addEventListener('click',function(e){e.preventDefault();var f=document.createElement('iframe');
+  f.src='https://www.youtube-nocookie.com/embed/6ofU30wRzsM?autoplay=1&rel=0&playsinline=1';f.title='Emily Furst editing reel';
+  f.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';f.allowFullscreen=true;$('reelbox').replaceChildren(f)});
+})();
+</script>
+</body>
+</html>
