@@ -126,8 +126,9 @@ h2{font-size:clamp(1.9rem,4vw,2.8rem);line-height:1.05;letter-spacing:-.02em;mar
 .cxb{min-width:0}
 .cx h4{margin:0 0 .25rem;font-size:.72rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
 .cx .syn{margin:0 0 1rem;font-size:1rem;line-height:1.55;max-width:38rem}
-.cx dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:.3rem 1.1rem;margin:0;font-size:.92rem;line-height:1.45;max-width:38rem}
+.cx dl{display:grid;grid-template-columns:11rem minmax(0,1fr);gap:.3rem 1.1rem;margin:0;font-size:.92rem;line-height:1.45;max-width:38rem}
 .cx dt{color:var(--muted);font-size:.72rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding-top:.15rem}.cx dd{margin:0;white-space:pre-line}
+.cx dl+h4,.cx dl+dl,.cx .syn+dl{margin-top:1rem}.cx .syn:has(+dl){margin-bottom:0}
 .cx .meta{margin:.85rem 0 0;font-size:.85rem;color:var(--muted)}
 .cx .trv{grid-column:1/-1;position:relative;aspect-ratio:16/9;max-width:100%}
 .cx .trv iframe{position:absolute;inset:0;width:100%;height:100%;border:2px solid var(--ink);border-radius:8px;background:#000}
@@ -277,7 +278,7 @@ var CREDITS=[
  {track:0,at:month(2022,12),len:1,title:"Faye & Lexi",still:"images/stills/faye-and-lexi.jpg",role:"Colorist",year:2022,note:"Narrative short · Drama"},
  {track:0,at:month(2023,4)-.1,len:1,title:"That's the Spirit",still:"images/stills/thats-the-spirit.jpg",role:"Colorist",year:2023,note:"Narrative short · Mockumentary"},
  {track:0,at:month(2023,9),len:1,title:"White Gaze",still:"images/stills/white-gaze.jpg",role:"Colorist",year:2023,note:"Narrative short · Drama"},
- {track:5,at:month(2024,8),len:9,title:"Paul American",still:"images/stills/paul-american.jpg",role:"Assistant Editor",year:2025,note:"HBO Max · Series"},
+ {track:5,at:month(2024,8),len:9,title:"Paul American",still:"images/stills/paul-american.jpg",role:"Assistant Editor",year:2025,note:"HBO Max · Documentary series"},
  {track:3,at:month(2023,8)+11.5,len:3,title:"I Don't Even Skate",still:"images/stills/i-dont-even-skate.jpg",poster:"images/posters/i-dont-even-skate.jpg",role:"Editor",year:2026,note:"Narrative short · Drama"},
  {track:3,at:month(2023,8)+15,len:3,title:"Socks",still:"images/stills/socks.jpg",poster:"images/posters/socks.jpg",role:"Editor",year:"Completed",sortYear:2026,note:"Narrative short · Drama"},
  {track:5,at:month(2023,8)+21,len:3,title:"aka Charlie Sheen",still:"images/stills/aka-charlie-sheen.jpg",role:"Assistant Editor",year:2025,note:"Netflix · Two-part documentary"},
@@ -290,42 +291,47 @@ var CREDITS=[
  {track:3,at:NOW-1,len:1,title:"Keeper",still:"images/stills/keeper.jpg",role:"Editor",year:"In post",note:"Narrative short · Drama"}
 ];
 // More about each project, shown when its credit is opened (from the film pages on the old portfolio site).
-// syn = synopsis (synLabel changes its heading), crew = [heading, names] rows, imdb = IMDb title id,
-// trailer = YouTube video id, watch = {label,url,note} for a full film link.
+// Every project of a kind shows the same headings, in the order of SHORT_ROWS / DOC_ROWS below; a heading
+// with nothing filled in is left out. Format, genre and network live in the credit's one-liner (`note`).
+// syn = synopsis (synLabel renames it), imdb = IMDb title id, trailer = YouTube video id,
+// watch = {label,url,note} for a full film link, roleFull = a longer role than the one on the credit row.
+var SHORT_ROWS=[['starring','Starring'],['director','Director'],['writers','Writer','Writers'],['producers','Producer','Producers'],['dp','Director of Photography'],['pd','Production Designer']];
+var DOC_ROWS=[['starring','Starring'],['companies','Production Companies'],['director','Director'],['editors','Editors'],['post','Post Supervisor'],['aes','Other Assistant Editors'],['awards','Awards']];
 var DETAILS={
  "Cocoon":{syn:"Hyun-sook pressures her anxious daughter to greet her strict grandmother for Lunar New Year, but when her daughter, Jisoo cannot speak, she must choose between punishment or defying generational expectations.",
-  crew:[["Starring","Taehee Kim, Alexes Josephine Lee, Joy Sung Kim"],["Director","Sujin Jung"],["Writers","Sujin Jung, Dongwon Oh"],["Producers","Jiyeon Kim-Myung, Nana Okamoto"],["Director of Photography","Red Jitar"],["Production Designer","Apoorva Choudhary"],["Editor","Emily Furst"]],
+  starring:"Taehee Kim, Alexes Josephine Lee, Joy Sung Kim",director:"Sujin Jung",writers:"Sujin Jung, Dongwon Oh",producers:"Jiyeon Kim-Myung, Nana Okamoto",dp:"Red Jitar",pd:"Apoorva Choudhary",
   imdb:"tt30037286",trailer:"j8jfOaStakA"},
  "Socks":{syn:"7-year-old Ella lives with her turbulent parents and a very special friend that she shares her socks with. When her parents are caught in a financial dilemma, she must choose between her mom and her beloved friend.",
-  crew:[["Starring","Sabine Grace, Kim Ellis"],["Writer/Director","Jiyeon Kim-Myung"],["Producers","Nana Okamoto, Eugene Ko"],["Director of Photography","Red Jitar"],["Production Designer","Apoorva Choudhary"],["Editor","Emily Furst"]],
+  starring:"Sabine Grace, Kim Ellis",director:"Jiyeon Kim-Myung",writers:"Jiyeon Kim-Myung",producers:"Nana Okamoto, Eugene Ko",dp:"Red Jitar",pd:"Apoorva Choudhary",
   imdb:"tt38117287"},
  "I Don't Even Skate":{syn:"Working under the table and under pressure, a naive aspiring skater must endure her exploitative boss’s unreasonable demands in order to attend a pivotal skateboarding event that could launch her career.",
-  crew:[["Starring","Ren Tran, Malcolm Amin, Emma Valdez, Aurelio de Anda"],["Writer/Director","Zyortza"],["Producers","Zyortza, Kelsey Langat"],["Director of Photography","Donald Nam"],["Production Designer","Shania Singh"],["Editor","Emily Furst"]],
+  starring:"Ren Tran, Malcolm Amin, Emma Valdez, Aurelio de Anda",director:"Zyortza",writers:"Zyortza",producers:"Zyortza, Kelsey Langat",dp:"Donald Nam",pd:"Shania Singh",
   links:[{label:"Letterboxd",url:"https://letterboxd.com/film/i-dont-even-skate/"}]},
  "Ornamental Oriental":{syn:"A film in three parts, through three sessions and three core memories. We address each damaging narrative forced upon us as a collective and through radical honesty, we come to a reckoning.",
-  crew:[["Starring","Annie Garretson, Tia Kaiulani Kanaeholo, Christian Machi"],["Director","Jessica Qinyue Luo"],["Writer","Tia Kaiulani Kanaeholo"],["Producers","Tia Kaiulani Kanaeholo, Jessica Qinyue Luo"],["Director of Photography","Yiran Chen"],["Editor","Emily Furst"]],
+  starring:"Annie Garretson, Tia Kaiulani Kanaeholo, Christian Machi",director:"Jessica Qinyue Luo",writers:"Tia Kaiulani Kanaeholo",producers:"Tia Kaiulani Kanaeholo, Jessica Qinyue Luo",dp:"Yiran Chen",
   imdb:"tt32523066",watch:{label:"Watch on Vimeo",url:"https://vimeo.com/999609165",note:"Password: LMU"}},
  "Promises, Promises":{syn:"Helena loses the chance to run in the conference game, whereas her best friend Joanna is selected as the best runner to represent the team. After hearing about an accident that happened to another athlete, Helena decides to sabotage Joanna.",
-  crew:[["Starring","Julia James, Leia Yan, Maria Jose De La Cruz"],["Director","Yunyi Zhu"],["Writers","Yunyi Zhu, Louisa Danger Rorschach"],["Producers","Enyi Zhu, Yunyi Zhu, Christopher Putlock, Charlotte Hendrickx, Joaquina Gentil"],["Director of Photography","Zheng Yu"],["Editor","Emily Furst"]],
+  starring:"Julia James, Leia Yan, Maria Jose De La Cruz",director:"Yunyi Zhu",writers:"Yunyi Zhu, Louisa Danger Rorschach",producers:"Enyi Zhu, Yunyi Zhu, Christopher Putlock, Charlotte Hendrickx, Joaquina Gentil",dp:"Zheng Yu",
   imdb:"tt23391118"},
  "Mom Is Visiting 妈妈来了":{syn:"After Ying, a successful voice actor who owns a sound studio, accidentally slips the secret that she is pregnant through IVF, her mom Hong suddenly visits the U.S. from China without notice.",
-  crew:[["Starring","Lee Chen, Marina Savoy, Hang Ren"],["Director","Meixuan Li"],["Writers","Meixuan Li, Dongwon Oh"],["Producers","Bridget Gales, Dallas Garcia, Yuxing Lei, Meixuan Li, Po Wei Su"],["Director of Photography","Vahan Bedelian, Bo-Yu Chen"],["Production Designer","Simon Gao"],["Editor","Emily Furst"]],
+  starring:"Lee Chen, Marina Savoy, Hang Ren",director:"Meixuan Li",writers:"Meixuan Li, Dongwon Oh",producers:"Bridget Gales, Dallas Garcia, Yuxing Lei, Meixuan Li, Po Wei Su",dp:"Vahan Bedelian, Bo-Yu Chen",pd:"Simon Gao",
   imdb:"tt25988006"},
  "Over Easy":{syn:"Two lesbians, who just wanted a fun and casual night, are delivered a giant egg that will hatch into their baby. They must figure out what to do with this unsolicited delivery item.",
-  crew:[["Starring","Kaitlyn Ohara, Christine Liao"],["Writer/Director","Jiyeon Kim-Myung"],["Producers","Kevin Yiu, Jiyeon Kim-Myung, Anna Yuxing Lei, Shamel Fadloun"],["Director of Photography","Red Jitar"],["Production Designer","Mari Kure"],["Editor","Emily Furst"]],
+  starring:"Kaitlyn Ohara, Christine Liao",director:"Jiyeon Kim-Myung",writers:"Jiyeon Kim-Myung",producers:"Kevin Yiu, Jiyeon Kim-Myung, Anna Yuxing Lei, Shamel Fadloun",dp:"Red Jitar",pd:"Mari Kure",
   imdb:"tt27756125"},
  "Attached":{syn:"A college student struggles with a horrific side-effect of his cellphone obsession while taking his final exam that he cannot risk failing.",
-  crew:[["Starring","David Vi Hoang, Ron L. Palmer, Maddie Nguyen"],["Writer/Director","Xingyu ‘Harry’ Chen"],["Producer","Jiyeon Kim-Myung"],["Director of Photography","Bo-Yu Chen"],["Production Designer","Yiming Fang"],["Co-Editor/VFX/Script Supervisor","Emily Furst"]],
+  roleFull:"Co-Editor, VFX, Script Supervisor",
+  starring:"David Vi Hoang, Ron L. Palmer, Maddie Nguyen",director:"Xingyu ‘Harry’ Chen",writers:"Xingyu ‘Harry’ Chen",producers:"Jiyeon Kim-Myung",dp:"Bo-Yu Chen",pd:"Yiming Fang",
   imdb:"tt18250822"},
  "aka Charlie Sheen":{syn:"After 7 years sober, Charlie Sheen candidly discusses his rise to fame and public downfall, joined by family and friends who share untold stories of his journey through stardom, struggles, and redemption.",
-  crew:[["Production Companies","Boardwalk Pictures, North of Now, Skydance"],["Director","Andrew Renzi"],["Editors","Ed Greene, ACE; Wyatt Rogowski; Daniel Wyknenko"],["Post Supervisor","Kelly Rose"],["Assistant Editors","Daniel Wyknenko, Ismail Rashed, Emily Furst"],
-   ["Awards","ACE Eddie Nominee (Best Edited Documentary Series), Part 1 · Ed Greene\nPGA Award Nominee (Outstanding Producer of Non-Fiction Television) · Andrew Renzi, Charles Roven, Nick Boak, Madison Weireter, Jesse Sisgold, Jon Weinbach, Jordan Wynn, Andrew Fried, Dane Lillegard, Talin Parseghian Middleton, Michael Minahan, Vivian Johnson Rogowski"]],
+  companies:"Boardwalk Pictures, North of Now, Skydance",director:"Andrew Renzi",editors:"Ed Greene, ACE; Wyatt Rogowski; Daniel Wyknenko",post:"Kelly Rose",aes:"Daniel Wyknenko, Ismail Rashed",
+  awards:"ACE Eddie Nominee (Best Edited Documentary Series), Part 1 · Ed Greene\nPGA Award Nominee (Outstanding Producer of Non-Fiction Television) · Andrew Renzi, Charles Roven, Nick Boak, Madison Weireter, Jesse Sisgold, Jon Weinbach, Jordan Wynn, Andrew Fried, Dane Lillegard, Talin Parseghian Middleton, Michael Minahan, Vivian Johnson Rogowski",
   imdb:"tt37898320",trailer:"WqQUvfsavO4"},
  "Paul American":{syn:"Follows social media stars Jake and Logan Paul, revealing private moments and personal insights into their extravagant lifestyles and family dynamics.",
-  crew:[["Production Companies","Boardwalk Pictures, North of Now"],["Director","Michael John Warren"],["Editors","Michael Anthony Brown, ACE; Meg Ramsay; Edward A. Bishop; Ben Eisele; Matthew Greenberg; Peter Holmes; Malcolm Hearn"],["Post Supervisor","Kelly Rose"],["Assistant Editors","Maria Petros (also Additional Editor), Francisco Huzel, Daniel Wyknenko, Emily Furst"]],
+  companies:"Boardwalk Pictures, North of Now",director:"Michael John Warren",editors:"Michael Anthony Brown, ACE; Meg Ramsay; Edward A. Bishop; Ben Eisele; Matthew Greenberg; Peter Holmes; Malcolm Hearn",post:"Kelly Rose",aes:"Maria Petros (also Additional Editor), Francisco Huzel, Daniel Wyknenko",
   imdb:"tt35635261",trailer:"s-Hlvz-t50g"},
  "Pop Star Academy: KATSEYE":{syn:"Twenty aspiring pop stars undergo a K-pop training program in this docu-series about the creation of HYBE x Geffen's first global girl group, KATSEYE.",
-  crew:[["Production Companies","Boardwalk Pictures, Interscope Geffen A&M Records, HYBE"],["Director","Nadia Hallgren"],["Editors","Alex O’Flinn (Supervising Editor), Kimberely Hassett (Supervising Editor), Betsy Kagen, Sharon Weaver, Janah Elise Cox, Sarah Devorkin, Peter Holmes, Eric F. Martin, Mark Imgrund, Greg O’Toole, Jonah Moran"],["Post Supervisor","Michael Suter"],["Assistant Editors","Ismail Rashed (Lead AE), Brian Vinik, Emily Furst, Jiyeon Kim-Myung"]],
+  companies:"Boardwalk Pictures, Interscope Geffen A&M Records, HYBE",director:"Nadia Hallgren",editors:"Alex O’Flinn (Supervising Editor), Kimberely Hassett (Supervising Editor), Betsy Kagen, Sharon Weaver, Janah Elise Cox, Sarah Devorkin, Peter Holmes, Eric F. Martin, Mark Imgrund, Greg O’Toole, Jonah Moran",post:"Michael Suter",aes:"Ismail Rashed (Lead AE), Brian Vinik, Jiyeon Kim-Myung",
   imdb:"tt28810495",trailer:"B7eSStth_v0"},
  "Dimenticato":{synLabel:"Logline",syn:"A rigid matriarch fights to maintain the 'perfect' 1950s life that exists only in her mind, unaware that her quest for domestic control is dismantling the lives of the only people left who love her."}
 };
@@ -356,11 +362,12 @@ function status(c){return typeof c.year==='number'?'Released '+c.year:c.year}
 function panel(c){
   var pic=c.poster?'<img class="poster" src="'+esc(c.poster)+'" alt="Poster for '+esc(c.title)+'" loading="lazy">':c.card?'<div class="tcard">'+esc(c.title)+'</div>':c.still?'<img src="'+esc(c.still)+'" alt="Still from '+esc(c.title)+'" loading="lazy">':'';
   function a(url,label,cls){return '<a'+(cls?' class="'+cls+'"':'')+' href="'+esc(url)+'" target="_blank" rel="noopener">'+esc(label)+'</a>'}
-  var rows=c.crew?c.crew:[['Role',c.role],['Format',c.note]];
-  return '<div class="cx'+(c.poster?' pst':pic?'':' nopic')+'">'+pic+'<div class="cxb">'+
+  var kind=TRACKS[c.track].kind,top=[['Role',c.roleFull||c.role]],
+      crew=(kind==='doc'?DOC_ROWS:kind==='own'?[]:SHORT_ROWS).map(function(r){var v=c[r[0]];return [r[2]&&/,/.test(v)?r[2]:r[1],v]});
+  function dl(rows){rows=rows.filter(function(r){return r[1]});return rows.length?'<dl>'+rows.map(function(r){return '<dt>'+esc(r[0])+'</dt><dd>'+esc(r[1])+'</dd>'}).join('')+'</dl>':''}
+  return '<div class="cx'+(c.poster?' pst':pic?'':' nopic')+'">'+pic+'<div class="cxb">'+dl(top)+
     (c.syn?'<h4>'+esc(c.synLabel||'Synopsis')+'</h4><p class="syn">'+esc(c.syn)+'</p>':'')+
-    (c.about?'<p class="syn">'+esc(c.about)+'</p>':'')+
-    '<dl>'+rows.map(function(r){return '<dt>'+esc(r[0])+'</dt><dd>'+esc(r[1])+'</dd>'}).join('')+'</dl>'+
+    (c.about?'<p class="syn">'+esc(c.about)+'</p>':'')+dl(crew)+
     '<p class="meta">Worked on '+span(c)+' · '+esc(status(c))+'</p>'+
     '<div class="acts">'+(c.trailer?a('https://youtu.be/'+c.trailer,'Watch trailer','trl'):'')+
     (c.watch?a(c.watch.url,c.watch.label):'')+(c.imdb?a('https://www.imdb.com/title/'+c.imdb+'/','IMDb'):'')+
