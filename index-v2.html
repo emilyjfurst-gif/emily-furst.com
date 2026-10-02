@@ -291,7 +291,7 @@ var CREDITS=[
 // More about each project, shown when its credit is opened (from the film pages on the old portfolio site, the posters and my resume).
 // Every project of a kind shows the same headings (role is the tag on the row), in the order of SHORT_ROWS / DOC_ROWS below; a heading
 // with nothing filled in is left out. Format, genre and network live in the credit's one-liner (`note`).
-// syn = synopsis, imdb = IMDb title id, trailer = YouTube video id,
+// syn = synopsis, imdb = IMDb title id, trailer = YouTube or Vimeo link (plays in the credit),
 // watch = {label,url,note} for a full film link, endNote = a line after the credits.
 var SHORT_ROWS=[['starring','Starring'],['director','Director'],['writers','Writer','Writers'],['producers','Producer','Producers'],['dp','Director of Photography'],['pd','Production Designer']];
 var DOC_ROWS=[['starring','Starring'],['companies','Production Company','Production Companies'],['director','Director'],['editors','Editors'],['post','Post Supervisor'],['aes','Other Assistant Editors'],['awards','Awards']];
@@ -323,17 +323,18 @@ var DETAILS={
  "aka Charlie Sheen":{syn:"After 7 years sober, Charlie Sheen candidly discusses his rise to fame and public downfall, joined by family and friends who share untold stories of his journey through stardom, struggles, and redemption.",
   companies:"Boardwalk Pictures, North of Now, Skydance",director:"Andrew Renzi",editors:"Ed Greene, ACE; Wyatt Rogowski; Daniel Wyknenko",post:"Kelly Rose",aes:"Daniel Wyknenko, Ismail Rashed",
   awards:"ACE Eddie Nominee (Best Edited Documentary Series), Part 1 · Ed Greene\n\nPGA Award Nominee (Outstanding Producer of Non-Fiction Television) · Andrew Renzi, Charles Roven, Nick Boak, Madison Weireter, Jesse Sisgold, Jon Weinbach, Jordan Wynn, Andrew Fried, Dane Lillegard, Talin Parseghian Middleton, Michael Minahan, Vivian Johnson Rogowski",
-  imdb:"tt37898320",trailer:"WqQUvfsavO4"},
+  imdb:"tt37898320",trailer:"https://youtu.be/WqQUvfsavO4"},
  "Paul American":{syn:"Follows social media stars Jake and Logan Paul, revealing private moments and personal insights into their extravagant lifestyles and family dynamics.",
   companies:"Boardwalk Pictures, North of Now",director:"Michael John Warren",editors:"Michael Anthony Brown, ACE; Meg Ramsay; Edward A. Bishop; Ben Eisele; Matthew Greenberg; Peter Holmes; Malcolm Hearn",post:"Kelly Rose",aes:"Maria Petros (also Additional Editor), Francisco Huzel, Daniel Wyknenko",
-  imdb:"tt35635261",trailer:"s-Hlvz-t50g"},
+  imdb:"tt35635261",trailer:"https://youtu.be/s-Hlvz-t50g"},
  "Pop Star Academy: KATSEYE":{syn:"Twenty aspiring pop stars undergo a K-pop training program in this docu-series about the creation of HYBE x Geffen's first global girl group, KATSEYE.",
   companies:"Boardwalk Pictures, Interscope Geffen A&M Records, HYBE",director:"Nadia Hallgren",editors:"Alex O’Flinn (Supervising Editor), Kimberely Hassett (Supervising Editor), Betsy Kagen, Sharon Weaver, Janah Elise Cox, Sarah Devorkin, Peter Holmes, Eric F. Martin, Mark Imgrund, Greg O’Toole, Jonah Moran",post:"Michael Suter",aes:"Ismail Rashed (Lead AE), Brian Vinik, Jiyeon Kim-Myung",
-  imdb:"tt28810495",trailer:"B7eSStth_v0"},
+  imdb:"tt28810495",trailer:"https://youtu.be/B7eSStth_v0"},
  "Unannounced feature":{companies:"Dorothy St Pictures",director:"Andrew Renzi",editors:"Ed Greene, ACE; Daniel Wyknenko"},
  "Untitled development project":{companies:"Boardwalk Pictures",director:"Andrew Renzi",editors:"Ed Greene, ACE; Daniel Wyknenko"},
  "Keeper":{syn:"When a dog attack sparks a racially charged neighborhood feud in L.A.'s Koreatown, 14-year-old Mina becomes trapped in an escalating cycle of inherited violence.",
   director:"Sujin Jung"},
+ "That's the Spirit":{trailer:"https://vimeo.com/817507660/74e305c195"},
  "White Gaze":{starring:"Gema Limeta, Shannon Gibbs, Alain Argueta",director:"ETA",writers:"ETA",producers:"Shanhuan Manton",dp:"Cole Maslansky",pd:"Mikaela Rose"},
  "Faye & Lexi":{director:"Olivia Lige Wuri",producers:"Olivia Lige Wuri"},
  "Dimenticato":{about:"Family drama feature film script tackling the topic of dementia."}
@@ -356,6 +357,9 @@ $('labels').style.gridTemplateRows=$('area').style.gridTemplateRows=rows;
 CREDITS.forEach(function(c,i){c.i=i;c.start=c.at;c.min=c.len;last[c.track]=Math.max(last[c.track],c.at+c.len)});
 function pct(m){return (m/TOTAL*100)+'%'}
 function when(c){return c.year===''?'':' · '+(typeof c.year==='number'?'Released '+c.year:c.year)}
+// A YouTube or Vimeo link turned into its player (Vimeo's private-link hash rides along as h=)
+function embed(u){var y=u.match(/(?:youtu\.be\/|v=)([\w-]{11})/),v=u.match(/vimeo\.com\/(\d+)(?:\/(\w+))?/);
+  return y?'https://www.youtube-nocookie.com/embed/'+y[1]+'?autoplay=1&rel=0&playsinline=1':'https://player.vimeo.com/video/'+v[1]+'?autoplay=1'+(v[2]?'&h='+v[2]:'')}
 function esc(x){return String(x).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;')}
 function panel(c){
   var pic=c.poster?'<img class="poster" src="'+esc(c.poster)+'" alt="Poster for '+esc(c.title)+'" loading="lazy">':'';
@@ -369,7 +373,7 @@ function panel(c){
   return '<div class="cx'+(pic?' pst':' nopic')+'">'+pic+'<div class="cxb">'+
     (c.syn?'<h4>'+'Synopsis'+'</h4><p class="syn">'+esc(c.syn)+'</p>':'')+
     (c.about?'<p class="syn">'+esc(c.about)+'</p>':'')+dl(crew)+(c.endNote?'<p class="meta">'+esc(c.endNote)+'</p>':'')+
-    '<div class="acts">'+(c.trailer?a('https://youtu.be/'+c.trailer,'Watch trailer','trl'):'')+
+    '<div class="acts">'+(c.trailer?a(c.trailer,'Watch trailer','trl'):'')+
     (c.watch?a(c.watch.url,c.watch.label):'')+(c.imdb?a('https://www.imdb.com/title/'+c.imdb+'/','IMDb'):'')+
     (c.links||[]).map(function(l){return a(l.url,l.label)}).join('')+
     '<button type="button" class="show">Show on timeline</button></div>'+
@@ -386,7 +390,7 @@ CREDITS.forEach(function(c){
     CREDITS.forEach(function(x){if(x.row!==r)x.row.open=false});r.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth',block:'start'})});
   // Trailers play right in the credit, like the reel (the preview build links out to YouTube instead)
   var trl=r.querySelector('.trl');if(trl&&!window.PREVIEW)trl.addEventListener('click',function(e){e.preventDefault();var v=r.querySelector('.trv');
-    if(!v.firstChild){var f=document.createElement('iframe');f.src='https://www.youtube-nocookie.com/embed/'+c.trailer+'?autoplay=1&rel=0&playsinline=1';f.title=c.title+' trailer';
+    if(!v.firstChild){var f=document.createElement('iframe');f.src=embed(c.trailer);f.title=c.title+' trailer';
       f.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';f.allowFullscreen=true;v.appendChild(f)}v.hidden=false});
   r.addEventListener('toggle',function(){var v=r.querySelector('.trv');if(!r.open&&v){v.hidden=true;v.replaceChildren()}});
   r.querySelector('.show').addEventListener('click',function(){pick(c.i);$('credits').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'})});
