@@ -60,13 +60,16 @@ h1 .ghost{position:absolute;inset:0;color:var(--pink);opacity:.5;transform:trans
 @media (hover:hover){.zoom button:hover{background:var(--sand);color:#1e1a3c}}
 .zoom input{width:min(12rem,40vw);accent-color:var(--pink)}
 .ruler{position:relative;border-bottom:1.5px solid var(--line)}
-.tick{position:absolute;bottom:0;height:.3rem;border-left:1px solid var(--muted);opacity:.55}
-.tick.major{height:.65rem;opacity:1}
-.tick span{position:absolute;bottom:.15rem;left:4px;font-size:.72rem;font-weight:600;color:var(--muted);white-space:nowrap;line-height:1}
+/* Calendar ruler: year labels on top, month labels below, a tick per month and a full-height tick each January */
+.tick{position:absolute;bottom:0;height:.35rem;border-left:1px solid var(--muted);opacity:.5}
+.tick.yr{height:100%;opacity:.8}.tick.yr.first{border-left:0}.tick.yr.first span{left:2px}
+.tick.yr span{position:absolute;top:.1rem;left:5px;font-size:.8rem;font-weight:800;color:var(--ink);line-height:1;font-variant-numeric:tabular-nums}
+.mo{position:absolute;bottom:.4rem;transform:translateX(-50%);font-size:.62rem;font-weight:600;color:var(--muted);line-height:1;pointer-events:none}
+.mo::before{content:attr(data-s)}.ruler.wide .mo::before{content:attr(data-l)}.ruler.tight .mo{display:none}.ruler.tight .mark span{top:auto;bottom:.6rem}.ruler.tight .tick.yr.first span{display:none}
 .mark{position:absolute;bottom:0;height:100%;z-index:2;cursor:help}
 .mark::before{content:"";position:absolute;left:-5px;bottom:-5px;width:10px;height:10px;background:var(--sand);border:1.5px solid var(--ink);transform:rotate(45deg)}
-.mark span{position:absolute;bottom:.75rem;left:7px;font-size:.72rem;font-weight:800;color:var(--ink);background:var(--sand);border:1.5px solid var(--ink);border-radius:4px;padding:0 .3rem;line-height:1.3;white-space:nowrap}
-.lanes-mark{position:absolute;top:2.4rem;bottom:0;width:0;border-left:1.5px dashed var(--muted);opacity:.6;pointer-events:none}
+.mark span{position:absolute;top:.05rem;left:7px;font-size:.72rem;font-weight:800;color:var(--ink);background:var(--sand);border:1.5px solid var(--ink);border-radius:4px;padding:0 .3rem;line-height:1.3;white-space:nowrap}
+.lanes-mark{position:absolute;top:3rem;bottom:0;width:0;border-left:1.5px dashed var(--muted);opacity:.6;pointer-events:none}
 .lane{position:relative;background:repeating-linear-gradient(90deg,transparent 0 calc(100% - 1px),var(--line) 0);border-radius:6px}
 .clip{position:absolute;top:0;bottom:0;border:1px solid var(--edge,var(--cd));border-radius:3px;padding:0;font:inherit;font-size:.78rem;font-weight:600;color:#1e1a3c;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;line-height:1.3}
 .clip,.zoom button{-webkit-tap-highlight-color:transparent}
@@ -222,7 +225,7 @@ var CREDITS=[
  {track:3,at:NOW-1,len:1,title:"Keeper",still:"images/stills/keeper.jpg",role:"Editor",year:"In post",note:"Narrative short · Drama"}
 ];
 (function(){
-var $=function(i){return document.getElementById(i)},TOTAL=END,rows='2.4rem',last=TRACKS.map(function(){return 0});
+var $=function(i){return document.getElementById(i)},TOTAL=END,rows='3rem',last=TRACKS.map(function(){return 0});
 // Avid-style track headers: monitor (video) or speaker (audio) icon, sync lock, track selector button
 var ICON={vid:'<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="3" width="13" height="8.5" rx="1"/><path d="M5 14h6"/></svg>',
   aud:'<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6h3l4-3v10l-4-3H2z"/><path d="M11.5 5.5a3.5 3.5 0 0 1 0 5"/></svg>',
@@ -255,7 +258,14 @@ TRACKS.forEach(function(tr,t){var from=Math.max(last[t],NOW)+GAP;if(!tr.slot||fr
 // J/L step through clips left to right
 var ORDER=CREDITS.slice().sort(function(a,b){return a.start-b.start||a.track-b.track}).map(function(c){return c.i});
 function tick(cls,m,text){var k=document.createElement('div');k.className=cls;k.style.left=pct(m);if(text)k.appendChild(document.createElement('span')).textContent=text;$('ruler').appendChild(k);return k}
-for(var m=MARKERS[0].at%1;m<TOTAL;m+=1)if(m>0)tick(Math.round(m-MARKERS[0].at)%6?'tick':'tick major',m);
+var MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+for(var m=JAN2026%1;m<TOTAL;m+=1){var ix=Math.round(m-JAN2026),mo=((ix%12)+12)%12,yr=2026+Math.floor(ix/12);
+  if(m===JAN2026%1&&mo)tick('tick yr first',0,String(yr)); // label the partial first year at the left edge
+  tick(mo?'tick':'tick yr',m,mo||TOTAL-m<3?'':String(yr));
+  if(m+.5<TOTAL){var t=document.createElement('span');t.className='mo';t.style.left=pct(m+.5);t.dataset.s=MON[mo][0];t.dataset.l=MON[mo];$('ruler').appendChild(t)}}
+// Month labels: initials when the timeline fits the screen, abbreviations when zoomed in, hidden when too tight
+function rulerFit(){var w=$('area').offsetWidth/TOTAL;$('ruler').classList.toggle('wide',w>=30);$('ruler').classList.toggle('tight',w<11)}
+rulerFit();addEventListener('resize',rulerFit);
 for(var m=MARKERS[0].at%6;m<TOTAL-2;m+=6){var k=document.createElement('span');k.className='tcv'+((m-MARKERS[0].at)%12?' half':'');k.style.left=pct(m);k.textContent=tcOf(m/TOTAL);$('area').querySelector('.tc1').appendChild(k)}
 MARKERS.forEach(function(mk){var k=tick('mark',mk.at,mk.label);k.title=mk.title;k.setAttribute('aria-label',mk.title);
   var l=document.createElement('div');l.className='lanes-mark';l.style.left=pct(mk.at);$('area').insertBefore(l,$('head'))});
@@ -303,7 +313,7 @@ function reveal(p){var x=p*area.offsetWidth;if(x<sc.scrollLeft+24||x>sc.scrollLe
 function setZoom(z,clientX){z=Math.max(1,Math.min(ZMAX,z));
   var hx=headP*area.offsetWidth-sc.scrollLeft,ax=clientX!=null?clientX-sc.getBoundingClientRect().left:hx>=0&&hx<=sc.clientWidth?hx:sc.clientWidth/2,
       f=(sc.scrollLeft+ax)/area.offsetWidth;
-  Z=z;area.style.width=(z*100)+'%';sc.scrollLeft=f*area.offsetWidth-ax;$('zr').value=Math.round(Math.log(z)/Math.log(ZMAX)*100)}
+  Z=z;area.style.width=(z*100)+'%';rulerFit();sc.scrollLeft=f*area.offsetWidth-ax;$('zr').value=Math.round(Math.log(z)/Math.log(ZMAX)*100)}
 $('zr').addEventListener('input',function(){setZoom(Math.pow(ZMAX,this.value/100))});
 $('zin').addEventListener('click',function(){setZoom(Z*1.5)});
 $('zout').addEventListener('click',function(){setZoom(Z/1.5)});
