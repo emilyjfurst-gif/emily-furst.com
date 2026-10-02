@@ -32,7 +32,7 @@ h1 .ghost{position:absolute;inset:0;color:var(--pink);opacity:.5;transform:trans
 .lede{font-size:clamp(1.25rem,2.6vw,1.6rem);font-weight:600;letter-spacing:-.01em;margin:1.25rem 0 0}
 
 /* edit window */
-.nle{--rh:2.4rem;border:2px solid var(--ink);border-radius:14px;overflow:hidden;background:var(--paper)}
+.nle{border:2px solid var(--ink);border-radius:14px;overflow:hidden;background:var(--paper)}
 .mon{background:#1e1a3c;color:#f4fafa;padding:1.1rem 1.25rem;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:1.5rem;align-items:center}
 .info{display:grid;gap:.15rem;align-self:start;align-content:start}
 .pv{aspect-ratio:16/9;border-radius:8px;border:2px solid var(--paper);background-size:cover;background-position:center;display:grid;place-items:center;padding:1rem;text-align:center;color:#1e1a3c;font-weight:800;font-size:clamp(1.1rem,3vw,1.8rem);line-height:1.1;letter-spacing:-.02em;overflow:hidden}
@@ -67,7 +67,7 @@ h1 .ghost{position:absolute;inset:0;color:var(--pink);opacity:.5;transform:trans
 .mark{position:absolute;bottom:0;height:100%;z-index:2;cursor:help}
 .mark::before{content:"";position:absolute;left:-5px;bottom:-5px;width:10px;height:10px;background:var(--sand);border:1.5px solid var(--ink);transform:rotate(45deg)}
 .mark span{position:absolute;bottom:.75rem;left:7px;font-size:.72rem;font-weight:800;color:var(--ink);background:var(--sand);border:1.5px solid var(--ink);border-radius:4px;padding:0 .3rem;line-height:1.3;white-space:nowrap}
-.lanes-mark{position:absolute;top:var(--rh);bottom:0;width:0;border-left:1.5px dashed var(--muted);opacity:.6;pointer-events:none}
+.lanes-mark{position:absolute;top:2.4rem;bottom:0;width:0;border-left:1.5px dashed var(--muted);opacity:.6;pointer-events:none}
 .lane{position:relative;background:repeating-linear-gradient(90deg,transparent 0 calc(100% - 1px),var(--line) 0);border-radius:6px}
 .clip{position:absolute;top:0;bottom:0;border:1px solid var(--edge,var(--cd));border-radius:3px;padding:0;font:inherit;font-size:.78rem;font-weight:600;color:#1e1a3c;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;line-height:1.3}
 .clip,.zoom button{-webkit-tap-highlight-color:transparent}
@@ -183,6 +183,7 @@ footer{text-align:center;color:var(--muted);padding:1rem 0 2rem;font-size:.95rem
 .mark{--mk:#5cc46d}.mark.grad{--mk:#f0a23c}
 .mark::before{left:-4.5px;bottom:2px;width:9px;height:11px;background:var(--mk);border:0;transform:none;clip-path:polygon(0 0,100% 0,100% 62%,50% 100%,0 62%)}
 .mark span{bottom:15px;left:-1px;background:none;border:0;padding:0;color:var(--mk);font-size:.68rem;font-weight:700}
+.mark span.nofit{visibility:hidden}
 .lanes-mark{border-left:1px dashed #f0a23c;opacity:.55}
 .zoom{background:var(--pp-hd);border-top:1px solid var(--pp-sep);padding:.45rem .75rem}
 .zoom button{background:#2f2f2f;color:#ddd;border:1px solid #474747;border-radius:3px;height:1.7rem;min-width:1.7rem;font-size:.78rem}
@@ -191,9 +192,7 @@ footer{text-align:center;color:var(--muted);padding:1rem 0 2rem;font-size:.95rem
 /* Premiere blue for the playhead and timecode readouts (Avid-shaped indicator) */
 .head,.head::before{background:var(--pp-blue)}
 .tc{color:var(--pp-blue)}
-@media (max-width:700px){.body{grid-template-columns:2.5rem 1fr}.tlc{visibility:hidden;width:0;overflow:hidden}.tail,.ic.lk{display:none}.th{grid-template-columns:1fr}
-  /* Phones: no room beside the year labels, so the ruler grows and Graduated! sits on a line above them */
-  .nle{--rh:2.9rem}.mark.grad span{bottom:29px}}
+@media (max-width:700px){.body{grid-template-columns:2.5rem 1fr}.tlc{visibility:hidden;width:0;overflow:hidden}.tail,.ic.lk{display:none}.th{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -287,7 +286,7 @@ var CREDITS=[
  {track:3,at:NOW-1,len:1,title:"Keeper",still:"images/stills/keeper.jpg",role:"Editor",year:"In post",note:"Narrative short · Drama"}
 ];
 (function(){
-var $=function(i){return document.getElementById(i)},TOTAL=END,rows='var(--rh)',last=TRACKS.map(function(){return 0});
+var $=function(i){return document.getElementById(i)},TOTAL=END,rows='2.4rem',last=TRACKS.map(function(){return 0});
 // Premiere-style track headers: lock, track name (lit when targeted), eye for video, M/S for audio
 var ICON={eye:'<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 8s2.4-4.5 6.5-4.5S14.5 8 14.5 8 12.1 12.5 8 12.5 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></svg>',
   lock:'<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3.5" y="7" width="9" height="7" rx="1"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2"/></svg>'};
@@ -384,7 +383,11 @@ function reveal(p){var x=p*area.offsetWidth;if(x<sc.scrollLeft+24||x>sc.scrollLe
 function setZoom(z,clientX){z=Math.max(1,Math.min(ZMAX,z));
   var hx=headP*area.offsetWidth-sc.scrollLeft,ax=clientX!=null?clientX-sc.getBoundingClientRect().left:hx>=0&&hx<=sc.clientWidth?hx:sc.clientWidth/2,
       f=(sc.scrollLeft+ax)/area.offsetWidth;
-  Z=z;area.style.width=(z*100)+'%';sc.scrollLeft=f*area.offsetWidth-ax;$('zr').value=Math.round(Math.log(z)/Math.log(ZMAX)*100)}
+  Z=z;area.style.width=(z*100)+'%';sc.scrollLeft=f*area.offsetWidth-ax;$('zr').value=Math.round(Math.log(z)/Math.log(ZMAX)*100);fitMarks()}
+// Graduated! shows only when it clears the year labels beside it (on phones that means zooming in)
+function fitMarks(){var g=area.querySelector('.mark.grad span');if(!g)return;g.classList.remove('nofit');var a=g.getBoundingClientRect();
+  area.querySelectorAll('.mark.year span').forEach(function(y){var b=y.getBoundingClientRect();if(a.left<b.right+4&&b.left<a.right+4)g.classList.add('nofit')})}
+fitMarks();addEventListener('resize',fitMarks);if(document.fonts)document.fonts.ready.then(fitMarks);
 $('zr').addEventListener('input',function(){setZoom(Math.pow(ZMAX,this.value/100))});
 $('zin').addEventListener('click',function(){setZoom(Z*1.5)});
 $('zout').addEventListener('click',function(){setZoom(Z/1.5)});
