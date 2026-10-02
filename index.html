@@ -25,7 +25,7 @@ nav{display:flex;justify-content:flex-end;gap:1rem;padding:1.25rem 0;font-weight
 nav div{display:flex;gap:1.25rem;flex-wrap:wrap}nav a{text-decoration:none}nav a:hover{color:var(--pink)}
 .hero{padding:2.5rem 0 1rem}
 h1{font-size:clamp(3rem,11vw,8rem);line-height:.92;font-weight:800;letter-spacing:-.035em;margin:0;position:relative;display:inline-block}
-h1 .ghost{position:absolute;inset:0;color:var(--pink);opacity:.5;transform:translate(var(--gx,6px),var(--gy,4px));mix-blend-mode:multiply;pointer-events:none}
+h1 .ghost{position:absolute;inset:0;color:var(--pink);opacity:.5;transform:translate(6px,4px);mix-blend-mode:multiply;pointer-events:none}
 @media (prefers-color-scheme:dark){h1 .ghost{mix-blend-mode:screen}}
 .stack{display:none}
 .lede{font-size:clamp(1.25rem,2.6vw,1.6rem);font-weight:600;letter-spacing:-.01em;margin:1.25rem 0 0}
@@ -373,7 +373,6 @@ CREDITS.forEach(function(c){if(c.still)new Image().src=c.still});
 if(!window.PREVIEW)$('play').addEventListener('click',function(e){e.preventDefault();var f=document.createElement('iframe');
   f.src='https://www.youtube-nocookie.com/embed/6ofU30wRzsM?autoplay=1&rel=0&playsinline=1';f.title='Emily Furst editing reel';
   f.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';f.allowFullscreen=true;$('reelbox').replaceChildren(f)});
-document.addEventListener('pointermove',function(e){var n=$('name');n.style.setProperty('--gx',((e.clientX/innerWidth-.5)*24)+'px');n.style.setProperty('--gy',((e.clientY/innerHeight-.5)*16)+'px')});
 })();
 </script>
 </body>
