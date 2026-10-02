@@ -23,7 +23,7 @@ a{color:inherit}
 :focus-visible{outline:3px solid var(--pink);outline-offset:3px}
 .wrap{max-width:62rem;margin:0 auto;padding:0 1.25rem}
 nav{display:flex;justify-content:flex-end;gap:1rem;padding:1.25rem 0;font-weight:600}
-nav div{display:flex;gap:clamp(.7rem,4vw,1.25rem);white-space:nowrap;font-size:clamp(.92rem,4.6vw,1.0625rem)} /* one line down to the smallest phones */nav a{text-decoration:none}nav a:hover{color:var(--pink)}
+nav div{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:.25rem clamp(.45rem,3vw,1.25rem);white-space:nowrap;font-size:clamp(.7rem,3.9vw,1.0625rem)} /* one line on phones; wraps rather than running off the tiniest screens */nav a{text-decoration:none}nav a:hover{color:var(--pink)}
 .hero{padding:0}
 /* Name and subhead on the left, reel on the right; stacked on narrow screens */
 .top{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:2.5rem;align-items:center;padding:2rem 0 1rem}
@@ -213,7 +213,7 @@ footer{text-align:center;color:var(--muted);padding:1rem 0 2rem;font-size:.95rem
 </head>
 <body>
 <div class="wrap">
-<nav><div><a href="#reel">Reel</a><a href="#credits">Credits</a><a href="#about">About</a><a href="#contact">Contact</a></div></nav>
+<nav><div><a href="#reel">Reel</a><a href="#credits">Credits</a><a href="#about">About</a><a href="#contact">Contact</a><a href="https://drive.google.com/file/d/1RvOMhIR_NX2cugMgwY02l1zfkdiZIRLI/view" target="_blank" rel="noopener">Resume</a></div></nav>
 <div class="top">
 <header class="hero">
   <h1 id="name" aria-label="Emily Furst"><span>Emily <br class="stack">Furst</span><span class="ghost" aria-hidden="true">Emily <br class="stack">Furst</span></h1>
