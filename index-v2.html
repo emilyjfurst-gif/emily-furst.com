@@ -325,6 +325,9 @@ CREDITS.forEach(function(c){
   b.addEventListener('click',function(e){if(e.detail===0){if(active===c.i)goTo(c.i);else pick(c.i)}});
   var r=document.createElement('details');r.className='credit';r.id='c'+c.i;c.row=r;
   r.innerHTML='<summary><span class="yr">'+esc(c.year)+'</span><h3>'+esc(c.title)+'<small>'+esc(c.note)+'</small></h3><span>'+(c.role?'<span class="role '+TRACKS[c.track].kind+'">'+esc(c.role)+'</span>':'')+'</span></summary>'+panel(c);
+  // One open at a time: opening a row closes the others, and the page holds the opened row in place
+  r.addEventListener('toggle',function(){if(!r.open)return;var y=r.getBoundingClientRect().top;
+    CREDITS.forEach(function(x){if(x.row!==r)x.row.open=false});var d=r.getBoundingClientRect().top-y;if(d)scrollBy({top:d,behavior:'instant'})});
   r.querySelector('.show').addEventListener('click',function(){pick(c.i);$('credits').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'})});
 });
 // Newest first; undated next; personal projects last
@@ -374,7 +377,7 @@ function pick(i){var c=CREDITS[i];setHead((c.start+Math.min(c.min/2,3))/TOTAL);s
 // Credits list starts collapsed; the button or a clip click opens it
 function setList(open){$('list').hidden=!open;$('more').setAttribute('aria-expanded',open);$('more').textContent=open?'Hide credits':'Show all credits ('+CREDITS.length+')'}
 setList(false);$('more').addEventListener('click',function(){setList($('list').hidden)});
-function goTo(i){setList(true);sel=i;hov=-1;render();var r=CREDITS[i].row;r.open=true;r.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth',block:'center'});
+function goTo(i){setList(true);sel=i;hov=-1;render();var r=CREDITS[i].row;CREDITS.forEach(function(x){x.row.open=x.row===r});r.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth',block:'center'});
   r.classList.remove('flash');void r.offsetWidth;r.classList.add('flash')}
 var area=$('area'),sc=$('scroller'),down=false,tap=null;
 // Zoom: the track area grows to Z times the window and scrolls sideways; labels stay put
