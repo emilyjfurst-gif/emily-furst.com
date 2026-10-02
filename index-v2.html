@@ -92,7 +92,6 @@ h1 .ghost{position:absolute;inset:0;color:var(--pink);opacity:.5;transform:trans
 .more::after{content:" ↓"}.more[aria-expanded="true"]::after{content:" ↑"}
 @media (hover:hover){.more:hover{background:var(--sand);color:#1e1a3c}}
 #list{margin-top:1.25rem}
-.note{font-size:.9rem;color:var(--muted);margin:0 0 .75rem}
 kbd{background:var(--paper);border:1.5px solid var(--ink);border-radius:5px;padding:0 .35rem;font:inherit;font-size:.85em;font-weight:600}
 
 section{padding:3.5rem 0 1rem}
@@ -228,7 +227,7 @@ footer{text-align:center;color:var(--muted);padding:1rem 0 2rem;font-size:.95rem
   </div>
   <p class="hint"><span class="kb">Hover to scrub and click a clip for its credit. Zoom with the slider or <kbd>⌘</kbd>/<kbd>Ctrl</kbd> + scroll; <kbd>J</kbd> and <kbd>L</kbd> jump between clips.</span></p>
   <button type="button" class="more" id="more" aria-expanded="false" aria-controls="list">Show all credits</button>
-  <div id="list" hidden><p class="note">Years are release years. The timeline shows when I worked on each project.</p></div>
+  <div id="list" hidden></div>
 </section>
 <section id="about"><h2>About</h2>
   <div class="about"><div>
