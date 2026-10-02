@@ -128,9 +128,6 @@ h2{font-size:clamp(1.9rem,4vw,2.8rem);line-height:1.05;letter-spacing:-.02em;mar
 .cx .acts{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.9rem}
 .cx .acts a,.cx .acts button{font:inherit;font-size:.85rem;font-weight:700;color:var(--ink);background:var(--paper);border:1.5px solid var(--ink);border-radius:99px;padding:.25rem .9rem;cursor:pointer;text-decoration:none}
 @media (hover:hover){.cx .acts a:hover,.cx .acts button:hover{background:var(--sand);color:#1e1a3c}}
-.credit.hl{background:linear-gradient(90deg,rgba(229,64,122,.14),transparent)}
-.credit.flash{animation:flash 1.6s ease-out}
-@keyframes flash{0%,30%{background-color:rgba(229,64,122,.35)}100%{background-color:transparent}}
 .yr{color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
 .credit h3{margin:0;font-size:1.3rem;font-weight:600;line-height:1.25}
 .credit small{display:block;font-size:.95rem;font-weight:400;color:var(--muted)}
@@ -365,7 +362,7 @@ function setHead(p){headP=Math.max(0,Math.min(.9999,p));$('head').style.left=(he
 function render(){var t=headP*TOTAL,c=hov>=0?CREDITS[hov]:sel>=0&&covers(CREDITS[sel],t)?CREDITS[sel]:topAt(t);
   active=c?c.i:-1;
   heads.forEach(function(h,i){h.classList.toggle('on',!!c&&c.track===i)});
-  CREDITS.forEach(function(x){x.el.classList.toggle('on',x===c);x.row.classList.toggle('hl',x===c)});
+  CREDITS.forEach(function(x){x.el.classList.toggle('on',x===c)});
   if(c){art(c);$('mtag').textContent=TRACKS[c.track].tag;$('mt').textContent=c.monTitle||c.title;
     $('mm').textContent=(c.role||'')+(c.role?when(c):String(c.year||''));
     $('mx').textContent=c.note}
@@ -377,8 +374,7 @@ function pick(i){var c=CREDITS[i];setHead((c.start+Math.min(c.min/2,3))/TOTAL);s
 // Credits list starts collapsed; the button or a clip click opens it
 function setList(open){$('list').hidden=!open;$('more').setAttribute('aria-expanded',open);$('more').textContent=open?'Hide credits':'Show all credits ('+CREDITS.length+')'}
 setList(false);$('more').addEventListener('click',function(){setList($('list').hidden)});
-function goTo(i){setList(true);sel=i;hov=-1;render();var r=CREDITS[i].row;CREDITS.forEach(function(x){x.row.open=x.row===r});r.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth',block:'center'});
-  r.classList.remove('flash');void r.offsetWidth;r.classList.add('flash')}
+function goTo(i){setList(true);sel=i;hov=-1;render();var r=CREDITS[i].row;CREDITS.forEach(function(x){x.row.open=x.row===r});r.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth',block:'center'})}
 var area=$('area'),sc=$('scroller'),down=false,tap=null;
 // Zoom: the track area grows to Z times the window and scrolls sideways; labels stay put
 var Z=1,ZMAX=12;
