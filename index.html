@@ -27,7 +27,7 @@ nav div{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:.25rem clamp(.4
 .top{display:grid;grid-template-columns:minmax(0,.62fr) minmax(0,1.38fr);gap:2rem;align-items:center;padding:2rem 0 1rem}
 .top #reel{padding:0}
 h1{font-size:clamp(2.75rem,7vw,5.5rem);line-height:.92;font-weight:800;letter-spacing:-.035em;margin:0;position:relative;display:inline-block}
-h1 .ghost{position:absolute;inset:0;color:var(--pink);opacity:.5;transform:translate(3px,2px);mix-blend-mode:multiply;pointer-events:none}
+h1{isolation:isolate}h1 .ghost{position:absolute;inset:0;z-index:-1;color:var(--pink);transform:translate(3px,2px);pointer-events:none} /* same pink as the buttons and polaroid shadow, behind the letters */
 .stack{display:inline}
 .lede{text-wrap:balance;font-size:clamp(1.25rem,2.6vw,1.6rem);font-weight:600;letter-spacing:-.01em;margin:1.25rem 0 0}
 
