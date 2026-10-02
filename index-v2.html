@@ -109,7 +109,7 @@ h2{font-size:clamp(1.9rem,4vw,2.8rem);line-height:1.05;letter-spacing:-.02em;mar
 .play span{position:relative;width:4.5rem;height:4.5rem;border-radius:50%;background:var(--paper);display:grid;place-items:center;transition:transform .2s}
 .play:hover span{transform:scale(1.12)}
 .play span::after{content:"";border:12px solid transparent;border-left:19px solid #1e1a3c;border-right:0;margin-left:5px}
-.credit{border-top:1.5px solid var(--line)}
+.credit{border-top:1.5px solid var(--line);scroll-margin-top:1rem}
 .credit:last-child{border-bottom:1.5px solid var(--line)}
 /* Each credit is a <details>: the summary is the row, the panel holds more about the project */
 .credit summary{display:grid;grid-template-columns:8.5rem 1fr auto 1.5rem;gap:1rem;align-items:baseline;padding:1rem 0;cursor:pointer;list-style:none;-webkit-tap-highlight-color:transparent}
@@ -322,9 +322,9 @@ CREDITS.forEach(function(c){
   b.addEventListener('click',function(e){if(e.detail===0){if(active===c.i)goTo(c.i);else pick(c.i)}});
   var r=document.createElement('details');r.className='credit';r.id='c'+c.i;c.row=r;
   r.innerHTML='<summary><span class="yr">'+esc(c.year)+'</span><h3>'+esc(c.title)+'<small>'+esc(c.note)+'</small></h3><span>'+(c.role?'<span class="role '+TRACKS[c.track].kind+'">'+esc(c.role)+'</span>':'')+'</span></summary>'+panel(c);
-  // One open at a time: opening a row closes the others, and the page holds the opened row in place
-  r.addEventListener('toggle',function(){if(!r.open)return;var y=r.getBoundingClientRect().top;
-    CREDITS.forEach(function(x){if(x.row!==r)x.row.open=false});var d=r.getBoundingClientRect().top-y;if(d)scrollBy({top:d,behavior:'instant'})});
+  // One open at a time: opening a row closes the others and scrolls the opened row to the top of the page
+  r.addEventListener('toggle',function(){if(!r.open)return;
+    CREDITS.forEach(function(x){if(x.row!==r)x.row.open=false});r.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth',block:'start'})});
   r.querySelector('.show').addEventListener('click',function(){pick(c.i);$('credits').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'})});
 });
 // Newest first; undated next; personal projects last
@@ -374,7 +374,7 @@ function pick(i){var c=CREDITS[i];setHead((c.start+Math.min(c.min/2,3))/TOTAL);s
 // Credits list starts collapsed; the button or a clip click opens it
 function setList(open){$('list').hidden=!open;$('more').setAttribute('aria-expanded',open);$('more').textContent=open?'Hide credits':'Show all credits ('+CREDITS.length+')'}
 setList(false);$('more').addEventListener('click',function(){setList($('list').hidden)});
-function goTo(i){setList(true);sel=i;hov=-1;render();var r=CREDITS[i].row;CREDITS.forEach(function(x){x.row.open=x.row===r});r.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth',block:'center'})}
+function goTo(i){setList(true);sel=i;hov=-1;render();var r=CREDITS[i].row;CREDITS.forEach(function(x){x.row.open=x.row===r});r.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth',block:'start'})}
 var area=$('area'),sc=$('scroller'),down=false,tap=null;
 // Zoom: the track area grows to Z times the window and scrolls sideways; labels stay put
 var Z=1,ZMAX=12;
