@@ -291,7 +291,7 @@ var CREDITS=[
 // More about each project, shown when its credit is opened (from the film pages on the old portfolio site).
 // Every project of a kind shows the same headings (role is the tag on the row), in the order of SHORT_ROWS / DOC_ROWS below; a heading
 // with nothing filled in is left out. Format, genre and network live in the credit's one-liner (`note`).
-// syn = synopsis (synLabel renames it), imdb = IMDb title id, trailer = YouTube video id,
+// syn = synopsis, imdb = IMDb title id, trailer = YouTube video id,
 // watch = {label,url,note} for a full film link, endNote = a line after the credits.
 var SHORT_ROWS=[['starring','Starring'],['director','Director'],['writers','Writer','Writers'],['producers','Producer','Producers'],['dp','Director of Photography'],['pd','Production Designer']];
 var DOC_ROWS=[['starring','Starring'],['companies','Production Companies'],['director','Director'],['editors','Editors'],['post','Post Supervisor'],['aes','Other Assistant Editors'],['awards','Awards']];
@@ -330,7 +330,7 @@ var DETAILS={
  "Pop Star Academy: KATSEYE":{syn:"Twenty aspiring pop stars undergo a K-pop training program in this docu-series about the creation of HYBE x Geffen's first global girl group, KATSEYE.",
   companies:"Boardwalk Pictures, Interscope Geffen A&M Records, HYBE",director:"Nadia Hallgren",editors:"Alex O’Flinn (Supervising Editor), Kimberely Hassett (Supervising Editor), Betsy Kagen, Sharon Weaver, Janah Elise Cox, Sarah Devorkin, Peter Holmes, Eric F. Martin, Mark Imgrund, Greg O’Toole, Jonah Moran",post:"Michael Suter",aes:"Ismail Rashed (Lead AE), Brian Vinik, Jiyeon Kim-Myung",
   imdb:"tt28810495",trailer:"B7eSStth_v0"},
- "Dimenticato":{synLabel:"Logline",syn:"A rigid matriarch fights to maintain the 'perfect' 1950s life that exists only in her mind, unaware that her quest for domestic control is dismantling the lives of the only people left who love her."}
+ "Dimenticato":{about:"Family drama feature film script tackling the topic of dementia."}
 };
 CREDITS.forEach(function(c){var d=DETAILS[c.title];if(d)for(var k in d)c[k]=d[k]});
 (function(){
@@ -361,7 +361,7 @@ function panel(c){
         return [r[2]&&/,/.test(v)?r[2]:r[1],v]});
   function dl(rows){rows=rows.filter(function(r){return r[1]});return rows.length?'<dl>'+rows.map(function(r){return '<dt>'+esc(r[0])+'</dt><dd>'+esc(r[1])+'</dd>'}).join('')+'</dl>':''}
   return '<div class="cx'+(pic?' pst':' nopic')+'">'+pic+'<div class="cxb">'+
-    (c.syn?'<h4>'+esc(c.synLabel||'Synopsis')+'</h4><p class="syn">'+esc(c.syn)+'</p>':'')+
+    (c.syn?'<h4>'+'Synopsis'+'</h4><p class="syn">'+esc(c.syn)+'</p>':'')+
     (c.about?'<p class="syn">'+esc(c.about)+'</p>':'')+dl(crew)+(c.endNote?'<p class="meta">'+esc(c.endNote)+'</p>':'')+
     '<div class="acts">'+(c.trailer?a('https://youtu.be/'+c.trailer,'Watch trailer','trl'):'')+
     (c.watch?a(c.watch.url,c.watch.label):'')+(c.imdb?a('https://www.imdb.com/title/'+c.imdb+'/','IMDb'):'')+
