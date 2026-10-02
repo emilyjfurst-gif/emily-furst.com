@@ -24,11 +24,14 @@ a{color:inherit}
 .wrap{max-width:62rem;margin:0 auto;padding:0 1.25rem}
 nav{display:flex;justify-content:flex-end;gap:1rem;padding:1.25rem 0;font-weight:600}
 nav div{display:flex;gap:clamp(.7rem,4vw,1.25rem);white-space:nowrap;font-size:clamp(.92rem,4.6vw,1.0625rem)} /* one line down to the smallest phones */nav a{text-decoration:none}nav a:hover{color:var(--pink)}
-.hero{padding:2.5rem 0 1rem}
-h1{font-size:clamp(3rem,11vw,8rem);line-height:.92;font-weight:800;letter-spacing:-.035em;margin:0;position:relative;display:inline-block}
+.hero{padding:0}
+/* Name and subhead on the left, reel on the right; stacked on narrow screens */
+.top{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:2.5rem;align-items:center;padding:2rem 0 1rem}
+.top #reel{padding:0}
+h1{font-size:clamp(2.75rem,7vw,5.5rem);line-height:.92;font-weight:800;letter-spacing:-.035em;margin:0;position:relative;display:inline-block}
 h1 .ghost{position:absolute;inset:0;color:var(--pink);opacity:.5;transform:translate(3px,2px);mix-blend-mode:multiply;pointer-events:none}
 @media (prefers-color-scheme:dark){h1 .ghost{mix-blend-mode:screen}}
-.stack{display:none}
+.stack{display:inline}
 .lede{text-wrap:balance;font-size:clamp(1.25rem,2.6vw,1.6rem);font-weight:600;letter-spacing:-.01em;margin:1.25rem 0 0}
 
 /* edit window */
@@ -96,7 +99,6 @@ kbd{background:var(--paper);border:1.5px solid var(--ink);border-radius:5px;padd
 
 section{padding:3.5rem 0 1rem}
 h2{font-size:clamp(1.9rem,4vw,2.8rem);line-height:1.05;letter-spacing:-.02em;margin:0 0 1.5rem;font-weight:800}
-#reel{padding-top:2rem}
 #credits{padding-top:2.5rem}
 .reel{position:relative;aspect-ratio:16/9;max-width:100%}
 .reel iframe{position:absolute;inset:0;width:100%;height:100%;border:2px solid var(--ink);border-radius:14px;background:#000}
@@ -162,7 +164,7 @@ h2{font-size:clamp(1.9rem,4vw,2.8rem);line-height:1.05;letter-spacing:-.02em;mar
 .links a:hover{color:var(--pink);transform:translateY(-2px)}
 .links svg{width:1.75rem;height:1.75rem;fill:currentColor}
 footer{text-align:center;color:var(--muted);padding:1rem 0 2rem;font-size:.95rem}
-@media (max-width:700px){.stack{display:inline}.body{grid-template-columns:2.5rem 1fr}.labels{padding-left:.25rem}.th{grid-template-columns:1fr;padding-right:.25rem}.ic{display:none}.tcv.half{display:none}.tcv{font-size:.52rem;padding-left:2px}.about,.mon{grid-template-columns:1fr}.credit summary{grid-template-columns:1fr auto 1.25rem;gap:.75rem}.credit .yr{grid-column:1/-1;margin-bottom:-.6rem}.cx{grid-template-columns:1fr;margin:0 0 1.25rem}.cx.pst{grid-template-columns:6.5rem minmax(0,1fr);gap:.9rem}.cx dl{grid-template-columns:1fr;gap:0}.cx dt{white-space:normal}.cx dd{margin-bottom:.45rem}.kb{display:none}.tch{display:inline}.clip{font-size:.7rem}.clip span{padding:.1rem .3rem}.polaroid{order:-1;max-width:15rem}.about{grid-template-rows:none}.about>div:first-child{grid-row:auto}.polaroid,.skills{grid-column:auto}.portrait{max-width:15rem}}
+@media (max-width:700px){.top{grid-template-columns:1fr;gap:1.75rem;padding-top:1.5rem}.body{grid-template-columns:2.5rem 1fr}.labels{padding-left:.25rem}.th{grid-template-columns:1fr;padding-right:.25rem}.ic{display:none}.tcv.half{display:none}.tcv{font-size:.52rem;padding-left:2px}.about,.mon{grid-template-columns:1fr}.credit summary{grid-template-columns:1fr auto 1.25rem;gap:.75rem}.credit .yr{grid-column:1/-1;margin-bottom:-.6rem}.cx{grid-template-columns:1fr;margin:0 0 1.25rem}.cx.pst{grid-template-columns:6.5rem minmax(0,1fr);gap:.9rem}.cx dl{grid-template-columns:1fr;gap:0}.cx dt{white-space:normal}.cx dd{margin-bottom:.45rem}.kb{display:none}.tch{display:inline}.clip{font-size:.7rem}.clip span{padding:.1rem .3rem}.polaroid{order:-1;max-width:15rem}.about{grid-template-rows:none}.about>div:first-child{grid-row:auto}.polaroid,.skills{grid-column:auto}.portrait{max-width:15rem}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 
 /* Premiere skin for the editor: fixed dark panel in both themes */
@@ -212,6 +214,7 @@ footer{text-align:center;color:var(--muted);padding:1rem 0 2rem;font-size:.95rem
 <body>
 <div class="wrap">
 <nav><div><a href="#reel">Reel</a><a href="#credits">Credits</a><a href="#about">About</a><a href="#contact">Contact</a></div></nav>
+<div class="top">
 <header class="hero">
   <h1 id="name" aria-label="Emily Furst"><span>Emily <br class="stack">Furst</span><span class="ghost" aria-hidden="true">Emily <br class="stack">Furst</span></h1>
   <p class="lede">Film/TV Editor &amp; Assistant&nbsp;Editor</p>
@@ -220,6 +223,7 @@ footer{text-align:center;color:var(--muted);padding:1rem 0 2rem;font-size:.95rem
 <section id="reel">
   <div class="reel" id="reelbox"><a class="play" id="play" href="https://youtu.be/6ofU30wRzsM" target="_blank" rel="noopener" aria-label="Play my editing reel"><span></span><b class="tag">Editing reel</b></a></div>
 </section>
+</div>
 <section id="credits">
   <div class="nle">
     <div class="mon"><div class="pv" id="pv" aria-hidden="true"><span id="pvt"></span></div><div class="info" aria-live="polite">
