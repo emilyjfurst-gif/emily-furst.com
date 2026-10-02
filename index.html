@@ -133,6 +133,46 @@ h2{font-size:clamp(1.9rem,4vw,2.8rem);line-height:1.05;letter-spacing:-.02em;mar
 footer{text-align:center;color:var(--muted);padding:1rem 0 2rem;font-size:.95rem}
 @media (max-width:700px){.stack{display:inline}.body{grid-template-columns:2.5rem 1fr}.labels{padding-left:.25rem}.th{grid-template-columns:1fr;padding-right:.25rem}.ic{display:none}.tcv.half{display:none}.tcv{font-size:.52rem;padding-left:2px}.about,.mon{grid-template-columns:1fr}.credit{grid-template-columns:1fr auto}.credit .yr{grid-column:1/-1;margin-bottom:-.6rem}.kb{display:none}.tch{display:inline}.clip{font-size:.7rem}.clip span{padding:.1rem .3rem}.slot{font-size:0;display:grid;place-items:center;padding:0}.slot::before{content:"+";font-size:1rem}.side{order:-1}.portrait{max-width:15rem}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+/* Premiere skin for the editor: fixed dark panel in both themes */
+.nle{--pp-bg:#1c1c1c;--pp-hd:#252525;--pp-row:#232323;--pp-sep:#141414;--pp-tx:#c4c4c4;--pp-dim:#808080;--pp-blue:#2d8ceb;background:var(--pp-bg)}
+.mon{background:#1f1f1f;border-bottom:1px solid var(--pp-sep)}
+.pv{border-color:#3a3a3a;border-radius:2px}
+.seq{background:var(--pp-hd);border-bottom:1px solid var(--pp-sep);padding:.35rem .75rem 0}
+.seqtab{background:transparent;color:#e6e6e6;border:0;border-bottom:2px solid #d0d0d0;border-radius:0;font-weight:500;font-size:.78rem;padding:.25rem .6rem .35rem;margin-bottom:-1px}
+.seqtab::before{content:"\00d7";margin-right:.55rem;color:var(--pp-dim)}.seqtab::after{content:"\2261";margin-left:.55rem;color:var(--pp-dim)}
+.body{background:var(--pp-bg);padding:0 .5rem .6rem 0;grid-template-columns:5.6rem 1fr}
+.labels,.area{gap:2px}
+.labels{background:var(--pp-hd);border-right:1px solid var(--pp-sep);padding-left:.35rem;color:var(--pp-dim);font-weight:500}
+.tlc{align-self:center;color:var(--pink);font-size:.74rem;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:.01em}
+.th{grid-template-columns:.95rem 1fr auto;gap:.3rem;padding-right:.3rem}
+.ic svg{stroke:var(--pp-dim);width:.8rem;height:.8rem}.ic.lk svg{width:.66rem;opacity:.8}
+.tail{display:flex;gap:.2rem}
+.ms{font-style:normal;font-size:.58rem;font-weight:600;color:var(--pp-dim);border:1px solid #3c3c3c;border-radius:2px;width:.9rem;height:.9rem;display:grid;place-items:center}
+.tb{height:1.3rem;border:1px solid #3a3a3a;border-radius:2px;background:transparent;color:#9c9c9c;font-size:.7rem;font-weight:600}
+.th.on .tb{background:var(--pp-blue);border-color:var(--pp-blue);color:#fff}
+.th.tcl .tb{border-style:solid}
+.lane{background:var(--pp-row);border-radius:0;box-shadow:0 1px 0 var(--pp-sep)}
+.lane.split::before{border-top:1px solid #3a3a3a}
+.tc1{background:#202020;border-top:1px solid var(--pp-sep);border-bottom:1px solid var(--pp-sep)}
+.tcv{color:var(--pp-dim);border-left-color:#4a4a4a}
+.scroller{scrollbar-color:#555 transparent}
+.ruler{background:var(--pp-bg);border-bottom:2px solid #d9c84a}
+.tick{border-left-color:#777}
+.clip{border-radius:0;font-size:.7rem}
+.clip.vid span{height:1.05rem;line-height:1.05rem}.clip.vid::after{top:1.05rem}
+.clip.on{box-shadow:0 0 0 1px #fff,0 0 0 2.5px var(--pp-blue)}
+.slot{border:1px dashed #555;border-radius:0;color:#8c8c8c}
+.clip.muted{background-image:repeating-linear-gradient(135deg,transparent 0 5px,rgba(0,0,0,.25) 5px 7px)!important}
+.mark{--mk:#5cc46d}.mark.grad{--mk:#f0a23c}
+.mark::before{left:-4.5px;bottom:2px;width:9px;height:11px;background:var(--mk);border:0;transform:none;clip-path:polygon(0 0,100% 0,100% 62%,50% 100%,0 62%)}
+.mark span{bottom:15px;left:-1px;background:none;border:0;padding:0;color:var(--mk);font-size:.68rem;font-weight:700}
+.lanes-mark{border-left:1px dashed #f0a23c;opacity:.55}
+.zoom{background:var(--pp-hd);border-top:1px solid var(--pp-sep);padding:.45rem .75rem}
+.zoom button{background:#2f2f2f;color:#ddd;border:1px solid #474747;border-radius:3px;height:1.7rem;min-width:1.7rem;font-size:.78rem}
+@media (hover:hover){.zoom button:hover{background:#3a3a3a;color:#fff}}
+.zoom input{accent-color:var(--pp-blue)}
+@media (max-width:700px){.body{grid-template-columns:2.5rem 1fr}.tlc{visibility:hidden;width:0;overflow:hidden}.tail,.ic.lk{display:none}.th{grid-template-columns:1fr}.mark.grad span{display:none}}
 </style>
 </head>
 <body>
@@ -154,7 +194,7 @@ footer{text-align:center;color:var(--muted);padding:1rem 0 2rem;font-size:.95rem
     </div>
     <div class="seq"><span class="seqtab" title="Sequence">EF_Credits_v26</span></div>
     <div class="body">
-      <div class="labels" id="labels"><span></span></div>
+      <div class="labels" id="labels"><span class="tlc" id="tlc">00:00:00:00</span></div>
       <div class="scroller" id="scroller"><div class="area" id="area"><div class="ruler" id="ruler"></div><div class="head" id="head"></div></div></div>
     </div>
     <div class="zoom"><button type="button" id="zout" aria-label="Zoom out">−</button><input type="range" id="zr" min="0" max="100" value="0" aria-label="Timeline zoom"><button type="button" id="zin" aria-label="Zoom in">+</button><button type="button" id="zfit">Fit</button></div>
@@ -187,7 +227,8 @@ footer{text-align:center;color:var(--muted);padding:1rem 0 2rem;font-size:.95rem
 var JAN2026=40.25,NOW=49.25,GAP=.5,SLOT=5,END=NOW+GAP+SLOT; // NOW = today (early Oct 2026)
 function month(y,m){return JAN2026+(y-2026)*12+(m-1)} // month(2023,5) = May 2023 on the timeline
 // Markers on the ruler, like NLE markers
-var MARKERS=[{at:month(2023,5),label:'Graduated!',title:'Graduated with my MFA · May 2023'}];
+var MARKERS=[{at:month(2023,5),label:'Graduated!',title:'Graduated with my MFA · May 2023',kind:'grad'}];
+[2023,2024,2025,2026].forEach(function(y){MARKERS.push({at:month(y,1),label:String(y),title:String(y),kind:'year'})});
 var TRACKS=[
  {label:'V6',kind:'color',tag:'V6 · Color Work',slot:{label:'Need a colorist?',ask:'Need a colorist?'}},
  {label:'V5',kind:'short',tag:'V5 · Shorts'},
@@ -223,13 +264,12 @@ var CREDITS=[
 ];
 (function(){
 var $=function(i){return document.getElementById(i)},TOTAL=END,rows='2.4rem',last=TRACKS.map(function(){return 0});
-// Avid-style track headers: monitor (video) or speaker (audio) icon, sync lock, track selector button
-var ICON={vid:'<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="3" width="13" height="8.5" rx="1"/><path d="M5 14h6"/></svg>',
-  aud:'<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6h3l4-3v10l-4-3H2z"/><path d="M11.5 5.5a3.5 3.5 0 0 1 0 5"/></svg>',
+// Premiere-style track headers: lock, track name (lit when targeted), eye for video, M/S for audio
+var ICON={eye:'<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 8s2.4-4.5 6.5-4.5S14.5 8 14.5 8 12.1 12.5 8 12.5 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></svg>',
   lock:'<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3.5" y="7" width="9" height="7" rx="1"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2"/></svg>'};
 function header(label,icon,cls){var h=document.createElement('div');h.className='th'+(cls?' '+cls:'');
-  h.innerHTML=(icon?'<i class="ic">'+ICON[icon]+'</i><i class="ic lk">'+ICON.lock+'</i>':'<i class="ic"></i><i class="ic"></i>')+'<b class="tb"></b>';
-  h.lastChild.textContent=label;$('labels').appendChild(h);return h}
+  h.innerHTML='<i class="ic lk">'+(icon?ICON.lock:'')+'</i><b class="tb"></b><i class="ic tail">'+(icon==='vid'?ICON.eye:icon==='aud'?'<i class="ms">M</i><i class="ms">S</i>':'')+'</i>';
+  h.querySelector('.tb').textContent=label;$('labels').appendChild(h);return h}
 var heads=[],lanes=TRACKS.map(function(t,i){
   if(t.kind==='own'&&TRACKS[i-1].kind!=='own'){ // TC1 timecode track sits between the video and audio tracks
     var tc=document.createElement('div');tc.className='lane tc1 split';$('area').insertBefore(tc,$('head'));header('TC1','','split tcl');rows+=' 1.5rem'}
@@ -257,7 +297,7 @@ var ORDER=CREDITS.slice().sort(function(a,b){return a.start-b.start||a.track-b.t
 function tick(cls,m,text){var k=document.createElement('div');k.className=cls;k.style.left=pct(m);if(text)k.appendChild(document.createElement('span')).textContent=text;$('ruler').appendChild(k);return k}
 for(var m=MARKERS[0].at%1;m<TOTAL;m+=1)if(m>0)tick(Math.round(m-MARKERS[0].at)%6?'tick':'tick major',m);
 for(var m=MARKERS[0].at%6;m<TOTAL-2;m+=6){var k=document.createElement('span');k.className='tcv'+((m-MARKERS[0].at)%12?' half':'');k.style.left=pct(m);k.textContent=tcOf(m/TOTAL);$('area').querySelector('.tc1').appendChild(k)}
-MARKERS.forEach(function(mk){var k=tick('mark',mk.at,mk.label);k.title=mk.title;k.setAttribute('aria-label',mk.title);
+MARKERS.forEach(function(mk){var k=tick('mark '+mk.kind,mk.at,mk.label);k.title=mk.title;k.setAttribute('aria-label',mk.title);if(mk.kind!=='grad')return;
   var l=document.createElement('div');l.className='lanes-mark';l.style.left=pct(mk.at);$('area').insertBefore(l,$('head'))});
 
 var PAL=[['#f7b6cd','#e5407a'],['#b8c9f0','#6b7fd6'],['#b9dba3','#5f8a4b'],['#f0dfae','#e0a53a']];
@@ -278,7 +318,7 @@ var active=-1,hov=-1,hovRow=-1,sel=-1,headP=0;
 function covers(c,t){return t>=c.start&&t<c.start+c.min}
 function clipAt(t,row){return CREDITS.filter(function(c){return c.track===row&&covers(c,t)})[0]}
 function topAt(t){for(var r=0;r<TRACKS.length;r++){var c=clipAt(t,r);if(c)return c}}
-function setHead(p){headP=Math.max(0,Math.min(.9999,p));$('head').style.left=(headP*100)+'%';$('tc').textContent=tcOf(headP)}
+function setHead(p){headP=Math.max(0,Math.min(.9999,p));$('head').style.left=(headP*100)+'%';$('tc').textContent=$('tlc').textContent=tcOf(headP)}
 function render(){var t=headP*TOTAL,c=hov>=0?CREDITS[hov]:sel>=0&&covers(CREDITS[sel],t)?CREDITS[sel]:topAt(t);
   active=c?c.i:-1;
   heads.forEach(function(h,i){h.classList.toggle('on',!!c&&c.track===i)});
