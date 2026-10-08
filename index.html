@@ -482,12 +482,21 @@ $('zin').addEventListener('click',function(){setZoom(Z*1.5)});
 $('zout').addEventListener('click',function(){setZoom(Z/1.5)});
 $('zfit').addEventListener('click',function(){setZoom(1)});
 sc.addEventListener('wheel',function(e){if(!(e.ctrlKey||e.metaKey))return;e.preventDefault();setZoom(Z*Math.exp(-e.deltaY*(e.deltaMode?.05:.0025)),e.clientX)},{passive:false});
+// Touch: two fingers pinch the timeline in or out around the point between them
+var pinch=null;
+function fingers(t){return Math.hypot(t[0].clientX-t[1].clientX,t[0].clientY-t[1].clientY)}
+sc.addEventListener('touchstart',function(e){if(e.touches.length!==2)return;pinch={d:fingers(e.touches),z:Z};
+  tap=null;down=false;area.classList.remove('dragging')},{passive:true});
+sc.addEventListener('touchmove',function(e){if(!pinch||e.touches.length!==2)return;e.preventDefault();
+  setZoom(pinch.z*fingers(e.touches)/Math.max(pinch.d,1),(e.touches[0].clientX+e.touches[1].clientX)/2)},{passive:false});
+['touchend','touchcancel'].forEach(function(n){sc.addEventListener(n,function(e){if(e.touches.length<2)pinch=null},{passive:true})});
 function posAt(e){var r=area.getBoundingClientRect(),row=0;
   lanes.forEach(function(l,i){if(i&&e.clientY>=(lanes[i-1].getBoundingClientRect().bottom+l.getBoundingClientRect().top)/2)row=i});
   var p=Math.max(0,Math.min(.9999,(e.clientX-r.left)/r.width)),c=e.target.closest('.ruler,.tc1')?null:clipAt(p*TOTAL,row);return {p:p,c:c?c.i:-1,row:e.target.closest('.ruler')?-1:row}}
 // Mouse: the playhead follows the cursor; clicking a clip jumps to its credit.
-// Touch: swipes scroll, the ruler scrubs, a tap moves the playhead to that clip, and a second tap jumps to its credit.
-area.addEventListener('pointerdown',function(e){var at=posAt(e),scrub=e.pointerType==='mouse'||!!e.target.closest('.ruler');
+// Touch: swipes scroll, the ruler scrubs, two fingers pinch to zoom, a tap moves the playhead to that clip,
+// and a second tap jumps to its credit.
+area.addEventListener('pointerdown',function(e){if(!e.isPrimary||pinch)return;var at=posAt(e),scrub=e.pointerType==='mouse'||!!e.target.closest('.ruler');
   tap={x:e.clientX,scrub:scrub,was:e.pointerType==='mouse'?hov:sel,moved:false};
   if(scrub){down=true;area.classList.add('dragging');area.setPointerCapture(e.pointerId);setHead(at.p);hov=at.c;sel=-1;render()}});
 area.addEventListener('pointermove',function(e){if(!down&&e.pointerType!=='mouse')return;var at=posAt(e);
