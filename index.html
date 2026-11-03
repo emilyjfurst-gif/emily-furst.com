@@ -993,9 +993,7 @@ function month(y,m){return JAN2026+(y-2026)*12+(m-1)} // month(2023,5) = May 202
 var MARKERS=[{at:month(2023,5),label:'Graduated!',title:'Graduated with my MFA · May 2023',kind:'grad'}];
 [2022,2023,2024,2025,2026].forEach(function(y){MARKERS.push({at:month(y,1),label:String(y),title:String(y),kind:'year'})});
 var TRACKS=[
- {label:'V8',kind:'color',tag:'V8 · Color Work'},
- {label:'V7',kind:'short',tag:'V7 · Shorts'},
- {label:'V6',kind:'short',tag:'V6 · Shorts'},
+ {label:'V6',kind:'color',tag:'V6 · Color Work'},
  {label:'V5',kind:'short',tag:'V5 · Shorts'},
  {label:'V4',kind:'short',tag:'V4 · Shorts'},
  {label:'V3',kind:'short',tag:'V3 · Shorts'},
@@ -1005,27 +1003,27 @@ var TRACKS=[
  {label:'A2',kind:'own',tag:'A2 · Personal Projects'}
 ];
 var CREDITS=[
- {track:5,at:month(2021,10),len:3,title:"Attached",still:"images/stills/attached.jpg",poster:"images/posters/attached.jpg",role:"Editor",year:2022,note:"Narrative short · Sci-Fi · Horror"},
- {track:3,at:month(2022,10)+.5,len:month(2024,5)-(month(2022,10)+.5),title:"Over Easy",still:"images/stills/over-easy.jpg",poster:"images/posters/over-easy.jpg",role:"Editor",year:2023,note:"Narrative short · Comedy"},
- {track:2,at:month(2022,10)+.5,len:month(2024,5)-(month(2022,10)+.5),title:"Promises, Promises",still:"images/stills/promises-promises.jpg",poster:"images/posters/promises-promises.jpg",role:"Editor",year:2024,note:"Narrative short · Drama"},
- {track:1,at:month(2022,10)+.5,len:month(2024,5)-(month(2022,10)+.5),title:"Mom Is Visiting 妈妈来了",monTitle:"Mom Is Visiting\n妈妈来了",still:"images/stills/mom-is-visiting.jpg",poster:"images/posters/mom-is-visiting.jpg",role:"Editor",year:2023,note:"Narrative short · Drama · Mandarin/English"},
- {track:7,at:month(2023,8),len:11,title:"Pop Star Academy: KATSEYE",still:"images/stills/pop-star-academy.jpg",poster:"images/posters/pop-star-academy.jpg",role:"Assistant Editor",year:2024,note:"Netflix · Documentary series · Multilingual"},
- {track:5,at:month(2023,12),len:3,title:"Cocoon",still:"images/stills/cocoon.jpg",poster:"images/posters/cocoon.jpg",role:"Editor",year:2025,note:"Narrative short · Drama · Korean/English"},
- {track:4,at:month(2024,2),len:3,title:"Ornamental Oriental",still:"images/stills/ornamental-oriental.jpg",poster:"images/posters/ornamental-oriental.jpg",role:"Editor",year:2024,note:"Narrative short · Sci-Fi"},
+ {track:3,at:month(2021,10),len:3,title:"Attached",still:"images/stills/attached.jpg",poster:"images/posters/attached.jpg",role:"Editor",year:2022,note:"Narrative short · Sci-Fi · Horror"},
+ {track:3,at:month(2022,10)+.5,len:month(2023,5)-(month(2022,10)+.5),title:"Over Easy",still:"images/stills/over-easy.jpg",poster:"images/posters/over-easy.jpg",role:"Editor",year:2023,note:"Narrative short · Comedy"},
+ {track:2,at:month(2022,10)+.5,len:month(2023,5)-(month(2022,10)+.5),title:"Promises, Promises",still:"images/stills/promises-promises.jpg",poster:"images/posters/promises-promises.jpg",role:"Editor",year:2024,note:"Narrative short · Drama"},
+ {track:1,at:month(2022,10)+.5,len:month(2023,5)-(month(2022,10)+.5),title:"Mom Is Visiting 妈妈来了",monTitle:"Mom Is Visiting\n妈妈来了",still:"images/stills/mom-is-visiting.jpg",poster:"images/posters/mom-is-visiting.jpg",role:"Editor",year:2023,note:"Narrative short · Drama · Mandarin/English"},
+ {track:5,at:month(2023,8),len:11,title:"Pop Star Academy: KATSEYE",still:"images/stills/pop-star-academy.jpg",poster:"images/posters/pop-star-academy.jpg",role:"Assistant Editor",year:2024,note:"Netflix · Documentary series · Multilingual"},
+ {track:3,at:month(2023,12),len:3,title:"Cocoon",still:"images/stills/cocoon.jpg",poster:"images/posters/cocoon.jpg",role:"Editor",year:2025,note:"Narrative short · Drama · Korean/English"},
+ {track:2,at:month(2024,2),len:3,title:"Ornamental Oriental",still:"images/stills/ornamental-oriental.jpg",poster:"images/posters/ornamental-oriental.jpg",role:"Editor",year:2024,note:"Narrative short · Sci-Fi"},
  {track:0,at:month(2022,12),len:1,title:"Faye & Lexi",still:"images/stills/faye-and-lexi.jpg",poster:"images/posters/faye-and-lexi.jpg",role:"Colorist",year:2022,note:"Narrative short · Drama"},
  {track:0,at:month(2023,4)-.1,len:1,title:"That's the Spirit",still:"images/stills/thats-the-spirit.jpg",role:"Colorist",year:2023,note:"Narrative short · Mockumentary"},
  {track:0,at:month(2023,9),len:1,title:"White Gaze",still:"images/stills/white-gaze.jpg",poster:"images/posters/white-gaze.jpg",role:"Colorist",year:2023,note:"Narrative short · Drama"},
- {track:7,at:month(2024,8),len:9,title:"Paul American",still:"images/stills/paul-american.jpg",poster:"images/posters/paul-american.jpg",role:"Assistant Editor",year:2025,note:"HBO Max · Series"},
- {track:5,at:month(2023,8)+11.5,len:3,title:"I Don't Even Skate",still:"images/stills/i-dont-even-skate.jpg",poster:"images/posters/i-dont-even-skate.jpg",role:"Editor",year:2026,note:"Narrative short · Drama · Spanish/English"},
- {track:5,at:month(2023,8)+15,len:3,title:"Socks",still:"images/stills/socks.jpg",poster:"images/posters/socks.jpg",role:"Editor",year:"Completed",sortYear:2026,note:"Narrative short · Drama · Korean/English"},
- {track:7,at:month(2023,8)+21,len:3,title:"aka Charlie Sheen",still:"images/stills/aka-charlie-sheen.jpg",poster:"images/posters/aka-charlie-sheen.jpg",role:"Assistant Editor",year:2025,note:"Netflix · Two-part documentary"},
- {track:7,at:month(2025,8)+.5,len:2,title:"Untitled Michigan Football Project",role:"Assistant Editor",year:"Canceled",sortYear:2025,muted:true,still:"images/stills/media-offline.jpg",note:"Docu-series"},
- {track:8,at:month(2025,8)+.75,len:NOW-(month(2025,8)+.75),title:"Orizuru",card:true,role:"Writer & Director",year:"In production",note:"Animated short · Drama",about:"An animated short film I wrote and am currently directing."},
- {track:5,at:month(2025,12),len:3,title:"Muse",still:"images/stills/muse.jpg",role:"Editor",year:"Completed",sortYear:2026,note:"Narrative short · Drama"},
- {track:7,at:month(2026,1),len:NOW-month(2026,1),title:"Untitled development project",card:true,role:"Assistant Editor",year:"In post",note:"Feature documentary"},
- {track:6,at:month(2026,4),len:NOW-month(2026,4),title:"Unannounced feature",card:true,role:"Assistant Editor",year:"In post",note:"Netflix · Feature documentary"},
- {track:9,at:month(2026,2),len:NOW-month(2026,2),title:"Dimenticato",card:true,role:"Writer",year:"In development",note:"Feature script · Drama"},
- {track:5,at:month(2026,9),len:NOW-month(2026,9),title:"Keeper",still:"images/stills/keeper.jpg",role:"Editor",year:"In post",note:"Narrative short · Drama · Korean/English"}
+ {track:5,at:month(2024,8),len:9,title:"Paul American",still:"images/stills/paul-american.jpg",poster:"images/posters/paul-american.jpg",role:"Assistant Editor",year:2025,note:"HBO Max · Series"},
+ {track:3,at:month(2023,8)+11.5,len:3,title:"I Don't Even Skate",still:"images/stills/i-dont-even-skate.jpg",poster:"images/posters/i-dont-even-skate.jpg",role:"Editor",year:2026,note:"Narrative short · Drama · Spanish/English"},
+ {track:3,at:month(2023,8)+15,len:3,title:"Socks",still:"images/stills/socks.jpg",poster:"images/posters/socks.jpg",role:"Editor",year:"Completed",sortYear:2026,note:"Narrative short · Drama · Korean/English"},
+ {track:5,at:month(2023,8)+21,len:3,title:"aka Charlie Sheen",still:"images/stills/aka-charlie-sheen.jpg",poster:"images/posters/aka-charlie-sheen.jpg",role:"Assistant Editor",year:2025,note:"Netflix · Two-part documentary"},
+ {track:5,at:month(2025,8)+.5,len:2,title:"Untitled Michigan Football Project",role:"Assistant Editor",year:"Canceled",sortYear:2025,muted:true,still:"images/stills/media-offline.jpg",note:"Docu-series"},
+ {track:6,at:month(2025,8)+.75,len:NOW-(month(2025,8)+.75),title:"Orizuru",card:true,role:"Writer & Director",year:"In production",note:"Animated short · Drama",about:"An animated short film I wrote and am currently directing."},
+ {track:3,at:month(2025,12),len:3,title:"Muse",still:"images/stills/muse.jpg",role:"Editor",year:"Completed",sortYear:2026,note:"Narrative short · Drama"},
+ {track:5,at:month(2026,1),len:NOW-month(2026,1),title:"Untitled development project",card:true,role:"Assistant Editor",year:"In post",note:"Feature documentary"},
+ {track:4,at:month(2026,4),len:NOW-month(2026,4),title:"Unannounced feature",card:true,role:"Assistant Editor",year:"In post",note:"Netflix · Feature documentary"},
+ {track:7,at:month(2026,2),len:NOW-month(2026,2),title:"Dimenticato",card:true,role:"Writer",year:"In development",note:"Feature script · Drama"},
+ {track:3,at:month(2026,9),len:NOW-month(2026,9),title:"Keeper",still:"images/stills/keeper.jpg",role:"Editor",year:"In post",note:"Narrative short · Drama · Korean/English"}
 ];
 // More about each project, shown when its credit is opened (from the film pages on the old portfolio site, the posters and my resume).
 // Every project of a kind shows the same headings (role is the tag on the row), in the order of SHORT_ROWS / DOC_ROWS below; a heading
